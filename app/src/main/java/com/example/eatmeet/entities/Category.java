@@ -1,15 +1,26 @@
 package com.example.eatmeet.entities;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by sofia on 08/06/2016.
  */
-public class Category {
+public class Category implements Serializable {
     private int id;
     private String name;
     private Date created_at;
     private Date updated_at;
+    private Map<String,String> meta;
+
+    public Map<String, String> getMeta() {
+        return meta;
+    }
+
+    public void setMeta(Map<String, String> meta) {
+        this.meta = meta;
+    }
 
     public Date getCreatedAt() {
         return created_at;

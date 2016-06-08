@@ -2,6 +2,7 @@ package com.example.eatmeet.dao;
 
 import com.example.eatmeet.entities.Category;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface CategoryDAO {
     public List<Category> getCategories();
+    public HashMap<String,String> getMeta();
 }

@@ -1,11 +1,12 @@
 package com.example.eatmeet.entities;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
 /**
  * Created by sofia on 08/06/2016.
  */
-public class Event {
+public class Event implements Serializable{
     private int id;
     private String title;
     private Date schedule;
