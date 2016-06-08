@@ -5,7 +5,7 @@ package com.example.eatmeet;
  */
 public class Configs {
 
-    private final boolean development = true;
+    private static final boolean development = true;
 
     public static String getBackendUrl() {
         if(development)
