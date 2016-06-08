@@ -13,10 +13,6 @@ public class ZoneDAOImpl implements ZoneDAO {
     public List<Zone> getZones() {
         ArrayList<Zone> zones = new ArrayList<>();
 
-        zones.add(new Zone("Test Zone"));
-        zones.add(new Zone("Test Zone"));
-        zones.add(new Zone("Test Zone"));
-
         return zones;
     }
 }
