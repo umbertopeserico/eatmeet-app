@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.example.eatmeet.dao.ZoneDAO;
 import com.example.eatmeet.dao.ZoneDAOImpl;
-import com.example.eatmeet.eatmeet.R;
 import com.example.eatmeet.entities.Zone;
 
 import java.util.List;
