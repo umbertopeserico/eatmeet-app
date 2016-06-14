@@ -52,7 +52,6 @@ public class CategoryActivity extends ActionBarActivity  {
             ArrayList<String> categoriesName = new ArrayList<>();
             for (int i = 0; i < categories.size(); i++){
                 categoriesName.add(categories.get(i).getName());
-                System.out.println("pizzaaaa: " + categories.get(i).getName());
             }
 
             categoryAdapter =
