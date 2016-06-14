@@ -27,29 +27,6 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public List<Category> getCategories() {
 
-        //Connection c = new Connection();
-        new Connection(){
-            @Override public void onPostExecute(String result)
-            {
-                Log.d("My tag 2",result);
-                try {
-                    JSONObject obj = new JSONObject(result);
-                    JSONArray arr = obj.getJSONArray("categories");
-                    String name = arr.getJSONObject(0).getString("name");
-                    int id = arr.getJSONObject(0).getInt("id");
-                    System.out.println(name + " " + id);  // prints "Alice 20"
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute("http://eatmeet.herokuapp.com/api/categories");
-        //c.execute("http://eatmeet.herokuapp.com/api/categories");
-
-        Category pizza = new Category();
-        pizza.setId(0);
-        pizza.setMeta(this.getMeta());
-        pizza.setName("pizza");
-
         Category sushi = new Category();
         sushi.setId(1);
         sushi.setMeta(this.getMeta());
@@ -67,7 +44,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
         List<Category> allCategories = new ArrayList<Category>();
 
-        allCategories.add(pizza);
         allCategories.add(sushi);
         allCategories.add(vino);
         allCategories.add(biologico);
