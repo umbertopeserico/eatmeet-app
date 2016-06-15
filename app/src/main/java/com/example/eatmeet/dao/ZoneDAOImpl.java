@@ -1,6 +1,5 @@
 package com.example.eatmeet.dao;
 
-import com.example.eatmeet.Configs;
 import com.example.eatmeet.entities.Zone;
 
 import java.util.ArrayList;

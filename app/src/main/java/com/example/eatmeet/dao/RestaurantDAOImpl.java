@@ -2,6 +2,7 @@ package com.example.eatmeet.dao;
 
 import com.example.eatmeet.entities.Restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,30 @@ import java.util.List;
 public class RestaurantDAOImpl implements RestaurantDAO {
     @Override
     public List<Restaurant> getRestaurants() {
-        return null;
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+
+        Restaurant r1 = new Restaurant();
+        r1.setId(1);
+        r1.setName("Ristorante 1");
+        r1.setLat(46.0646806);
+        r1.setLgt(11.1212576);
+
+        Restaurant r2 = new Restaurant();
+        r2.setId(2);
+        r2.setName("Ristorante 2");
+        r2.setLat(46.0648169);
+        r2.setLgt(11.1482693);
+
+        Restaurant r3 = new Restaurant();
+        r3.setId(3);
+        r3.setName("Ristorante 3");
+        r3.setLat(46.0684497);
+        r3.setLgt(11.1176831);
+
+        restaurants.add(r1);
+        restaurants.add(r2);
+        restaurants.add(r3);
+
+        return restaurants;
     }
 }

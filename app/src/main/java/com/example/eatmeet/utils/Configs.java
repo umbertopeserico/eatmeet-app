@@ -1,4 +1,4 @@
-package com.example.eatmeet;
+package com.example.eatmeet.utils;
 
 /**
  * Created by umberto on 08/06/16.
