@@ -2,14 +2,12 @@ package com.example.eatmeet.dao;
 
 import android.util.Log;
 
-import com.example.eatmeet.Connection;
+import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import org.json.*;
 

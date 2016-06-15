@@ -1,4 +1,4 @@
-package com.example.eatmeet;
+package com.example.eatmeet.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.eatmeet.R;
 import com.example.eatmeet.dao.CategoryDAO;
 import com.example.eatmeet.dao.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
