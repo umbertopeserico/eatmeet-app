@@ -21,6 +21,8 @@ public class Restaurant implements Serializable {
     private int restaurant_owner_id;
     private Date created_at;
     private Date updated_at;
+    private double lat;
+    private double lgt;
 
     public int getId() {
         return id;
@@ -108,6 +110,22 @@ public class Restaurant implements Serializable {
 
     public void setRestaurantOwnerId(int restaurant_owner_id) {
         this.restaurant_owner_id = restaurant_owner_id;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLgt() {
+        return lgt;
+    }
+
+    public void setLgt(double lgt) {
+        this.lgt = lgt;
     }
 
     @Override
