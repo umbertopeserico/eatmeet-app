@@ -13,4 +13,7 @@
     <string name="example_text_categories">Welcome to categories!!</string>
     <string name="example_text_events">Welcome to events!!</string>
     <string name="example_text_map">Welcome to map!!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
