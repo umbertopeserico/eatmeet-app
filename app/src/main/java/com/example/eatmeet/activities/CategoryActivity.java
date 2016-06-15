@@ -10,10 +10,9 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.dao.CategoryDAO;
 import com.example.eatmeet.dao.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
-import com.example.eatmeet.utils.MyListViewAdapter;
+import com.example.eatmeet.utils.CategoriesAdapter;
 import com.example.eatmeet.utils.Notificable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity implements Notificable {
@@ -30,7 +29,7 @@ public class CategoryActivity extends AppCompatActivity implements Notificable {
         CategoryDAO categoryDao = new CategoryDAOImpl(this);
         List<Category> categoriesList = categoryDao.getCategories();
 
-        categoryAdapter = new MyListViewAdapter(this, R.layout.list_item_category, categoriesList);
+        categoryAdapter = new CategoriesAdapter(this, R.layout.list_item_category, categoriesList);
         /*categoryAdapter =
                 new ArrayAdapter<String>(
                         this, // The current context (this activity)

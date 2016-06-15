@@ -1,6 +1,7 @@
 package com.example.eatmeet.dao;
 
 import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.utils.Notificable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +11,12 @@ import java.util.List;
  * Created by sofia on 08/06/2016.
  */
 public class EventDAOImpl implements EventDAO {
+
+    Notificable mNotificable;
+
+    public EventDAOImpl(Notificable notificable) {
+        mNotificable = notificable;
+    }
     @Override
     public List<Event> getEvents() {
 

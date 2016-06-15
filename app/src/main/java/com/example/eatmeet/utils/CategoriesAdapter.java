@@ -10,19 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by sofia on 15/06/2016.
  */
-public class MyListViewAdapter extends ArrayAdapter {
+public class CategoriesAdapter extends ArrayAdapter {
 
     private List<Category> mItems;
     private Context mContext;
     private int mListRowLayout;
 
-    public MyListViewAdapter(Context context, int resource, List<Category> objects) {
+    public CategoriesAdapter(Context context, int resource, List<Category> objects) {
         super(context, resource, objects);
         mItems = objects;
         mContext = context;
