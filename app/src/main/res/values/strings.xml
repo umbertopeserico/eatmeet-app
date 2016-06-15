@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">EatMeet</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">EatMeet</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_category">Category</string>
     <string name="title_activity_main_fragment_activuty">MainFragmentActivuty</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="category_tab_title">Categorie</string>
+    <string name="events_tab_title">Eventi</string>
+    <string name="map_tab_title">Mappa</string>
 </resources>
