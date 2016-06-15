@@ -1,4 +1,4 @@
-package com.example.eatmeet;
+package com.example.eatmeet.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,24 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.example.eatmeet.dao.ZoneDAO;
-import com.example.eatmeet.dao.ZoneDAOImpl;
-import com.example.eatmeet.entities.Zone;
-
-import java.util.List;
+import com.example.eatmeet.R;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ZoneDAO zoneDao = new ZoneDAOImpl();
-
-        List<Zone> zones = zoneDao.getZones();
-
-
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -25,7 +25,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
 
         Category sushi = new Category();
         sushi.setId(1);
@@ -42,12 +42,40 @@ public class CategoryDAOImpl implements CategoryDAO {
         biologico.setMeta(this.getMeta());
         biologico.setName("biologico");
 
-        List<Category> allCategories = new ArrayList<Category>();
+        final List<Category> allCategories = new ArrayList<Category>();
 
         allCategories.add(sushi);
         allCategories.add(vino);
         allCategories.add(biologico);
 
-        return allCategories;
+        final ArrayList<String> testCategories = new ArrayList<>();
+
+        new Connection(){
+            @Override public void onPostExecute(String result)
+            {
+                Log.d("My tag 2",result);
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    JSONArray arr = obj.getJSONArray("categories");
+                    for(int i = 0; i < arr.length(); i++) {
+                        String name = arr.getJSONObject(i).getString("name");
+                        int id = arr.getJSONObject(i).getInt("id");
+                        System.out.println(name + " " + id);
+                        Category newCategory = new Category();
+                        newCategory.setId(id);
+                        newCategory.setName(name);
+                        //categoryAdapter.clear();
+                        allCategories.add(newCategory);
+                        testCategories.add(newCategory.getName());
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute("http://eatmeet.herokuapp.com/api/categories");
+
+        //return allCategories;
+        return testCategories;
     }
 }
