@@ -1,17 +1,16 @@
 package com.example.eatmeet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.dao.CategoryDAO;
 import com.example.eatmeet.dao.CategoryDAOImpl;
+import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.utils.MyListViewAdapter;
 import com.example.eatmeet.utils.Notificable;
 
 import java.util.ArrayList;
@@ -25,18 +24,19 @@ public class CategoryActivity extends AppCompatActivity implements Notificable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
 
         CategoryDAO categoryDao = new CategoryDAOImpl(this);
-        List<String> categoriesList = categoryDao.getCategories();
+        List<Category> categoriesList = categoryDao.getCategories();
 
-        categoryAdapter =
+        categoryAdapter = new MyListViewAdapter(this, R.layout.list_item_category, categoriesList);
+        /*categoryAdapter =
                 new ArrayAdapter<String>(
                         this, // The current context (this activity)
                         R.layout.list_item_category, // The name of the layout ID.
                         R.id.list_item_category_textview, // The ID of the textview to populate.
-                        categoriesList);
+                        categoriesList);*/
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) findViewById(R.id.listview_categories);

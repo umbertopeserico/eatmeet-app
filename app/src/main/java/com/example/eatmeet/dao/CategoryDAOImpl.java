@@ -30,7 +30,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public List<String> getCategories() {
+    public List<Category> getCategories() {
 
         Category sushi = new Category();
         sushi.setId(1);
@@ -53,8 +53,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         allCategories.add(vino);
         allCategories.add(biologico);
 
-        final ArrayList<String> testCategories = new ArrayList<>();
-
         new Connection(){
             @Override public void onPostExecute(String result)
             {
@@ -71,7 +69,6 @@ public class CategoryDAOImpl implements CategoryDAO {
                         newCategory.setName(name);
                         //categoryAdapter.clear();
                         allCategories.add(newCategory);
-                        testCategories.add(newCategory.getName());
                         mNotificable.sendNotify();
                     }
                 } catch (JSONException e) {
@@ -80,7 +77,6 @@ public class CategoryDAOImpl implements CategoryDAO {
             }
         }.execute("http://eatmeet.herokuapp.com/api/categories");
 
-        //return allCategories;
-        return testCategories;
+        return allCategories;
     }
 }

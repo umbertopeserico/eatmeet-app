@@ -9,6 +9,6 @@ import java.util.List;
  * Created by sofia on 08/06/2016.
  */
 public interface CategoryDAO {
-    public List<String> getCategories();
+    public List<Category> getCategories();
     public HashMap<String,String> getMeta();
 }
