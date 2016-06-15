@@ -21,7 +21,9 @@ import android.widget.TextView;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.R;
-import com.example.eatmeet.mainactivityfragments.PlaceholderFragment;
+import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
+import com.example.eatmeet.mainactivityfragments.EventsFragment;
+import com.example.eatmeet.mainactivityfragments.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -101,9 +103,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment f = null;
+            switch (position) {
+                case 0:
+                    f =  new CategoriesFragment();
+                    break;
+                case 1:
+                    f =  new EventsFragment();
+                    break;
+                case 2:
+                    f =  new MapFragment();
+                    break;
+                default:
+                    f =  new CategoriesFragment();
+            }
+
+            return f;
         }
 
         @Override

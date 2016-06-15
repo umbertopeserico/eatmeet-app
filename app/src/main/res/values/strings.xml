@@ -9,4 +9,8 @@
     <string name="category_tab_title">Categorie</string>
     <string name="events_tab_title">Eventi</string>
     <string name="map_tab_title">Mappa</string>
+
+    <string name="example_text_categories">Welcome to categories!!</string>
+    <string name="example_text_events">Welcome to events!!</string>
+    <string name="example_text_map">Welcome to map!!</string>
 </resources>
