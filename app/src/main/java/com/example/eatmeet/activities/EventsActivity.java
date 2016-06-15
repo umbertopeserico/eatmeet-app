@@ -10,7 +10,7 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.dao.EventDAO;
 import com.example.eatmeet.dao.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.utils.EventsAdapter;
+import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.utils.Notificable;
 
 import java.util.List;

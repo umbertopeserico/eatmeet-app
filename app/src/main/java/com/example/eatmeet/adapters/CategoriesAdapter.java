@@ -1,4 +1,4 @@
-package com.example.eatmeet.utils;
+package com.example.eatmeet.adapters;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.entities.Category;

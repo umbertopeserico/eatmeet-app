@@ -10,7 +10,7 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.dao.CategoryDAO;
 import com.example.eatmeet.dao.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
-import com.example.eatmeet.utils.CategoriesAdapter;
+import com.example.eatmeet.adapters.CategoriesAdapter;
 import com.example.eatmeet.utils.Notificable;
 
 import java.util.List;
