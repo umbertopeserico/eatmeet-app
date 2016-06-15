@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.utils.Notificable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,12 @@ import org.json.*;
  * Created by sofia on 08/06/2016.
  */
 public class CategoryDAOImpl implements CategoryDAO {
+
+    Notificable mNotificable;
+
+    public CategoryDAOImpl(Notificable notificable) {
+        mNotificable = notificable;
+    }
 
     public HashMap<String,String> getMeta(){
         HashMap<String,String> meta = new HashMap<>();
@@ -65,7 +72,7 @@ public class CategoryDAOImpl implements CategoryDAO {
                         //categoryAdapter.clear();
                         allCategories.add(newCategory);
                         testCategories.add(newCategory.getName());
-
+                        mNotificable.sendNotify();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

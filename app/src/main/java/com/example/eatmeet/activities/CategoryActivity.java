@@ -17,6 +17,7 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.dao.CategoryDAO;
 import com.example.eatmeet.dao.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.utils.Notificable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,18 +30,18 @@ import java.util.List;
 /**
  * Created by sofia on 13/06/2016.
  */
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements Notificable {
+    private ArrayAdapter<String> categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        ArrayAdapter<String> categoryAdapter;
-        CategoryDAO categoryDao = new CategoryDAOImpl();
+
+        CategoryDAO categoryDao = new CategoryDAOImpl(this);
         List<String> categoriesList = categoryDao.getCategories();
         //ArrayList<Category> categories;
-        CategoryDAOImpl categoryDAOImpl = new CategoryDAOImpl();
         //categories = (ArrayList<Category>) categoryDAOImpl.getCategories();
 
         ArrayList<String> categoriesName = new ArrayList<>();
@@ -59,5 +60,10 @@ public class CategoryActivity extends AppCompatActivity {
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) findViewById(R.id.listview_categories);
         listView.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    public void sendNotify() {
+        categoryAdapter.notifyDataSetChanged();
     }
 }
