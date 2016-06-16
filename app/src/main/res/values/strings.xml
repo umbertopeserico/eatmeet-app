@@ -16,6 +16,9 @@
     <string name="example_text_events">Welcome to events!!</string>
     <string name="example_text_map">Welcome to map!!</string>
 
+    <string name="order">Ordina</string>
+    <string name="filter">Filtra</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
