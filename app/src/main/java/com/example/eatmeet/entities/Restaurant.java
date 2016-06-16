@@ -1,7 +1,9 @@
 package com.example.eatmeet.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by umberto on 08/06/16.
@@ -23,6 +25,7 @@ public class Restaurant implements Serializable {
     private Date updated_at;
     private double lat;
     private double lgt;
+    private List<Event> events = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -126,6 +129,14 @@ public class Restaurant implements Serializable {
 
     public void setLgt(double lgt) {
         this.lgt = lgt;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override

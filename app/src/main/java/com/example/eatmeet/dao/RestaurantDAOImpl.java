@@ -1,5 +1,6 @@
 package com.example.eatmeet.dao;
 
+import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 
 import java.util.ArrayList;
@@ -30,6 +31,12 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         r3.setName("Ristorante 3");
         r3.setLat(46.0684497);
         r3.setLgt(11.1176831);
+
+        Event e1= new Event();
+        e1.setTitle("Evento Prova");
+
+
+        r1.getEvents().add(e1);
 
         restaurants.add(r1);
         restaurants.add(r2);
