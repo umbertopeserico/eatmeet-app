@@ -1,18 +1,36 @@
 package com.example.eatmeet.dao;
 
+import android.util.Log;
+
+import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.utils.Configs;
+import com.example.eatmeet.utils.Connection;
+import com.example.eatmeet.utils.Notificable;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by sofia on 08/06/2016.
  */
 public class EventDAOImpl implements EventDAO {
+
+    Notificable mNotificable;
+
+    public EventDAOImpl(Notificable notificable) {
+        mNotificable = notificable;
+    }
     @Override
     public List<Event> getEvents() {
 
+        /*
         Event event0 = new Event();
         event0.setId(0);
         event0.setTitle("Pizza a volontà");
@@ -57,12 +75,37 @@ public class EventDAOImpl implements EventDAO {
         event0.setActualPrice(16.00);
         event0.setMinPrice(12.00);
 
-        List<Event> allEvents = new ArrayList<Event>();
+        */
+        final List<Event> allEvents = new ArrayList<Event>();
 
+        new Connection(){
+            @Override public void onPostExecute(String result)
+            {
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    JSONArray arr = obj.getJSONArray("events");
+                    for(int i = 0; i < arr.length(); i++) {
+                        String title = arr.getJSONObject(i).getString("title");
+                        int id = arr.getJSONObject(i).getInt("id");
+
+                        Event newEvent = new Event();
+                        newEvent.setId(id);
+                        newEvent.setTitle(title);
+                        //categoryAdapter.clear();
+                        allEvents.add(newEvent);
+                        mNotificable.sendNotify();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(new Configs().getBackendUrl() + "/api/events");
+        /*
         allEvents.add(event0);
         allEvents.add(event1);
         allEvents.add(event2);
         allEvents.add(event3);
+        */
         return allEvents;
     }
 }
