@@ -11,16 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.CategoryActivity"
-            android:label="@string/title_activity_category"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".activities.EventsActivity"
-            android:label="@string/title_activity_events"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".activities.FilterActivity"
             android:label="@string/title_activity_filter"
             android:theme="@style/AppTheme.NoActionBar" />

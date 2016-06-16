@@ -6,13 +6,6 @@
 
     tools:context="com.example.eatmeet.mainactivityfragments.CategoriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/example_text_categories" />
-
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
