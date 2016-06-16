@@ -1,5 +1,6 @@
 package com.example.eatmeet.dao;
 
+import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface RestaurantDAO {
     public List<Restaurant> getRestaurants();
+    public Event getClosestEvent(Restaurant restaurant);
 }

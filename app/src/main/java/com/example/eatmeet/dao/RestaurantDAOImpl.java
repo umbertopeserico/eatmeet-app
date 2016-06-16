@@ -44,4 +44,12 @@ public class RestaurantDAOImpl implements RestaurantDAO {
 
         return restaurants;
     }
+
+    @Override
+    public Event getClosestEvent(Restaurant restaurant) {
+        Event e1= new Event();
+        e1.setTitle("Evento Prova più vicino");
+        
+        return e1;
+    }
 }
