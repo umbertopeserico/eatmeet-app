@@ -14,19 +14,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-import com.example.eatmeet.R;
 import com.example.eatmeet.R;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
-import com.example.eatmeet.mainactivityfragments.MapFragment;
+import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -130,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     f =  new EventsFragment();
                     break;
                 case 2:
-                    f =  new MapFragment();
+                    f =  new GoogleMapFragment();
                     break;
                 default:
                     f =  new CategoriesFragment();

@@ -30,4 +30,6 @@
     <string name="sidebar_signup">Registrati</string>
     <string name="sidebar_privacy_policy">Note legali</string>
 
-</resources>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCfquDifGMDILQihtWFb2g6-enXnK0AxCc</string>
+    <string name="google_app_id">284091591212</string>
+ </resources>
