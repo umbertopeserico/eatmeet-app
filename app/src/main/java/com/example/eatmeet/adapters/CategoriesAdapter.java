@@ -2,9 +2,11 @@ package com.example.eatmeet.adapters;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.utils.Images;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class CategoriesAdapter extends ArrayAdapter {
 
-    private List<Category> mItems;
+    protected List<Category> mItems;
     private Context mContext;
     private int mListRowLayout;
 
@@ -39,9 +41,14 @@ public class CategoriesAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mListRowLayout, null);
-
+        final ImageView icon = (ImageView) convertView.findViewById(R.id.categoryIcon);
         Category element = mItems.get(position);
 
+        new Images(){
+            @Override public void onPostExecute(Bitmap result){
+                icon.setImageBitmap(result);
+            }
+        }.execute(element.getIcon());
 
         /*
         ImageView icon = (ImageView) convertView.findViewById(R.id.categoryIcon);

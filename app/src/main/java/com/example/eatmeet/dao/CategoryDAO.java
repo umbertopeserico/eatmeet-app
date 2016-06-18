@@ -1,6 +1,7 @@
 package com.example.eatmeet.dao;
 
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 
 import java.util.HashMap;
 import java.util.List;

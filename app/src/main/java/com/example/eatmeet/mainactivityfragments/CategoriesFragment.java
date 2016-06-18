@@ -2,12 +2,14 @@ package com.example.eatmeet.mainactivityfragments;
 
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.eatmeet.R;
@@ -17,6 +19,8 @@ import com.example.eatmeet.dao.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.utils.Notificable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,7 +28,8 @@ import java.util.List;
  */
 public class CategoriesFragment extends Fragment implements Notificable {
 
-    private ArrayAdapter<String> categoryAdapter;
+    private CategoriesAdapter categoryAdapter;
+    private HashMap<Integer, ImageView> images = new HashMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -36,14 +41,7 @@ public class CategoriesFragment extends Fragment implements Notificable {
         List<Category> categoriesList = categoryDao.getCategories();
 
         categoryAdapter = new CategoriesAdapter(getContext(), R.layout.list_item_category, categoriesList);
-        /*categoryAdapter =
-                new ArrayAdapter<String>(
-                        this, // The current context (this activity)
-                        R.layout.list_item_category, // The name of the layout ID.
-                        R.id.list_item_category_textview, // The ID of the textview to populate.
-                        categoriesList);*/
 
-        // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) view.findViewById(R.id.listview_categories);
         listView.setAdapter(categoryAdapter);
 
