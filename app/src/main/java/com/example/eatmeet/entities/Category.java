@@ -12,10 +12,19 @@ public class Category implements Serializable {
     private String name;
     private Date created_at;
     private Date updated_at;
+    private String icon;
     private Map<String,String> meta;
 
     public Map<String, String> getMeta() {
         return meta;
+    }
+
+    public String getIcon(){
+        return this.icon;
+    }
+
+    public void setIcon(String icon){
+        this.icon=icon;
     }
 
     public void setMeta(Map<String, String> meta) {

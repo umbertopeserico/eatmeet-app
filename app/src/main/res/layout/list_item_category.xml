@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:weightSum="1"
+    android:gravity="center">
 
-    <CheckBox
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/categoryIcon"
+        android:checked="true"
+        android:layout_weight="0.28" />
+    <!--<CheckBox
         android:layout_width="wrap_content"
         android:layout_height="58dp"
         android:id="@+id/checkBoxListItem"
         android:checked="true"
-        android:layout_weight="0.28" />
+        android:layout_weight="0.28" />-->
 
     <TextView
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:text="New Text"
-        android:id="@+id/textViewListItem" />
+        android:id="@+id/textViewListItem"
+        android:layout_weight="0.5"
+        android:textSize="20sp"
+        android:gravity="center_vertical"  />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/imgViewListItem" />
+        android:textSize="20sp"
+        android:id="@+id/countViewListItem"
+        android:layout_weight="0.18" />
 </LinearLayout>

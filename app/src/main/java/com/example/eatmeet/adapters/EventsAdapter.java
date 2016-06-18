@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.eatmeet.R;
-import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class EventsAdapter extends ArrayAdapter {
         TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
         text.setText(element.getTitle());
 
-        TextView img = (TextView) convertView.findViewById(R.id.imgViewListItem);
+        TextView img = (TextView) convertView.findViewById(R.id.countViewListItem);
         img.setText(Integer.toString(element.getId()));
 
         return convertView;
