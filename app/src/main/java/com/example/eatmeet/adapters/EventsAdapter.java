@@ -1,6 +1,7 @@
 package com.example.eatmeet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.eatmeet.R;
+import com.example.eatmeet.activities.FilterActivity;
 import com.example.eatmeet.entities.Event;
 
 import java.util.List;
@@ -38,9 +40,19 @@ public class EventsAdapter extends ArrayAdapter {
 
         TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
         text.setText(element.getTitle());
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FilterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //startActivity(intent);
+            }
+        });
 
         TextView img = (TextView) convertView.findViewById(R.id.countViewListItem);
         img.setText(Integer.toString(element.getId()));
+
+
 
         return convertView;
     }
