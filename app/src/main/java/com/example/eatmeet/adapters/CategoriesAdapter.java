@@ -4,12 +4,18 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.entities.Category;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -36,11 +42,20 @@ public class CategoriesAdapter extends ArrayAdapter {
 
         Category element = mItems.get(position);
 
+
+        /*
+        ImageView icon = (ImageView) convertView.findViewById(R.id.categoryIcon);
+        String uri = "@drawable/"+element.getIcon();
+        uri = Environment.getExternalStorageDirectory().toString() + element.getName() + ".jpg";
+        int imageResource = getContext().getResources().getIdentifier(uri, null, getContext().getPackageName());
+        icon.setImageDrawable(getContext().getResources().getDrawable(imageResource));
+        */
+
         TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
         text.setText(element.getName());
 
-        TextView img = (TextView) convertView.findViewById(R.id.imgViewListItem);
-        img.setText(Integer.toString(element.getId()));
+        TextView count = (TextView) convertView.findViewById(R.id.countViewListItem);
+        count.setText(element.getMeta().get("events_count"));
 
         return convertView;
     }
