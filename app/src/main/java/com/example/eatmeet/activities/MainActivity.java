@@ -23,7 +23,52 @@ import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<Integer> f_categories = new ArrayList<>();
+    boolean on_categories = false;
+    Date f_min_date = null;
+    Date f_max_date = null;
+    boolean on_date = false;
+    double f_min_price = 0;
+    double f_max_price = 0;
+    boolean on_price = false;
+    double f_actual_discount = 0;
+    boolean on_discount = false;
+    int f_min_people = 0;
+    int f_max_people = 0;
+    boolean on_people = false;
+    ArrayList<Integer> f_restaurants = new ArrayList<>();
+    boolean on_restaurants = false;
+
+    public void setF_categories(ArrayList<Integer> categories) {
+        f_categories = categories;
+        on_categories = true;
+    }
+    public void removeF_categories(){
+        on_categories = false;
+    }
+    public ArrayList<Integer> getF_categories(){
+        return f_categories;
+    }
+
+    public void setF_restaurants(ArrayList<Integer> categories) {
+        f_categories = categories;
+        on_categories = true;
+    }
+    public void removeF_restaurants(){
+        on_restaurants = false;
+    }
+    public ArrayList<Integer> getF_restaurants(){
+        return f_restaurants;
+    }
+
+    /*...*/
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    public void setCurrentFragment(int fragment){
+        mViewPager.setCurrentItem(fragment, true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
