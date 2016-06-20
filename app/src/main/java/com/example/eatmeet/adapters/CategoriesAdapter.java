@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by sofia on 15/06/2016.
@@ -71,6 +73,7 @@ public class CategoriesAdapter extends ArrayAdapter {
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Logger.getLogger("Logging action from category to events").log(Level.WARNING, "Entro nel cambio di fragment");
                 //set filters
                 mainActivity.setF_categories(categories);
                 //go to event fragment v1

@@ -93,7 +93,6 @@ public class EventDAOImpl implements EventDAO {
                             Event newEvent = new Event();
                             newEvent.setId(id);
                             newEvent.setTitle(title);
-                            System.out.println(newEvent);
                             allEvents.add(newEvent);
                             mNotificable.sendNotify();
                         }
