@@ -3,9 +3,12 @@ package com.example.eatmeet.adapters;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
+import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Images;
+import com.example.eatmeet.utils.Post;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,6 +30,10 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,9 +93,6 @@ public class CategoriesAdapter extends ArrayAdapter {
                 //trans.commit();
                 //go to event fragment v2
                 mainActivity.setCurrentFragment(1);
-
-                //content type application json
-                // viewpager
             }
         });
 

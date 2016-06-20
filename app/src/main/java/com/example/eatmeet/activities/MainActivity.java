@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -85,8 +86,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private ViewPager mViewPager;
 
-    public void setCurrentFragment(int fragment){
-        mViewPager.setCurrentItem(fragment, true);
+    public void setCurrentFragment(int position){
+        mViewPager.setCurrentItem(position, true);
+        if(position==1) {
+            long i = new SectionsPagerAdapter(getSupportFragmentManager()).getItemId(position);
+            EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
+                    "android:switcher:" + mViewPager.getId() + ":" + i);
+            newFragment.refresh();
+            //System.out.println(getSupportFragmentManager().findFragmentByTag("unique_tag"));
+            //((EventsFragment) getSupportFragmentManager().findFragmentById(fragment)).refresh();
+            //((EventsFragment) getSupportFragmentManager().getFragments().get(fragment)).refresh();
+            /*
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            trans.replace(R.id.fragment_events, new EventsFragment());
+            trans.commit();
+            */
+        }
     }
 
     @Override
@@ -151,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         return false;
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

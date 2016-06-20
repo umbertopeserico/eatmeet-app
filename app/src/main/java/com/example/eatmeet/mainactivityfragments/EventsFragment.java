@@ -1,9 +1,11 @@
 package com.example.eatmeet.mainactivityfragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,15 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Notificable;
 import com.example.eatmeet.utils.Visibility;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,20 +40,72 @@ import java.util.List;
 public class EventsFragment extends Fragment  implements Notificable {
     //public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     private ArrayAdapter<String> eventAdapter;
+    private View view;
+    int i = 9;
+    List<Event> eventList = null;
+    JSONObject parameters = new JSONObject();
+    EventDAO eventDao;
+    private JSONObject constructParameters() throws JSONException {
+        JSONObject parameters= new JSONObject();
+        Context context = getContext();
+        MainActivity mainActivity = (MainActivity) context;
+        ArrayList<Integer> f_categories = mainActivity.getF_categories();
+        JSONObject category_parameter = new JSONObject();
+        category_parameter.put("categories",new JSONArray(f_categories));
 
+        parameters.put("filters",category_parameter);
+        /*
+        for (int i = 0; i < f_categories.size() ; i++){
+            System.out.println();
+            try {
+                category_parameter.put(Integer.toString(i),Integer.toString(f_categories.get(i)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(f_categories.get(i)==f_categories.size()-1){
+                try {
+                    parameters.put("categories",category_parameter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        */
+        return parameters;
+    }
+    @Override
+    public void onResume(){ super.onResume();}
+
+    public View refresh(){
+        try {
+            parameters = constructParameters();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        eventList = null;
+        eventList = eventDao.getEvents(parameters);
+        eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
+        ListView listView = (ListView) view.findViewById(R.id.listview_events);
+        listView.setAdapter(eventAdapter);
+        return view;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final View view = inflater.inflate(R.layout.fragment_events, container, false);
+        /*getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_events,this)
+                .commit();*/
+        view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        EventDAO eventDao = new EventDAOImpl(this);
-        List<Event> eventList = eventDao.getEvents();
-
-        eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
-
-        ListView listView = (ListView) view.findViewById(R.id.listview_events);
-        listView.setAdapter(eventAdapter);
-
+        eventDao = new EventDAOImpl(this);
+        eventList = new ArrayList<>();
+        try {
+            parameters = constructParameters();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        refresh();
         /*
         Button buttonCalls2 = (Button) view.findViewById(R.id.mioBottone);
         buttonCalls2.setOnClickListener(new View.OnClickListener() {
