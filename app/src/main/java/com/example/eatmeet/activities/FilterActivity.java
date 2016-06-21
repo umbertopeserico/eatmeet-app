@@ -27,6 +27,7 @@ public class FilterActivity extends AppCompatActivity implements Notificable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         setContentView(R.layout.activity_filter);
 
         EventDAO eventDao = new EventDAOImpl(this);
@@ -57,6 +58,7 @@ public class FilterActivity extends AppCompatActivity implements Notificable {
             @Override
             public void onClick(View v) {toggleView(listView);}
         });
+        */
     }
 
     public void toggleView(View view){

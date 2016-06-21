@@ -32,20 +32,20 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ArrayList<Integer> f_categories = new ArrayList<>();
-    boolean on_categories = false;
+    public boolean on_categories = false;
     Date f_min_date = null;
     Date f_max_date = null;
-    boolean on_date = false;
+    public boolean on_date = false;
     double f_min_price = 0;
     double f_max_price = 0;
-    boolean on_price = false;
+    public boolean on_price = false;
     double f_actual_discount = 0;
-    boolean on_discount = false;
+    public boolean on_discount = false;
     int f_min_people = 0;
     int f_max_people = 0;
-    boolean on_people = false;
+    public boolean on_people = false;
     ArrayList<Integer> f_restaurants = new ArrayList<>();
-    boolean on_restaurants = false;
+    public boolean on_restaurants = false;
 
     public void setF_categories(ArrayList<Integer> categories) {
         f_categories = categories;
@@ -58,18 +58,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return f_categories;
     }
 
-    public void setF_restaurants(ArrayList<Integer> categories) {
-        f_categories = categories;
-        on_categories = true;
+    public void setF_min_people(int min_people) {
+        f_min_people = min_people;
+        on_people = true;
     }
-    public void removeF_restaurants(){
-        on_restaurants = false;
+    public void removeF_min_people(){
+        on_people = false;
     }
-    public ArrayList<Integer> getF_restaurants(){
-        return f_restaurants;
+    public int getF_min_people(){
+        return f_min_people;
     }
 
-    /*...*/
+    public void setF_max_people(int max_people) {
+        f_max_people = max_people;
+        on_people = true;
+    }
+    public void removeF_max_people(){
+        on_people = false;
+    }
+    public int getF_max_people(){
+        return f_max_people;
+    }
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

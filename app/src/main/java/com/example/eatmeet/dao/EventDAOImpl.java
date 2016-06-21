@@ -84,24 +84,25 @@ public class EventDAOImpl implements EventDAO {
                 @Override
                 public void onPostExecute(String result) {
                     try {
-                        JSONObject obj = new JSONObject(result);
-                        JSONArray arr = obj.getJSONArray("events");
-                        for (int i = 0; i < arr.length(); i++) {
-                            String title = arr.getJSONObject(i).getString("title");
-                            int id = arr.getJSONObject(i).getInt("id");
+                        if(result != null) {
+                            JSONObject obj = new JSONObject(result);
+                            JSONArray arr = obj.getJSONArray("events");
+                            for (int i = 0; i < arr.length(); i++) {
+                                String title = arr.getJSONObject(i).getString("title");
+                                int id = arr.getJSONObject(i).getInt("id");
 
-                            Event newEvent = new Event();
-                            newEvent.setId(id);
-                            newEvent.setTitle(title);
-                            System.out.println(newEvent);
-                            allEvents.add(newEvent);
-                            mNotificable.sendNotify();
+                                Event newEvent = new Event();
+                                newEvent.setId(id);
+                                newEvent.setTitle(title);
+                                allEvents.add(newEvent);
+                                mNotificable.sendNotify();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-            }.execute(new Configs().getBackendUrl() + "/api/events/search",parameters);
+            }.execute(new Configs().getBackendUrl() + "api/events/search",parameters);
         }
         /*
         allEvents.add(event0);

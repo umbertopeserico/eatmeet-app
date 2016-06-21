@@ -54,7 +54,6 @@ public class Post extends AsyncTask<Object, Void, String> {
             }
             */
             JSONObject postDataJson = (JSONObject) params[1];
-
             // Construct the URL for the query
             URL url = new URL(myUrl);
 
