@@ -90,7 +90,6 @@ public class EventDAOImpl implements EventDAO {
                             for (int i = 0; i < arr.length(); i++) {
                                 String title = arr.getJSONObject(i).getString("title");
                                 int id = arr.getJSONObject(i).getInt("id");
-
                                 Event newEvent = new Event();
                                 newEvent.setId(id);
                                 newEvent.setTitle(title);

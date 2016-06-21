@@ -76,7 +76,7 @@ public class CategoryDAOImpl implements CategoryDAO {
                 e.printStackTrace();
             }
             }
-        }.execute(new Configs().getBackendUrl() + "/api/categories");
+        }.execute(Configs.getBackendUrl() + "/api/categories");
 
         return allCategories;
     }
