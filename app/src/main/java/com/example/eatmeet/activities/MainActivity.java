@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,21 +15,89 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
-import com.example.eatmeet.R;
 import com.example.eatmeet.R;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
-import com.example.eatmeet.mainactivityfragments.MapFragment;
+import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<Integer> f_categories = new ArrayList<>();
+    public boolean on_categories = false;
+    Date f_min_date = null;
+    Date f_max_date = null;
+    public boolean on_date = false;
+    double f_min_price = 0;
+    double f_max_price = 0;
+    public boolean on_price = false;
+    double f_actual_discount = 0;
+    public boolean on_discount = false;
+    int f_min_people = 0;
+    int f_max_people = 0;
+    public boolean on_people = false;
+    ArrayList<Integer> f_restaurants = new ArrayList<>();
+    public boolean on_restaurants = false;
+
+
+    public void setF_restaurants(ArrayList<Integer> restaurants) {
+        f_restaurants = restaurants;
+        on_restaurants = true;
+    }
+    public void removeF_restaurants(){
+        on_restaurants = false;
+    }
+    public ArrayList<Integer> getF_restaurants(){
+        return f_restaurants;
+    }
+
+    public void setF_categories(ArrayList<Integer> categories) {
+        f_categories = categories;
+        on_categories = true;
+    }
+    public void removeF_categories(){
+        on_categories = false;
+    }
+    public ArrayList<Integer> getF_categories(){
+        return f_categories;
+    }
+
+    public void setF_min_people(int min_people) {
+        f_min_people = min_people;
+        on_people = true;
+    }
+    public void removeF_min_people(){
+        on_people = false;
+    }
+    public int getF_min_people(){
+        return f_min_people;
+    }
+
+    public void setF_max_people(int max_people) {
+        f_max_people = max_people;
+        on_people = true;
+    }
+    public void removeF_max_people(){
+        on_people = false;
+    }
+    public int getF_max_people(){
+        return f_max_people;
+    }
+
+    public void removeAllFilters(){
+        removeF_max_people();
+        removeF_min_people();
+        removeF_categories();
+        removeF_restaurants();
+    }
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,6 +113,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    public void setCurrentFragment(int position){
+        mViewPager.setCurrentItem(position, true);
+        if(position==1) {
+            long i = new SectionsPagerAdapter(getSupportFragmentManager()).getItemId(position);
+            EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
+                    "android:switcher:" + mViewPager.getId() + ":" + i);
+            newFragment.refresh();
+            //System.out.println(getSupportFragmentManager().findFragmentByTag("unique_tag"));
+            //((EventsFragment) getSupportFragmentManager().findFragmentById(fragment)).refresh();
+            //((EventsFragment) getSupportFragmentManager().getFragments().get(fragment)).refresh();
+            /*
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            trans.replace(R.id.fragment_events, new EventsFragment());
+            trans.commit();
+            */
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -130,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     f =  new EventsFragment();
                     break;
                 case 2:
-                    f =  new MapFragment();
+                    f =  new GoogleMapFragment();
                     break;
                 default:
                     f =  new CategoriesFragment();

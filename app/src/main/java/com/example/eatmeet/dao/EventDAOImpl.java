@@ -7,6 +7,7 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.utils.Notificable;
+import com.example.eatmeet.utils.Post;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +29,7 @@ public class EventDAOImpl implements EventDAO {
         mNotificable = notificable;
     }
     @Override
-    public List<Event> getEvents() {
+    public List<Event> getEvents(JSONObject parameters) {
 
         /*
         Event event0 = new Event();
@@ -78,28 +79,30 @@ public class EventDAOImpl implements EventDAO {
         */
         final List<Event> allEvents = new ArrayList<Event>();
 
-        new Connection(){
-            @Override public void onPostExecute(String result)
-            {
-                try {
-                    JSONObject obj = new JSONObject(result);
-                    JSONArray arr = obj.getJSONArray("events");
-                    for(int i = 0; i < arr.length(); i++) {
-                        String title = arr.getJSONObject(i).getString("title");
-                        int id = arr.getJSONObject(i).getInt("id");
-
-                        Event newEvent = new Event();
-                        newEvent.setId(id);
-                        newEvent.setTitle(title);
-                        //categoryAdapter.clear();
-                        allEvents.add(newEvent);
-                        mNotificable.sendNotify();
+        if(parameters!=null) {
+            new Post() {
+                @Override
+                public void onPostExecute(String result) {
+                    try {
+                        if(result != null) {
+                            JSONObject obj = new JSONObject(result);
+                            JSONArray arr = obj.getJSONArray("events");
+                            for (int i = 0; i < arr.length(); i++) {
+                                String title = arr.getJSONObject(i).getString("title");
+                                int id = arr.getJSONObject(i).getInt("id");
+                                Event newEvent = new Event();
+                                newEvent.setId(id);
+                                newEvent.setTitle(title);
+                                allEvents.add(newEvent);
+                                mNotificable.sendNotify();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }.execute(new Configs().getBackendUrl() + "/api/events");
+            }.execute(new Configs().getBackendUrl() + "api/events/search",parameters);
+        }
         /*
         allEvents.add(event0);
         allEvents.add(event1);
