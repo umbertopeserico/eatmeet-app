@@ -9,6 +9,10 @@ import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.utils.Notificable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,17 +53,40 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         e1.setTitle("Evento Prova");
 
 
-        r1.getEvents().add(e1);
+        //r1.getEvents().add(e1);
 
-        restaurants.add(r1);
-        restaurants.add(r2);
+        //restaurants.add(r1);
+        //restaurants.add(r2);
 
         new Connection() {
             @Override
             public void onPostExecute(String result) {
-                    SystemClock.sleep(10000);
-                    restaurants.add(r3);
-                mNotificable.sendNotify();
+                //restaurants.add(r3);
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    JSONArray arr = obj.getJSONArray("restaurants");
+                    for (int i = 0; i < arr.length(); i++) {
+                        String name = arr.getJSONObject(i).getString("name");
+                        int id = arr.getJSONObject(i).getInt("id");
+                        double lat = arr.getJSONObject(i).getDouble("lat");
+                        double lgt = arr.getJSONObject(i).getDouble("lgt");
+                        String description = arr.getJSONObject(i).getString("description");
+                        String email = arr.getJSONObject(i).getString("email");
+
+                        Restaurant newRestaurant = new Restaurant();
+                        newRestaurant.setId(id);
+                        newRestaurant.setName(name);
+                        newRestaurant.setLat(lat);
+                        newRestaurant.setLgt(lgt);
+                        newRestaurant.setDescription(description);
+                        //newRestaurant.setLat(46.0684497);
+                        //newRestaurant.setLgt(11.1176831);
+                        restaurants.add(newRestaurant);
+                        mNotificable.sendNotify();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("END OF TASK");
             }
         }.execute(Configs.getBackendUrl()+"/api/restaurants");

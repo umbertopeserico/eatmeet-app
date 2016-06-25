@@ -56,6 +56,7 @@ public class EventsFragment extends Fragment  implements Notificable {
         JSONObject parameters= new JSONObject();
         Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
+
         JSONObject all_filters = new JSONObject();
 
         /*set filter parameters*/
@@ -63,7 +64,12 @@ public class EventsFragment extends Fragment  implements Notificable {
         if(mainActivity.on_categories) {
             f_categories = mainActivity.getF_categories();
         }
+        ArrayList<Integer> f_restaurants = new ArrayList<>();
+        if(mainActivity.on_restaurants) {
+            f_restaurants = mainActivity.getF_categories();
+        }
         all_filters.put("categories", new JSONArray(f_categories));
+        all_filters.put("restaurants", new JSONArray(f_restaurants));
 
         if(mainActivity.on_people) {
             int f_min_people = mainActivity.getF_min_people();

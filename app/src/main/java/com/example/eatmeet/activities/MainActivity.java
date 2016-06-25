@@ -47,6 +47,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Integer> f_restaurants = new ArrayList<>();
     public boolean on_restaurants = false;
 
+
+    public void setF_restaurants(ArrayList<Integer> restaurants) {
+        f_restaurants = restaurants;
+        on_restaurants = true;
+    }
+    public void removeF_restaurants(){
+        on_restaurants = false;
+    }
+    public ArrayList<Integer> getF_restaurants(){
+        return f_restaurants;
+    }
+
     public void setF_categories(ArrayList<Integer> categories) {
         f_categories = categories;
         on_categories = true;
