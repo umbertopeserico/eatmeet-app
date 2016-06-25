@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.CookieHandler;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -65,6 +66,8 @@ public class Post extends AsyncTask<Object, Void, String> {
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            CookieHandler.setDefault(CookiesUtil.getCookieManager());
+
             urlConnection.connect();
 
             OutputStream os = urlConnection.getOutputStream();
@@ -78,22 +81,25 @@ public class Post extends AsyncTask<Object, Void, String> {
             writer.close();
             */
             os.close();
-            /* TODO: handle this
+
+            CookiesUtil.setAuthCookies(urlConnection);
+
+            InputStream inputStream;
             int responseCode=urlConnection.getResponseCode();
 
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response+=line;
-                }
+            switch (responseCode) {
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    inputStream = urlConnection.getErrorStream();
+                    break;
+                case HttpURLConnection.HTTP_INTERNAL_ERROR:
+                    inputStream = urlConnection.getErrorStream();
+                    break;
+                default:
+                    inputStream = urlConnection.getInputStream();
             }
-            else {
-                response="";
-            }
-            */
+
+
             // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 // Nothing to do.

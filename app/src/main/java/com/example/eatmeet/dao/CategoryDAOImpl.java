@@ -49,32 +49,41 @@ public class CategoryDAOImpl implements CategoryDAO {
         final List<Category> allCategories = new ArrayList<Category>();
 
         new Connection(){
-            @Override public void onPostExecute(String result)
-            {
-            Log.d("My tag 2",result);
-            try {
-                JSONObject obj = new JSONObject(result);
-                JSONArray arr = obj.getJSONArray("categories");
-                for(int i = 0; i < arr.length(); i++) {
-                    String name = arr.getJSONObject(i).getString("name");
-                    int id = arr.getJSONObject(i).getInt("id");
-                    String events_count = arr.getJSONObject(i).getJSONObject("meta").getString("events_count");
-                    String icon = arr.getJSONObject(i).getString("image");
+            @Override public void onPostExecute(String result) {
+                Log.d("My tag 2", result);
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    JSONArray errors = null;
+                    try {
+                        // se ci sono errori continuo qui (Se il login è failed)
+                        errors = obj.getJSONArray("errors");
+                        return;
 
-                    Category newCategory = new Category();
-                    newCategory.setId(id);
-                    newCategory.setName(name);
-                    newCategory.setIcon(icon);
-                    HashMap<String,String> meta = new HashMap<>();
-                    meta.put("events_count",events_count);
-                    newCategory.setMeta(meta);
-                    //categoryAdapter.clear();
-                    allCategories.add(newCategory);
-                    mNotificable.sendNotify();
+                    } catch (JSONException e) {
+
+                        JSONArray arr = obj.getJSONArray("categories");
+                        for (int i = 0; i < arr.length(); i++) {
+                            String name = arr.getJSONObject(i).getString("name");
+                            int id = arr.getJSONObject(i).getInt("id");
+                            String events_count = arr.getJSONObject(i).getJSONObject("meta").getString("events_count");
+                            String icon = arr.getJSONObject(i).getString("image");
+
+                            Category newCategory = new Category();
+                            newCategory.setId(id);
+                            newCategory.setName(name);
+                            newCategory.setIcon(icon);
+                            HashMap<String, String> meta = new HashMap<>();
+                            meta.put("events_count", events_count);
+                            newCategory.setMeta(meta);
+                            //categoryAdapter.clear();
+                            allCategories.add(newCategory);
+                            mNotificable.sendNotify();
+                        }
+                    }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }.execute(Configs.getBackendUrl() + "/api/categories");
 

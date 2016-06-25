@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by umberto on 25/06/16.
  */
 public class CookiesUtil {
-    private static CookieManager cookieManager;
+    private static CookieManager cookieManager = new CookieManager();;
 
     public static void setAuthCookies(HttpURLConnection urlConnection) {
         Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
@@ -23,27 +23,32 @@ public class CookiesUtil {
         List<String> uid = headerFields.get("uid");
         List<String> cookiesHeader = headerFields.get("Set-Cookie");
 
-        if(cookiesHeader != null) {
+        if(accessToken != null) {
             for (String cookie : accessToken) {
-                cookieManager.getCookieStore().add(null, HttpCookie.parse("access-token="+cookie).get(0));
+                cookieManager.getCookieStore().add(null, HttpCookie.parse("access-token=" + cookie).get(0));
             }
-
+        }
+        if(tokenType != null) {
             for (String cookie : tokenType) {
-                cookieManager.getCookieStore().add(null, HttpCookie.parse("token-type="+cookie).get(0));
+                cookieManager.getCookieStore().add(null, HttpCookie.parse("token-type=" + cookie).get(0));
             }
-
+        }
+        if(client != null) {
             for (String cookie : client) {
-                cookieManager.getCookieStore().add(null, HttpCookie.parse("client="+cookie).get(0));
+                cookieManager.getCookieStore().add(null, HttpCookie.parse("client=" + cookie).get(0));
             }
-
+        }
+        if(expiry != null) {
             for (String cookie : expiry) {
-                cookieManager.getCookieStore().add(null, HttpCookie.parse("expiry="+cookie).get(0));
+                cookieManager.getCookieStore().add(null, HttpCookie.parse("expiry=" + cookie).get(0));
             }
-
+        }
+        if(uid != null) {
             for (String cookie : uid) {
-                cookieManager.getCookieStore().add(null, HttpCookie.parse("uid="+cookie).get(0));
+                cookieManager.getCookieStore().add(null, HttpCookie.parse("uid=" + cookie).get(0));
             }
-
+        }
+        if(cookiesHeader != null) {
             for (String cookie : cookiesHeader) {
                 cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
             }
@@ -52,13 +57,14 @@ public class CookiesUtil {
 
     public static void setCookieOnARequest(HttpURLConnection urlConnection) {
         if(cookieManager.getCookieStore().getCookies().size() > 0) {
-            System.out.println(cookieManager.getCookieStore().getCookies());
-
-            urlConnection.setRequestProperty("access-token", cookieManager.getCookieStore().getCookies().get(0).getValue());
-            urlConnection.setRequestProperty("token-type", cookieManager.getCookieStore().getCookies().get(1).getValue());
-            urlConnection.setRequestProperty("client", cookieManager.getCookieStore().getCookies().get(2).getValue());
-            urlConnection.setRequestProperty("expiry", cookieManager.getCookieStore().getCookies().get(3).getValue());
-            urlConnection.setRequestProperty("uid", cookieManager.getCookieStore().getCookies().get(4).getValue());
+            System.out.println("Cooooooookieeees: "+cookieManager.getCookieStore().getCookies().toString());
+            if(cookieManager.getCookieStore().getCookies().size()>1) {
+                urlConnection.setRequestProperty("access-token", cookieManager.getCookieStore().getCookies().get(0).getValue());
+                urlConnection.setRequestProperty("token-type", cookieManager.getCookieStore().getCookies().get(1).getValue());
+                urlConnection.setRequestProperty("client", cookieManager.getCookieStore().getCookies().get(2).getValue());
+                urlConnection.setRequestProperty("expiry", cookieManager.getCookieStore().getCookies().get(3).getValue());
+                urlConnection.setRequestProperty("uid", cookieManager.getCookieStore().getCookies().get(4).getValue());
+            }
         }
     }
 

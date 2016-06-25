@@ -3,7 +3,10 @@ package com.example.eatmeet.utils;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.eatmeet.activities.SignInActivity;
 import com.example.eatmeet.entities.Category;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,10 +45,27 @@ public abstract class Connection extends AsyncTask<String, Void, String>{
             // Create the request and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
+            CookiesUtil.setCookieOnARequest(urlConnection);
+
             urlConnection.connect();
 
+            CookiesUtil.setAuthCookies(urlConnection);
+
+            InputStream inputStream;
+            int responseCode=urlConnection.getResponseCode();
+
+            switch (responseCode) {
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    inputStream = urlConnection.getErrorStream();
+                    break;
+                case HttpURLConnection.HTTP_INTERNAL_ERROR:
+                    inputStream = urlConnection.getErrorStream();
+                    break;
+                default:
+                    inputStream = urlConnection.getInputStream();
+            }
+
             // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 // Nothing to do.

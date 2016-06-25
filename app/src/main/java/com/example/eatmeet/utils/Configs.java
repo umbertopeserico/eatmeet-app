@@ -5,13 +5,13 @@ package com.example.eatmeet.utils;
  */
 public class Configs {
 
-    private static final boolean development = true;
+    private static final boolean development = false;
 
     public static String getBackendUrl() {
         if(development)
             return "http://eatmeet.herokuapp.com/";
         else
-            return "http://eatmeet.herokuapp.com/";
+            return "http://192.168.1.70:3000/";
     }
 
 }
