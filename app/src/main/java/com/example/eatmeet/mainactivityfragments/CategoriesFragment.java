@@ -32,6 +32,9 @@ public class CategoriesFragment extends Fragment implements Notificable {
     private HashMap<Integer, ImageView> images = new HashMap<>();
 
     @Override
+    public void onResume(){super.onResume();}
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_categories, container, false);

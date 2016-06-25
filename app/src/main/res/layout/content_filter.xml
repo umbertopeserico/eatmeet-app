@@ -15,17 +15,144 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"-->
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_filters"
-        android:layout_gravity="top"
-        android:visibility="gone"/>
-    <ListView
+
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_filters"
+            android:visibility="gone">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/filter_min_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/filter_min_price"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/filter_max_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/filter_max_price"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/filter_min_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/filter_min_people"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/filter_max_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/filter_max_people"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_buttons"
+                android:weightSum="1"
+                android:visibility="gone">
+                <Button android:id="@+id/confirm_filter"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"
+                    android:text="@string/confirm"
+                    android:onClick="onRadioButtonClicked" />
+                <Button android:id="@+id/undo_filter"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"
+                    android:text="@string/undo"
+                    android:onClick="onRadioButtonClicked" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/radioGroup"
+        android:visibility="gone">
+        <RadioButton android:id="@+id/order_by_price"
+            android:layout_width="match_parent"
+            android:layout_height= "wrap_content"
+            android:text="@string/order_by_price"
+            android:onClick="onRadioButtonClicked"/>
+        <!--<RadioButton android:id="@+id/order_by_proximity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/order_by_proximity"
+            android:onClick="onRadioButtonClicked"/>-->
+        <RadioButton android:id="@+id/order_by_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_by_date"
+            android:onClick="onRadioButtonClicked" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <Button android:id="@+id/confirm_order"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:text="@string/confirm"
+                android:onClick="onRadioButtonClicked" />
+            <Button android:id="@+id/undo_order"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:text="@string/undo"
+                android:onClick="onRadioButtonClicked" />
+        </LinearLayout>
+    </RadioGroup>
+
+<!--    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listview_orders"
         android:layout_gravity="top"
         android:visibility="gone"/>
+        -->
 
 </FrameLayout>
