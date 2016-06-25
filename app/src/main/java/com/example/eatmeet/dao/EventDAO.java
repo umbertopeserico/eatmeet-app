@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface EventDAO {
     public List<Event> getEvents(JSONObject parameters);
+    public Event getEventById(int id);
 }

@@ -12,4 +12,37 @@
     tools:context="com.example.eatmeet.activities.EventActivity"
     tools:showIn="@layout/activity_event">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evento"
+        android:id="@+id/textViewEvent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="85dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evento"
+        android:id="@+id/titleEvent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="85dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evento"
+        android:id="@+id/scheduleEvent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="85dp" />
 </RelativeLayout>
