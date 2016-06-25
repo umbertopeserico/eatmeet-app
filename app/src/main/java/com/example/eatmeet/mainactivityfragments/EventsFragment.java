@@ -50,8 +50,10 @@ public class EventsFragment extends Fragment  implements Notificable {
         Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
         ArrayList<Integer> f_categories = mainActivity.getF_categories();
+        ArrayList<Integer> f_restaurants = mainActivity.getF_restaurants();
         JSONObject category_parameter = new JSONObject();
         category_parameter.put("categories",new JSONArray(f_categories));
+        category_parameter.put("restaurants",new JSONArray(f_restaurants));
 
         parameters.put("filters",category_parameter);
         /*

@@ -70,12 +70,15 @@ public class RestaurantDAOImpl implements RestaurantDAO {
                         int id = arr.getJSONObject(i).getInt("id");
                         double lat = arr.getJSONObject(i).getDouble("lat");
                         double lgt = arr.getJSONObject(i).getDouble("lgt");
+                        String description = arr.getJSONObject(i).getString("description");
+                        String email = arr.getJSONObject(i).getString("email");
 
                         Restaurant newRestaurant = new Restaurant();
                         newRestaurant.setId(id);
                         newRestaurant.setName(name);
                         newRestaurant.setLat(lat);
                         newRestaurant.setLgt(lgt);
+                        newRestaurant.setDescription(description);
                         //newRestaurant.setLat(46.0684497);
                         //newRestaurant.setLgt(11.1176831);
                         restaurants.add(newRestaurant);
