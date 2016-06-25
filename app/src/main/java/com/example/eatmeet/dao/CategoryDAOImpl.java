@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
@@ -75,7 +76,7 @@ public class CategoryDAOImpl implements CategoryDAO {
                 e.printStackTrace();
             }
             }
-        }.execute(new Configs().getBackendUrl() + "/api/categories");
+        }.execute(Configs.getBackendUrl() + "/api/categories");
 
         return allCategories;
     }

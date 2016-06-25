@@ -15,7 +15,7 @@ import java.net.URL;
 /**
  * Created by sofia on 14/06/2016.
  */
-public class Connection extends AsyncTask<String, Void, String>{
+public abstract class Connection extends AsyncTask<String, Void, String>{
 
     public Connection(){}
 
@@ -26,6 +26,7 @@ public class Connection extends AsyncTask<String, Void, String>{
 
     @Override
     protected String doInBackground(String... params) {
+        System.out.println("START ASYNC TASK");
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
