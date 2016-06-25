@@ -74,6 +74,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         MainActivity mainActivity = (MainActivity) context;
         ArrayList<Integer> f_restaurants = new ArrayList<>();
         f_restaurants.add(markers.get(marker));
+        mainActivity.removeAllFilters();
         mainActivity.setF_restaurants(f_restaurants);
         mainActivity.setCurrentFragment(1);
 

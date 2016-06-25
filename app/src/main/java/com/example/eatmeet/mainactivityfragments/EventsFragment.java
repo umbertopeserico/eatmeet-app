@@ -66,7 +66,7 @@ public class EventsFragment extends Fragment  implements Notificable {
         }
         ArrayList<Integer> f_restaurants = new ArrayList<>();
         if(mainActivity.on_restaurants) {
-            f_restaurants = mainActivity.getF_categories();
+            f_restaurants = mainActivity.getF_restaurants();
         }
         all_filters.put("categories", new JSONArray(f_categories));
         all_filters.put("restaurants", new JSONArray(f_restaurants));
@@ -325,9 +325,7 @@ public class EventsFragment extends Fragment  implements Notificable {
     public void changeFilter(){
         Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
-        mainActivity.removeF_categories();
-        mainActivity.removeF_min_people();
-        mainActivity.removeF_max_people();
+        mainActivity.removeAllFilters();
         EditText filter_min_people = (EditText) view.findViewById(R.id.filter_min_people);
         if(filter_min_people.getText().toString() == "ernesto") {
             mainActivity.setF_min_people(Integer.parseInt(filter_min_people.getText().toString()));

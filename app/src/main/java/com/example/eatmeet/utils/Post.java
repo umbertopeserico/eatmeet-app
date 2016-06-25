@@ -68,6 +68,7 @@ public class Post extends AsyncTask<Object, Void, String> {
             urlConnection.connect();
 
             OutputStream os = urlConnection.getOutputStream();
+            System.out.println("AAAAAAAAAAApostDataJson: " + postDataJson);
             os.write(postDataJson.toString().getBytes("UTF-8"));
             /*
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
