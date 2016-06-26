@@ -59,11 +59,9 @@ public class CookiesUtil {
         if(cookieManager.getCookieStore().getCookies().size() > 0) {
             System.out.println("Cooooooookieeees: "+cookieManager.getCookieStore().getCookies().toString());
             if(cookieManager.getCookieStore().getCookies().size()>1) {
-                urlConnection.setRequestProperty("access-token", cookieManager.getCookieStore().getCookies().get(0).getValue());
-                urlConnection.setRequestProperty("token-type", cookieManager.getCookieStore().getCookies().get(1).getValue());
-                urlConnection.setRequestProperty("client", cookieManager.getCookieStore().getCookies().get(2).getValue());
-                urlConnection.setRequestProperty("expiry", cookieManager.getCookieStore().getCookies().get(3).getValue());
-                urlConnection.setRequestProperty("uid", cookieManager.getCookieStore().getCookies().get(4).getValue());
+                for(HttpCookie c : cookieManager.getCookieStore().getCookies()) {
+                    urlConnection.setRequestProperty(c.getName(), c.getValue());
+                }
             }
         }
     }
