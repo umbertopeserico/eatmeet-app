@@ -5,7 +5,19 @@
     android:weightSum="1"
     android:id="@+id/list_item_events">
 
-    <CheckBox
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventsImage"
+        android:checked="true"
+        android:layout_weight="0.5" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/eventsTitle"
+        android:layout_weight="0.5" />
+    <!--<CheckBox
         android:layout_width="wrap_content"
         android:layout_height="58dp"
         android:id="@+id/checkBoxListItem"
@@ -20,5 +32,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/countViewListItem" />
+        android:id="@+id/countViewListItem" />-->
 </LinearLayout>

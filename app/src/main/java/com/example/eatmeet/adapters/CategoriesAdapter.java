@@ -75,6 +75,7 @@ public class CategoriesAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 //Logger.getLogger("Logging action from category to events").log(Level.WARNING, "Entro nel cambio di fragment");
                 //set filters
+                mainActivity.removeAllFilters();
                 mainActivity.setF_categories(categories);
                 //go to event fragment v1
                 //FragmentTransaction trans = mainActivity.getSupportFragmentManager().beginTransaction();

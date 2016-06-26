@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by sofia on 08/06/2016.
@@ -54,7 +55,8 @@ public class EventDAOImpl implements EventDAO {
                     myNewEvent.setId(myEventJson.getInt("id"));
                     myNewEvent.setTitle(myEventJson.getString("title"));
 
-                    SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    parserSDF.setTimeZone(TimeZone.getTimeZone("UTC"));
                     String string = myEventJson.getString("schedule");
                     Date scheduleDate = null;
                     try {
@@ -101,6 +103,9 @@ public class EventDAOImpl implements EventDAO {
                         categoriesClass.add(c);
                     }
                     myNewEvent.setCategories(categoriesClass);
+                    myNewEvent.setUrlImage(myEventJson.getJSONArray("photos").getJSONObject(0).getString("image"));
+                    myNewEvent.setUrlImageMedium(myEventJson.getJSONArray("photos").getJSONObject(0).getString("image_medium"));
+                    myNewEvent.setUrlImageThumb(myEventJson.getJSONArray("photos").getJSONObject(0).getString("image_thumb"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -162,7 +167,6 @@ public class EventDAOImpl implements EventDAO {
 
         */
         final List<Event> allEvents = new ArrayList<Event>();
-
         if(parameters!=null) {
             new Post() {
                 @Override
