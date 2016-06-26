@@ -2,18 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/sidebar_my_events"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/sidebar_my_events" />
-
-        <item
-            android:id="@+id/sidebar_account_settings"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/sidebar_account_settings" />
-    </group>
-
-    <group android:checkableBehavior="single">
-        <item
             android:id="@+id/sidebar_signin"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/sidebar_signin" />

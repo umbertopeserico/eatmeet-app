@@ -1,6 +1,7 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
@@ -20,11 +21,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.example.eatmeet.MyApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
+import com.example.eatmeet.utils.CookiesUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    NavigationView navigationView;
 
     ArrayList<Integer> f_categories = new ArrayList<>();
     public boolean on_categories = false;
@@ -162,14 +168,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onDrawerOpened(drawerView);
                 drawerView.bringToFront();
                 drawerView.requestLayout();
+                TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
             }
 
         };
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(MyApp.sharedPref.contains("email"))
+        {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
+        } else
+        {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+        }
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -189,6 +206,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
+
+        if(MyApp.sharedPref.contains("email")) {
+            assert emailText != null;
+            emailText.setText(MyApp.sharedPref.getString("email", "Ospite"));
+        }
+        else
+        {
+            emailText.setText("Ospite");
+        }
 
         return true;
     }
@@ -220,6 +247,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(MainActivity.this, SignInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                break;
+            case R.id.sidebar_signout:
+                SharedPreferences.Editor editor = MyApp.sharedPref.edit();
+                editor.clear();
+                editor.commit();
+                CookiesUtil.getCookieManager().getCookieStore().removeAll();
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
                 break;
             default:
         }
