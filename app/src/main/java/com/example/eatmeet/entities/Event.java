@@ -10,20 +10,23 @@ import java.util.HashMap;
  * Created by sofia on 08/06/2016.
  */
 public class Event implements Serializable{
-    private int id;
+    private int id=-1;
     private String title;
     private Date schedule;
-    private int max_people;
-    private int min_people;
-    private int min_price_people;
-    private double max_price;
-    private double actual_price;
-    private double min_price;
+    private int max_people=-1;
+    private int min_people=-1;
+    private int min_price_people=-1;
+    private double max_price=-1;
+    private double actual_price=-1;
+    private double min_price=-1;
     private ArrayList<Double> prices_array;
-    private int menu_id;
+    private int menu_id=-1;
     private Date created_at;
     private Date updated_at;
-    private int participants;
+    private int participants=-1;
+    private String urlImage;
+    private String urlImageThumb;
+    private String urlImageMedium;
 
     private Menu menu;
     private Restaurant restaurant;
@@ -44,6 +47,9 @@ public class Event implements Serializable{
     private final PropertyChangeSupport menuChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport restaurantChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport categoriesChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport urlImageChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport urlImageThumbChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport urlImageMediumChangeSupport = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.idChangeSupport.addPropertyChangeListener(listener);
@@ -61,6 +67,9 @@ public class Event implements Serializable{
         this.menuChangeSupport.addPropertyChangeListener(listener);
         this.restaurantChangeSupport.addPropertyChangeListener(listener);
         this.categoriesChangeSupport.addPropertyChangeListener(listener);
+        this.urlImageChangeSupport.addPropertyChangeListener(listener);
+        this.urlImageThumbChangeSupport.addPropertyChangeListener(listener);
+        this.urlImageMediumChangeSupport.addPropertyChangeListener(listener);
     }
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
@@ -79,6 +88,39 @@ public class Event implements Serializable{
         this.menuChangeSupport.removePropertyChangeListener(listener);
         this.restaurantChangeSupport.removePropertyChangeListener(listener);
         this.categoriesChangeSupport.removePropertyChangeListener(listener);
+        this.urlImageChangeSupport.removePropertyChangeListener(listener);
+        this.urlImageThumbChangeSupport.removePropertyChangeListener(listener);
+        this.urlImageMediumChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        String oldValue = this.urlImage;
+        this.urlImage = urlImage;
+        this.urlImageChangeSupport.firePropertyChange("urlImage",oldValue, urlImage);
+    }
+
+    public String getUrlImageThumb() {
+        return urlImageThumb;
+    }
+
+    public void setUrlImageThumb(String urlImageThumb) {
+        String oldValue = this.urlImageThumb;
+        this.urlImageThumb = urlImageThumb;
+        this.urlImageThumbChangeSupport.firePropertyChange("urlImageThumb",oldValue, urlImageThumb);
+    }
+
+    public String getUrlImageMedium() {
+        return urlImageMedium;
+    }
+
+    public void setUrlImageMedium(String urlImageMedium) {
+        String oldValue = this.urlImageMedium;
+        this.urlImageMedium = urlImageMedium;
+        this.urlImageMediumChangeSupport.firePropertyChange("urlImageMedium",oldValue, urlImageMedium);
     }
 
     public ArrayList<Category> getCategories() {
