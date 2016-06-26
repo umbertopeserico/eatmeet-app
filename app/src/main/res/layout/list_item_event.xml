@@ -6,14 +6,18 @@
     android:id="@+id/list_item_events">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:gravity="center"
         android:id="@+id/eventsImage"
         android:checked="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_weight="0.5" />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:gravity="center"
         android:text="New Text"
         android:id="@+id/eventsTitle"
         android:layout_weight="0.5" />
