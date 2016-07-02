@@ -3,9 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
-        applicationId "com.example.eatmeet.eatmeet"
+        applicationId 'com.example.eatmeet'
         minSdkVersion 13
         targetSdkVersion 23
         versionCode 1
@@ -17,6 +16,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -27,4 +28,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.gms:google-services:3.0.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }
