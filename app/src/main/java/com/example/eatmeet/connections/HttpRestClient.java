@@ -2,7 +2,6 @@ package com.example.eatmeet.connections;
 
 import android.content.Context;
 
-import com.example.eatmeet.utils.Configs;
 import com.loopj.android.http.*;
 
 import java.util.ArrayList;
@@ -14,12 +13,12 @@ import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 /**
  * Created by umberto on 02/07/16.
  */
-public class BackendRest {
+public class HttpRestClient {
 
     private static final AsyncHttpClient client = new AsyncHttpClient();
     private static PersistentCookieStore myCookieStore;
 
-    private BackendRest() {
+    private HttpRestClient() {
 
     }
 
@@ -71,7 +70,7 @@ public class BackendRest {
     }
 
     public static void saveTokenToCookie(Header[] headers) {
-        BackendRest.getCookieStore().clear();
+        HttpRestClient.getCookieStore().clear();
 
         ArrayList<String> acceptedCookies = new ArrayList<>();
         acceptedCookies.add("Set-Cookie");
@@ -85,7 +84,7 @@ public class BackendRest {
             BasicClientCookie cookie;
             if(acceptedCookies.contains(h.getName())) {
                 cookie = new BasicClientCookie(h.getName(), h.getValue());
-                BackendRest.getCookieStore().addCookie(cookie);
+                HttpRestClient.getCookieStore().addCookie(cookie);
             }
         }
     }
