@@ -1,9 +1,6 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.implementations;
 
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
-import com.example.eatmeet.R;
+import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Menu;
@@ -21,7 +18,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
