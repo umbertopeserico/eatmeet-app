@@ -70,8 +70,6 @@ public class HttpRestClient {
     }
 
     public static void saveTokenToCookie(Header[] headers) {
-        HttpRestClient.getCookieStore().clear();
-
         ArrayList<String> acceptedCookies = new ArrayList<>();
         acceptedCookies.add("Set-Cookie");
         acceptedCookies.add("access-token");
