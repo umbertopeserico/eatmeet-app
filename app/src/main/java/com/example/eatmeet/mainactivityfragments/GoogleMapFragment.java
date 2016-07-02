@@ -7,31 +7,23 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
-import com.example.eatmeet.dao.RestaurantDAO;
-import com.example.eatmeet.dao.RestaurantDAOImpl;
+import com.example.eatmeet.dao.interfaces.RestaurantDAO;
+import com.example.eatmeet.dao.implementations.RestaurantDAOImpl;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.utils.Notificable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.RuntimeRemoteException;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

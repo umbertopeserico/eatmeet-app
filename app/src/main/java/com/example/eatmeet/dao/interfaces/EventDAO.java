@@ -1,4 +1,4 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.interfaces;
 
 import com.example.eatmeet.entities.Event;
 

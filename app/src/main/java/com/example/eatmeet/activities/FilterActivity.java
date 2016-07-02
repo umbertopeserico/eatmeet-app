@@ -1,24 +1,11 @@
 package com.example.eatmeet.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import com.example.eatmeet.R;
-import com.example.eatmeet.adapters.FiltersAdapter;
-import com.example.eatmeet.dao.EventDAO;
-import com.example.eatmeet.dao.EventDAOImpl;
-import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.utils.Notificable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FilterActivity extends AppCompatActivity implements Notificable {
 
