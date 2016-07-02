@@ -17,12 +17,12 @@ public class RestDAOFactory implements DAOFactory {
 
     @Override
     public CategoryDAO getCategoryDAO() {
-        return (CategoryDAO) new CategoryDAOImpl(null);
+        return null;
     }
 
     @Override
     public EventDAO getEventDAO() {
-        return (EventDAO) new EventDAOImpl(null);
+        return null;
     }
 
     @Override
