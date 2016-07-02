@@ -16,22 +16,19 @@ import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
  */
 public class BackendRest {
 
-    private static final String BACKEND_URL = Configs.getBackendUrl();
     private static final AsyncHttpClient client = new AsyncHttpClient();
     private static PersistentCookieStore myCookieStore;
 
-    private static String getAbsoluteUrl(String relativeUrl) {
-        return BACKEND_URL + relativeUrl;
-    }
+    private BackendRest() {
 
-    private BackendRest() {}
+    }
 
     public static void get(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
         if(requestParams==null) {
             requestParams = new RequestParams();
         }
         setTokenToHeaders(requestParams);
-        client.get(getAbsoluteUrl(url), requestParams, responseHandler);
+        client.get(url, requestParams, responseHandler);
     }
 
     public static void post(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
@@ -39,7 +36,7 @@ public class BackendRest {
             requestParams = new RequestParams();
         }
         setTokenToHeaders(requestParams);
-        client.post(getAbsoluteUrl(url), requestParams, responseHandler);
+        client.post(url, requestParams, responseHandler);
     }
 
     public static void put(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
@@ -47,7 +44,7 @@ public class BackendRest {
             requestParams = new RequestParams();
         }
         setTokenToHeaders(requestParams);
-        client.put(getAbsoluteUrl(url), requestParams, responseHandler);
+        client.put(url, requestParams, responseHandler);
     }
 
     public static void delete(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
@@ -55,7 +52,7 @@ public class BackendRest {
             requestParams = new RequestParams();
         }
         setTokenToHeaders(requestParams);
-        client.delete(getAbsoluteUrl(url), requestParams, responseHandler);
+        client.delete(url, requestParams, responseHandler);
     }
 
     public static void setConfigurations(Context context) {
