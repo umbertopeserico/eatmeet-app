@@ -2,28 +2,24 @@ package com.example.eatmeet;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.eatmeet.activities.MainActivity;
-import com.example.eatmeet.activities.SignInActivity;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Post;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by umberto on 25/06/16.
  */
-public class MyApp extends Application {
+public class EatMeetApp extends Application {
     public static SharedPreferences sharedPref;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MyApp.sharedPref= getSharedPreferences(
+        EatMeetApp.sharedPref= getSharedPreferences(
                 getString(R.string.saved_credentials_file), Context.MODE_PRIVATE);
         final JSONObject loginParams = new JSONObject();
         try {

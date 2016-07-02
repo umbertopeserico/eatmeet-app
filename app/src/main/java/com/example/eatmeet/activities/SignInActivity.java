@@ -1,11 +1,8 @@
 package com.example.eatmeet.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,10 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.eatmeet.MyApp;
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.utils.Configs;
-import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.utils.Post;
 
 import org.json.JSONArray;
@@ -75,7 +71,7 @@ public class SignInActivity extends AppCompatActivity {
                                 // Se non ci sono errori continuo qui (Se il login è successfull)
                                 JSONObject data = obj.getJSONObject("data");
                                 for(int i = 0; i < data.length(); i++) {
-                                    SharedPreferences.Editor editor = MyApp.sharedPref.edit();
+                                    SharedPreferences.Editor editor = EatMeetApp.sharedPref.edit();
                                     editor.putString("email", emailField.getText().toString());
                                     editor.putString("password", passwordField.getText().toString());
                                     editor.commit();
