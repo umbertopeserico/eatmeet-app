@@ -1,4 +1,4 @@
-package com.example.eatmeet.dao.implementations;
+package com.example.eatmeet.dao.implementations.rest;
 
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;

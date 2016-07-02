@@ -1,4 +1,4 @@
-package com.example.eatmeet.dao.implementations;
+package com.example.eatmeet.dao.implementations.rest;
 
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Category;

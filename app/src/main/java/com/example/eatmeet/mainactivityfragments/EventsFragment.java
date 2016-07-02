@@ -19,7 +19,7 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.dao.implementations.EventDAOImpl;
+import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Notificable;
 import com.example.eatmeet.utils.Visibility;
