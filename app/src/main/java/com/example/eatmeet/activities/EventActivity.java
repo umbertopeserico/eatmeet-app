@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.eatmeet.R;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.dao.implementations.EventDAOImpl;
+import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Menu;
 import com.example.eatmeet.entities.Restaurant;

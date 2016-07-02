@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
-import com.example.eatmeet.dao.implementations.RestaurantDAOImpl;
+import com.example.eatmeet.dao.implementations.rest.RestaurantDAOImpl;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.utils.Notificable;
 import com.google.android.gms.maps.CameraUpdateFactory;
