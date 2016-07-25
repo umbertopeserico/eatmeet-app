@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.eatmeet.MyApp;
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
@@ -32,8 +29,6 @@ import com.example.eatmeet.utils.CookiesUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -178,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(MyApp.sharedPref.contains("email"))
+        if(EatMeetApp.sharedPref.contains("email"))
         {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
@@ -208,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.menu_main, menu);
         TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
 
-        if(MyApp.sharedPref.contains("email")) {
+        if(EatMeetApp.sharedPref.contains("email")) {
             assert emailText != null;
-            emailText.setText(MyApp.sharedPref.getString("email", "Ospite"));
+            emailText.setText(EatMeetApp.sharedPref.getString("email", "Ospite"));
         }
         else
         {
@@ -249,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.sidebar_signout:
-                SharedPreferences.Editor editor = MyApp.sharedPref.edit();
+                SharedPreferences.Editor editor = EatMeetApp.sharedPref.edit();
                 editor.clear();
                 editor.commit();
                 CookiesUtil.getCookieManager().getCookieStore().removeAll();
