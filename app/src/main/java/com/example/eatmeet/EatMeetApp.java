@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Post;
 
@@ -19,6 +20,7 @@ public class EatMeetApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        HttpRestClient.setConfigurations(this);
         EatMeetApp.sharedPref= getSharedPreferences(
                 getString(R.string.saved_credentials_file), Context.MODE_PRIVATE);
         final JSONObject loginParams = new JSONObject();
@@ -35,7 +37,7 @@ public class EatMeetApp extends Application {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        new Post() {
+        /*new Post() {
             @Override
             public void onPostExecute(String result) {
                 /*try {
@@ -64,7 +66,7 @@ public class EatMeetApp extends Application {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }*/
-            }
-        }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);
+            /*}
+        }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);*/
     }
 }
