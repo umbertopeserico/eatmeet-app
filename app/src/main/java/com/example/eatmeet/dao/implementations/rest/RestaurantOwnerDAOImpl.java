@@ -1,5 +1,6 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.implementations.rest;
 
+import com.example.eatmeet.dao.interfaces.RestaurantOwnerDAO;
 import com.example.eatmeet.entities.RestaurantOwner;
 
 import java.util.List;

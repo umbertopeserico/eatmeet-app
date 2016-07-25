@@ -1,5 +1,6 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.implementations.rest;
 
+import com.example.eatmeet.dao.interfaces.MenuDAO;
 import com.example.eatmeet.entities.Menu;
 
 import java.util.List;

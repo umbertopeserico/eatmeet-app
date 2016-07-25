@@ -10,8 +10,8 @@ import java.util.Map;
 public class Category implements Serializable {
     private int id;
     private String name;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
     private String icon;
     private Map<String,String> meta;
 
@@ -32,19 +32,19 @@ public class Category implements Serializable {
     }
 
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
     public void setCreatedAt(Date created_at) {
-        this.created_at = created_at;
+        this.createdAt = created_at;
     }
 
     public Date getUpdatedAt() {
-        return updated_at;
+        return updatedAt;
     }
 
     public void setUpdatedAt(Date updated_at) {
-        this.updated_at = updated_at;
+        this.updatedAt = updated_at;
     }
 
     public int getId() {
@@ -62,6 +62,7 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
 
     @Override
     public boolean equals(Object o) {

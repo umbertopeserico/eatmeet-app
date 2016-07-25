@@ -1,8 +1,6 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.implementations.rest;
 
-import android.os.SystemClock;
-import android.provider.Settings;
-
+import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.utils.Configs;

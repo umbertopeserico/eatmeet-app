@@ -1,26 +1,13 @@
-package com.example.eatmeet.dao;
+package com.example.eatmeet.dao.implementations.rest;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 
-import com.example.eatmeet.activities.MainActivity;
+import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
-import com.example.eatmeet.utils.Images;
 import com.example.eatmeet.utils.Notificable;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

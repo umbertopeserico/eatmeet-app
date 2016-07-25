@@ -1,47 +1,28 @@
 package com.example.eatmeet.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.eatmeet.R;
-import com.example.eatmeet.dao.CategoryDAO;
-import com.example.eatmeet.dao.CategoryDAOImpl;
-import com.example.eatmeet.dao.EventDAO;
-import com.example.eatmeet.dao.EventDAOImpl;
-import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.dao.interfaces.EventDAO;
+import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Menu;
 import com.example.eatmeet.entities.Restaurant;
-import com.example.eatmeet.utils.Configs;
-import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.utils.Images;
-import com.example.eatmeet.utils.Notificable;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.TimeZone;
 
 public class EventActivity extends AppCompatActivity {
 

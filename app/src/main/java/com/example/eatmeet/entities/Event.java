@@ -4,7 +4,6 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Created by sofia on 08/06/2016.
@@ -21,8 +20,8 @@ public class Event implements Serializable{
     private double min_price=-1;
     private ArrayList<Double> prices_array;
     private int menu_id=-1;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
     private int participants=-1;
     private String urlImage;
     private String urlImageThumb;
@@ -164,19 +163,19 @@ public class Event implements Serializable{
     }
 
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
     public void setCreatedAt(Date created_at) {
-        this.created_at = created_at;
+        this.createdAt = created_at;
     }
 
     public Date getUpdatedAt() {
-        return updated_at;
+        return updatedAt;
     }
 
     public void setUpdatedAt(Date updated_at) {
-        this.updated_at = updated_at;
+        this.updatedAt = updated_at;
     }
 
     public int getId() {

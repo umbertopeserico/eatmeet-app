@@ -3,14 +3,11 @@ package com.example.eatmeet.mainactivityfragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,13 +16,10 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 
 import com.example.eatmeet.R;
-import com.example.eatmeet.activities.FilterActivity;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
-import com.example.eatmeet.adapters.FiltersAdapter;
-import com.example.eatmeet.adapters.OrderAdapter;
-import com.example.eatmeet.dao.EventDAO;
-import com.example.eatmeet.dao.EventDAOImpl;
+import com.example.eatmeet.dao.interfaces.EventDAO;
+import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Notificable;
 import com.example.eatmeet.utils.Visibility;
@@ -35,10 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * A simple {@link Fragment} subclass.
