@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface CategoryDAO {
 
-    public void getCategories(final List<Category> categories, final BackendStatusManager backendStatusManager);
+    void getCategories(final List<Category> categories, final BackendStatusManager backendStatusManager);
 
     @Deprecated
-    public List<Category> getCategories();
+    List<Category> getCategories();
 
     @Deprecated
-    public HashMap<String,String> getMeta();
+    HashMap<String,String> getMeta();
 }

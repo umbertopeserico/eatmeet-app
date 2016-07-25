@@ -2,6 +2,7 @@ package com.example.eatmeet.dao.implementations.oldrest;
 
 import android.util.Log;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
@@ -32,7 +33,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public void getCategories(List<Category> categories) {
+    public void getCategories(List<Category> categories, BackendStatusManager backendStatusManager) {
 
     }
 

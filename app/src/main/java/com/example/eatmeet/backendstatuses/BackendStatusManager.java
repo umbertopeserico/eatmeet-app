@@ -1,5 +1,7 @@
 package com.example.eatmeet.backendstatuses;
 
+import com.example.eatmeet.observablearraylist.OnAddListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class BackendStatusManager {
 
     public BackendStatusManager() {
         errors = new ArrayList<>();
+        successes = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
@@ -37,7 +40,11 @@ public class BackendStatusManager {
 
     private void notifySuccessListeners() {
         for(BackendStatusListener bel : listeners) {
-            bel.onFailure();
+            bel.onSuccess();
         }
+    }
+
+    public void setBackendStatusListener(BackendStatusListener listener) {
+        this.listeners.add(listener);
     }
 }

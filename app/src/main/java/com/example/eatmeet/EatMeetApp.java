@@ -74,7 +74,7 @@ public class EatMeetApp extends Application {
         }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);*/
     }
 
-    public DAOFactory getDaoFactory() {
+    public static DAOFactory getDaoFactory() {
         return daoFactory;
     }
 }

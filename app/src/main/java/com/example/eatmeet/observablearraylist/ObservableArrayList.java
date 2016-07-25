@@ -54,13 +54,13 @@ public class ObservableArrayList<T> extends ArrayList {
         this.removeListeners.add(listener);
     }
 
-    public void notifyAdd(Object item) {
+    private void notifyAdd(Object item) {
         for(OnAddListener listener : addListeners) {
             listener.onAddEvent(item);
         }
     }
 
-    public void notifyRemove(Object item) {
+    private void notifyRemove(Object item) {
         for(OnRemoveListener listener : removeListeners) {
             listener.onRemoveEvent(item);
         }
