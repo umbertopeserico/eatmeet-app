@@ -1,86 +1,56 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by sofia on 08/06/2016.
  */
-public class Category implements Serializable {
-    private int id;
+public class Category extends AbstractEntity implements Serializable {
+    // Instance variables
     private String name;
-    private Date createdAt;
-    private Date updatedAt;
-    private String icon;
-    private Map<String,String> meta;
+    private String image;
 
-    public Map<String, String> getMeta() {
-        return meta;
-    }
+    // PropertyChangeSupport for instance variables
+    private final PropertyChangeSupport nameChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport imageChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport metaChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport eventsChangeSupport = new PropertyChangeSupport(this);
 
-    public String getIcon(){
-        return this.icon;
-    }
-
-    public void setIcon(String icon){
-        this.icon=icon;
-    }
-
-    public void setMeta(Map<String, String> meta) {
-        this.meta = meta;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Getters and setters
     public String getName() {
         return name;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
-    
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public String getImage(){
+        return this.image;
+    }
 
-        Category category = (Category) o;
-
-        if (getId() != category.getId()) return false;
-        return getName().equals(category.getName());
-
+    public void setImage(String image){
+        this.image = image;
     }
 
     @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getName().hashCode();
-        return result;
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+        this.nameChangeSupport.addPropertyChangeListener(listener);
+        this.imageChangeSupport.addPropertyChangeListener(listener);
+        this.metaChangeSupport.addPropertyChangeListener(listener);
+        this.eventsChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
+        this.nameChangeSupport.removePropertyChangeListener(listener);
+        this.imageChangeSupport.removePropertyChangeListener(listener);
+        this.metaChangeSupport.removePropertyChangeListener(listener);
+        this.eventsChangeSupport.removePropertyChangeListener(listener);
     }
 
     @Override
