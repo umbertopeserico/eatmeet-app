@@ -1,30 +1,20 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by umberto on 08/06/16.
  */
-public class Menu implements Serializable {
+public class Menu extends AbstractEntity implements Serializable {
 
-    private int id;
     private String title;
-    private double max_price;
-    private double min_price;
-    private String text_menu;
-    private String html_menu;
-    private int restaurant_id;
-    private Date createdAt;
-    private Date updatedAt;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private double maxPrice;
+    private double minPrice;
+    private String textMenu;
+    private String htmlMenu;
+    private int restaurantId;
 
     public String getTitle() {
         return title;
@@ -35,43 +25,53 @@ public class Menu implements Serializable {
     }
 
     public double getMaxPrice() {
-        return max_price;
+        return maxPrice;
     }
 
     public void setMaxPrice(double max_price) {
-        this.max_price = max_price;
+        this.maxPrice = max_price;
     }
 
     public double getMinPrice() {
-        return min_price;
+        return minPrice;
     }
 
     public void setMinPrice(double min_price) {
-        this.min_price = min_price;
+        this.minPrice = min_price;
     }
 
     public String getTextMenu() {
-        return text_menu;
+        return textMenu;
     }
 
     public void setTextMenu(String text_menu) {
-        this.text_menu = text_menu;
+        this.textMenu = text_menu;
     }
 
     public String getHtmlMenu() {
-        return html_menu;
+        return htmlMenu;
     }
 
     public void setHtmlMenu(String html_menu) {
-        this.html_menu = html_menu;
+        this.htmlMenu = html_menu;
     }
 
     public int getRestaurantId() {
-        return restaurant_id;
+        return restaurantId;
     }
 
     public void setRestaurantId(int restaurant_id) {
-        this.restaurant_id = restaurant_id;
+        this.restaurantId = restaurant_id;
+    }
+
+    @Override
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+
+    }
+
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
+
     }
 
     @Override
@@ -96,21 +96,5 @@ public class Menu implements Serializable {
     @Override
     public String toString() {
         return this.getTitle();
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
     }
 }

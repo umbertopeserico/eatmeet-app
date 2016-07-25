@@ -24,13 +24,13 @@ public class CategoryDAOImpl implements CategoryDAO {
     public CategoryDAOImpl(Notificable notificable) {
         mNotificable = notificable;
     }
-
+    /*
     public HashMap<String,String> getMeta(){
         HashMap<String,String> meta = new HashMap<>();
         meta.put("events_count","3");
         return null;
     }
-
+    */
     @Override
     public List<Category> getCategories() {
         final List<Category> allCategories = new ArrayList<Category>();
@@ -52,16 +52,17 @@ public class CategoryDAOImpl implements CategoryDAO {
                         for (int i = 0; i < arr.length(); i++) {
                             String name = arr.getJSONObject(i).getString("name");
                             int id = arr.getJSONObject(i).getInt("id");
-                            String events_count = arr.getJSONObject(i).getJSONObject("meta").getString("events_count");
+                            //String events_count = arr.getJSONObject(i).getJSONObject("meta").getString("events_count");
+                            Integer events_count = arr.getJSONObject(i).getInt("events_count");
                             String icon = arr.getJSONObject(i).getString("image");
 
                             Category newCategory = new Category();
                             newCategory.setId(id);
                             newCategory.setName(name);
-                            newCategory.setIcon(icon);
-                            HashMap<String, String> meta = new HashMap<>();
-                            meta.put("events_count", events_count);
-                            newCategory.setMeta(meta);
+                            newCategory.setImage(icon);
+                            newCategory.setEventsCount(events_count);
+                            //HashMap<String, String> meta = new HashMap<>();
+                            //meta.put("events_count", events_count);
                             //categoryAdapter.clear();
                             allCategories.add(newCategory);
                             mNotificable.sendNotify();

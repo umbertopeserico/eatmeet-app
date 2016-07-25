@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface CategoryDAO {
     public List<Category> getCategories();
-    public HashMap<String,String> getMeta();
+    //public HashMap<String,String> getMeta();
 }

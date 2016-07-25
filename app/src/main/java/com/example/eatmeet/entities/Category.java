@@ -13,6 +13,7 @@ public class Category extends AbstractEntity implements Serializable {
     // Instance variables
     private String name;
     private String image;
+    private Integer eventsCount;
 
     // PropertyChangeSupport for instance variables
     private final PropertyChangeSupport nameChangeSupport = new PropertyChangeSupport(this);
@@ -35,6 +36,14 @@ public class Category extends AbstractEntity implements Serializable {
 
     public void setImage(String image){
         this.image = image;
+    }
+
+    public Integer getEventsCount() {
+        return eventsCount;
+    }
+
+    public void setEventsCount(Integer eventsCount) {
+        this.eventsCount = eventsCount;
     }
 
     @Override

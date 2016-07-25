@@ -1,28 +1,18 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by umberto on 08/06/16.
  */
-public class RestaurantOwner implements Serializable {
+public class RestaurantOwner extends AbstractEntity implements Serializable {
 
-    private int id;
     private String name;
     private String surname;
-    private String full_name;
+    private String fullName;
     private String email;
-    private Date createdAt;
-    private Date updatedAt;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -41,11 +31,11 @@ public class RestaurantOwner implements Serializable {
     }
 
     public String getFullName() {
-        return full_name;
+        return fullName;
     }
 
     public void setFullName(String full_name) {
-        this.full_name = full_name;
+        this.fullName = full_name;
     }
 
     public String getEmail() {
@@ -54,6 +44,16 @@ public class RestaurantOwner implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+
+    }
+
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
+
     }
 
     @Override
@@ -78,21 +78,5 @@ public class RestaurantOwner implements Serializable {
     @Override
     public String toString() {
         return this.getFullName();
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
     }
 }

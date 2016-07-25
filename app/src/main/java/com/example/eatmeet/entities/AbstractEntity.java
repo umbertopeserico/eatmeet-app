@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public abstract class AbstractEntity {
 
-    private int id;
+    private Integer id;
     private Date createdAt;
     private Date updatedAt;
 
@@ -21,8 +21,10 @@ public abstract class AbstractEntity {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
+        Integer oldValue = this.id;
         this.id = id;
+        this.idChangeSupport.firePropertyChange("id",oldValue, id);
     }
 
     public Date getCreatedAt() {
@@ -30,7 +32,9 @@ public abstract class AbstractEntity {
     }
 
     public void setCreatedAt(Date createdAt) {
+        Date oldValue = this.createdAt;
         this.createdAt = createdAt;
+        this.idChangeSupport.firePropertyChange("createdAt",oldValue, createdAt);
     }
 
     public Date getUpdatedAt() {
@@ -38,7 +42,9 @@ public abstract class AbstractEntity {
     }
 
     public void setUpdatedAt(Date updatedAt) {
+        Date oldValue = this.updatedAt;
         this.updatedAt = updatedAt;
+        this.idChangeSupport.firePropertyChange("updatedAt",oldValue, updatedAt);
     }
 
     public final void addPropertyChangeListener(PropertyChangeListener listener) {
