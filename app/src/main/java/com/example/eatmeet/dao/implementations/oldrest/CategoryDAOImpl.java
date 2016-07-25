@@ -1,4 +1,4 @@
-package com.example.eatmeet.dao.implementations.rest;
+package com.example.eatmeet.dao.implementations.oldrest;
 
 import android.util.Log;
 
@@ -32,6 +32,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
+    public void getCategories(List<Category> categories) {
+
+    }
+
+    @Override
     public List<Category> getCategories() {
         final List<Category> allCategories = new ArrayList<Category>();
 
@@ -58,10 +63,9 @@ public class CategoryDAOImpl implements CategoryDAO {
                             Category newCategory = new Category();
                             newCategory.setId(id);
                             newCategory.setName(name);
-                            newCategory.setIcon(icon);
+                            newCategory.setImage(icon);
                             HashMap<String, String> meta = new HashMap<>();
                             meta.put("events_count", events_count);
-                            newCategory.setMeta(meta);
                             //categoryAdapter.clear();
                             allCategories.add(newCategory);
                             mNotificable.sendNotify();
