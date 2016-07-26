@@ -15,7 +15,5 @@ public interface CategoryDAO {
 
     @Deprecated
     List<Category> getCategories();
-
-    @Deprecated
-    HashMap<String,String> getMeta();
+    
 }
