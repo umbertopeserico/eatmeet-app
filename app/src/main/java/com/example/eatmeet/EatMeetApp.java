@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.utils.Configs;
+import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Post;
 
 import org.json.JSONException;
@@ -16,10 +17,12 @@ import org.json.JSONObject;
  */
 public class EatMeetApp extends Application {
     public static SharedPreferences sharedPref;
+    private static FiltersManager filtersManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        filtersManager = new FiltersManager();
         HttpRestClient.setConfigurations(this);
         EatMeetApp.sharedPref= getSharedPreferences(
                 getString(R.string.saved_credentials_file), Context.MODE_PRIVATE);
@@ -68,5 +71,9 @@ public class EatMeetApp extends Application {
                 }*/
             /*}
         }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);*/
+    }
+
+    public static FiltersManager getFiltersManager(){
+        return filtersManager;
     }
 }

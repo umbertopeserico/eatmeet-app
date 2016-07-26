@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
@@ -70,8 +71,8 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         MainActivity mainActivity = (MainActivity) context;
         ArrayList<Integer> f_restaurants = new ArrayList<>();
         f_restaurants.add(markers.get(marker));
-        mainActivity.removeAllFilters();
-        mainActivity.setF_restaurants(f_restaurants);
+        EatMeetApp.getFiltersManager().removeAllFilters();
+        EatMeetApp.getFiltersManager().setF_restaurants(f_restaurants);
         mainActivity.setCurrentFragment(1);
 
         //String title = marker.getTitle();

@@ -15,12 +15,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activities.EventActivity;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Notificable;
 import com.example.eatmeet.utils.Visibility;
 
@@ -36,79 +39,18 @@ import java.util.List;
  */
 public class EventsFragment extends Fragment  implements Notificable {
     //public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
-    private String order_by = "order_by_date";
     private String order_by_temp = "order_by_date";
     private ArrayAdapter<String> eventAdapter;
     private View view;
     List<Event> eventList = null;
     JSONObject parameters = new JSONObject();
     EventDAO eventDao;
-    private JSONObject constructParameters() throws JSONException {
-        JSONObject parameters= new JSONObject();
-        Context context = getContext();
-        MainActivity mainActivity = (MainActivity) context;
-
-        JSONObject all_filters = new JSONObject();
-
-        /*set filter parameters*/
-        ArrayList<Integer> f_categories = new ArrayList<>();
-        if(mainActivity.on_categories) {
-            f_categories = mainActivity.getF_categories();
-        }
-        ArrayList<Integer> f_restaurants = new ArrayList<>();
-        if(mainActivity.on_restaurants) {
-            f_restaurants = mainActivity.getF_restaurants();
-        }
-        all_filters.put("categories", new JSONArray(f_categories));
-        all_filters.put("restaurants", new JSONArray(f_restaurants));
-
-        if(mainActivity.on_people) {
-            int f_min_people = mainActivity.getF_min_people();
-            JSONObject participants_range = new JSONObject();
-            participants_range.put("start", f_min_people);
-            int f_max_people = mainActivity.getF_max_people();
-            if(f_max_people==0) f_max_people = 1000;
-            participants_range.put("end", f_max_people);
-            all_filters.put("participants_range", participants_range);
-        }
-
-        parameters.put("filters",all_filters);
-        /*set order parameters*/
-        if(order_by=="order_by_date") {
-            JSONObject schedule = new JSONObject();
-            schedule.put("schedule","asc");
-            parameters.put("order", schedule);
-        } else if (order_by=="order_by_price") {
-            JSONObject price = new JSONObject();
-            price.put("actual_price","desc");
-            parameters.put("order", price);
-        }
-        //System.out.println("PARAMETERS: " + parameters);
-        /*
-        for (int i = 0; i < f_categories.size() ; i++){
-            System.out.println();
-            try {
-                category_parameter.put(Integer.toString(i),Integer.toString(f_categories.get(i)));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if(f_categories.get(i)==f_categories.size()-1){
-                try {
-                    parameters.put("categories",category_parameter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        */
-        return parameters;
-    }
     @Override
     public void onResume(){ super.onResume();}
 
     public View refresh(){
         try {
-            parameters = constructParameters();
+            parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -131,7 +73,7 @@ public class EventsFragment extends Fragment  implements Notificable {
         eventDao = new EventDAOImpl(this);
         eventList = new ArrayList<>();
         try {
-            parameters = constructParameters();
+            parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -262,11 +204,11 @@ public class EventsFragment extends Fragment  implements Notificable {
     */
 
     public void setRadio(){
-        if(order_by=="order_by_date"){
+        if(EatMeetApp.getFiltersManager().getF_order_by()=="order_by_date"){
             ((RadioButton) view.findViewById(R.id.order_by_date)).setChecked(true);
-        } else if (order_by=="order_by_price"){
+        } else if (EatMeetApp.getFiltersManager().getF_order_by()=="order_by_price"){
             ((RadioButton) view.findViewById(R.id.order_by_price)).setChecked(true);
-        /*} else if (order_by=="order_by_proximity"){
+        /*} else if (EatMeetApp.getFiltersManager().getF_order_by()=="order_by_proximity"){
             ((RadioButton) view.findViewById(R.id.order_by_proximity)).setChecked(true);*/
         }
     }
@@ -316,14 +258,14 @@ public class EventsFragment extends Fragment  implements Notificable {
     public void changeFilter(){
         Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
-        mainActivity.removeAllFilters();
+        EatMeetApp.getFiltersManager().removeAllFilters();
         EditText filter_min_people = (EditText) view.findViewById(R.id.filter_min_people);
         if(filter_min_people.getText().toString() == "ernesto") {
-            mainActivity.setF_min_people(Integer.parseInt(filter_min_people.getText().toString()));
+            EatMeetApp.getFiltersManager().setF_min_people(Integer.parseInt(filter_min_people.getText().toString()));
         }
         EditText filter_max_people = (EditText) view.findViewById(R.id.filter_max_people);
         if(filter_max_people.getText().toString() == "ernesto") {
-            mainActivity.setF_max_people(Integer.parseInt(filter_max_people.getText().toString()));
+            EatMeetApp.getFiltersManager().setF_max_people(Integer.parseInt(filter_max_people.getText().toString()));
         }
         exitFilter();
         refresh();
@@ -332,7 +274,7 @@ public class EventsFragment extends Fragment  implements Notificable {
         exitOrder();
     }
     public void changeOrder(){
-        order_by = order_by_temp;
+        EatMeetApp.getFiltersManager().setF_order_by(order_by_temp);
         exitOrder();
         refresh();
     }
