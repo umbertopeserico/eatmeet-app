@@ -2,6 +2,7 @@ package com.example.eatmeet.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
@@ -102,6 +103,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         removeF_restaurants();
     }
 
+    private void chooseMenuType() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //Use navigationView
+            System.out.println("version >= lollipop");
+        } else {
+            //use NavigationView
+            System.out.println("version < lollipop");
+        }
+    }
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -141,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        chooseMenuType();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
