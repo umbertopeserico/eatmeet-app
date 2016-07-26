@@ -118,7 +118,8 @@ public class CategoriesAdapter extends ArrayAdapter {
         text.setText(element.getName());
 
         TextView count = (TextView) convertView.findViewById(R.id.countViewListItem);
-        //count.setText(element.getE().get("events_count"));
+
+        count.setText(element.getEventsCount());
 
         return convertView;
     }

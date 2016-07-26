@@ -8,20 +8,17 @@ import java.util.Date;
 /**
  * Created by sofia on 08/06/2016.
  */
-public class Event implements Serializable{
-    private int id=-1;
+public class Event extends AbstractEntity implements Serializable{
     private String title;
     private Date schedule;
-    private int max_people=-1;
-    private int min_people=-1;
-    private int min_price_people=-1;
-    private double max_price=-1;
-    private double actual_price=-1;
-    private double min_price=-1;
-    private ArrayList<Double> prices_array;
-    private int menu_id=-1;
-    private Date createdAt;
-    private Date updatedAt;
+    private int maxPeople =-1;
+    private int minPeople =-1;
+    private int minPricePeople =-1;
+    private double maxPrice =-1;
+    private double actualPrice =-1;
+    private double minPrice =-1;
+    private ArrayList<Double> pricesArray;
+    private int menuId =-1;
     private int participants=-1;
     private String urlImage;
     private String urlImageThumb;
@@ -31,17 +28,16 @@ public class Event implements Serializable{
     private Restaurant restaurant;
     private ArrayList<Category> categories;
 
-    private final PropertyChangeSupport idChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport titleChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport scheduleChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport max_peopleChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport min_peopleChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport min_price_peopleChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport max_priceChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport actual_priceChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport min_priceChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport prices_arrayChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport menu_idChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport maxPeopleChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport minPeopleChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport minPricePeopleChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport maxPriceChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport actualPriceChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport minPriceChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pricesArrayChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport menuIdChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport participantsChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport menuChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport restaurantChangeSupport = new PropertyChangeSupport(this);
@@ -50,18 +46,17 @@ public class Event implements Serializable{
     private final PropertyChangeSupport urlImageThumbChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport urlImageMediumChangeSupport = new PropertyChangeSupport(this);
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        this.idChangeSupport.addPropertyChangeListener(listener);
+    public void setPropertyChangeListener(PropertyChangeListener listener) {
         this.titleChangeSupport.addPropertyChangeListener(listener);
         this.scheduleChangeSupport.addPropertyChangeListener(listener);
-        this.max_peopleChangeSupport.addPropertyChangeListener(listener);
-        this.min_peopleChangeSupport.addPropertyChangeListener(listener);
-        this.min_price_peopleChangeSupport.addPropertyChangeListener(listener);
-        this.max_priceChangeSupport.addPropertyChangeListener(listener);
-        this.actual_priceChangeSupport.addPropertyChangeListener(listener);
-        this.min_priceChangeSupport.addPropertyChangeListener(listener);
-        this.prices_arrayChangeSupport.addPropertyChangeListener(listener);
-        this.menu_idChangeSupport.addPropertyChangeListener(listener);
+        this.maxPeopleChangeSupport.addPropertyChangeListener(listener);
+        this.minPeopleChangeSupport.addPropertyChangeListener(listener);
+        this.minPricePeopleChangeSupport.addPropertyChangeListener(listener);
+        this.maxPriceChangeSupport.addPropertyChangeListener(listener);
+        this.actualPriceChangeSupport.addPropertyChangeListener(listener);
+        this.minPriceChangeSupport.addPropertyChangeListener(listener);
+        this.pricesArrayChangeSupport.addPropertyChangeListener(listener);
+        this.menuIdChangeSupport.addPropertyChangeListener(listener);
         this.participantsChangeSupport.addPropertyChangeListener(listener);
         this.menuChangeSupport.addPropertyChangeListener(listener);
         this.restaurantChangeSupport.addPropertyChangeListener(listener);
@@ -71,18 +66,17 @@ public class Event implements Serializable{
         this.urlImageMediumChangeSupport.addPropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        this.idChangeSupport.removePropertyChangeListener(listener);
+    public void unsetPropertyChangeListener(PropertyChangeListener listener) {
         this.titleChangeSupport.removePropertyChangeListener(listener);
         this.scheduleChangeSupport.removePropertyChangeListener(listener);
-        this.max_peopleChangeSupport.removePropertyChangeListener(listener);
-        this.min_peopleChangeSupport.removePropertyChangeListener(listener);
-        this.min_price_peopleChangeSupport.removePropertyChangeListener(listener);
-        this.max_priceChangeSupport.removePropertyChangeListener(listener);
-        this.actual_priceChangeSupport.removePropertyChangeListener(listener);
-        this.min_priceChangeSupport.removePropertyChangeListener(listener);
-        this.prices_arrayChangeSupport.removePropertyChangeListener(listener);
-        this.menu_idChangeSupport.removePropertyChangeListener(listener);
+        this.maxPeopleChangeSupport.removePropertyChangeListener(listener);
+        this.minPeopleChangeSupport.removePropertyChangeListener(listener);
+        this.minPricePeopleChangeSupport.removePropertyChangeListener(listener);
+        this.maxPriceChangeSupport.removePropertyChangeListener(listener);
+        this.actualPriceChangeSupport.removePropertyChangeListener(listener);
+        this.minPriceChangeSupport.removePropertyChangeListener(listener);
+        this.pricesArrayChangeSupport.removePropertyChangeListener(listener);
+        this.menuIdChangeSupport.removePropertyChangeListener(listener);
         this.participantsChangeSupport.removePropertyChangeListener(listener);
         this.menuChangeSupport.removePropertyChangeListener(listener);
         this.restaurantChangeSupport.removePropertyChangeListener(listener);
@@ -162,32 +156,6 @@ public class Event implements Serializable{
         this.participantsChangeSupport.firePropertyChange("participants",oldValue, participants);
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        int oldValue = this.id;
-        this.id = id;
-        this.idChangeSupport.firePropertyChange("id",oldValue, id);
-    }
-
     public String getTitle() {
         return title;
     }
@@ -209,83 +177,83 @@ public class Event implements Serializable{
     }
 
     public int getMaxPeople() {
-        return max_people;
+        return maxPeople;
     }
 
     public void setMaxPeople(int max_people) {
-        int oldValue = this.max_people;
-        this.max_people = max_people;
-        this.max_peopleChangeSupport.firePropertyChange("max_people",oldValue, max_people);
+        int oldValue = this.maxPeople;
+        this.maxPeople = max_people;
+        this.maxPeopleChangeSupport.firePropertyChange("maxPeople",oldValue, max_people);
     }
 
     public int getMinPeople() {
-        return min_people;
+        return minPeople;
     }
 
     public void setMinPeople(int min_people) {
-        int oldValue = this.min_people;
-        this.min_people = min_people;
-        this.min_peopleChangeSupport.firePropertyChange("min_people",oldValue, min_people);
+        int oldValue = this.minPeople;
+        this.minPeople = min_people;
+        this.minPeopleChangeSupport.firePropertyChange("minPeople",oldValue, min_people);
     }
 
     public int getMinPricePeople() {
-        return min_price_people;
+        return minPricePeople;
     }
 
     public void setMinPricePeople(int min_price_people) {
-        int oldValue = this.min_price_people;
-        this.min_price_people = min_price_people;
-        this.min_price_peopleChangeSupport.firePropertyChange("min_price_people",oldValue, min_price_people);
+        int oldValue = this.minPricePeople;
+        this.minPricePeople = min_price_people;
+        this.minPricePeopleChangeSupport.firePropertyChange("minPricePeople",oldValue, min_price_people);
     }
 
     public double getMaxPrice() {
-        return max_price;
+        return maxPrice;
     }
 
     public void setMaxPrice(double max_price) {
-        double oldValue = this.max_price;
-        this.max_price = max_price;
-        this.max_priceChangeSupport.firePropertyChange("max_price",oldValue, max_price);
+        double oldValue = this.maxPrice;
+        this.maxPrice = max_price;
+        this.maxPriceChangeSupport.firePropertyChange("maxPrice",oldValue, max_price);
     }
 
     public double getActualPrice() {
-        return actual_price;
+        return actualPrice;
     }
 
     public void setActualPrice(double actual_price) {
-        double oldValue = this.actual_price;
-        this.actual_price = actual_price;
-        this.actual_priceChangeSupport.firePropertyChange("actual_price",oldValue, actual_price);
+        double oldValue = this.actualPrice;
+        this.actualPrice = actual_price;
+        this.actualPriceChangeSupport.firePropertyChange("actualPrice",oldValue, actual_price);
     }
 
     public double getMinPrice() {
-        return min_price;
+        return minPrice;
     }
 
     public void setMinPrice(double min_price) {
-        double oldValue = this.min_price;
-        this.min_price = min_price;
-        this.min_priceChangeSupport.firePropertyChange("min_price",oldValue, min_price);
+        double oldValue = this.minPrice;
+        this.minPrice = min_price;
+        this.minPriceChangeSupport.firePropertyChange("minPrice",oldValue, min_price);
     }
 
     public ArrayList<Double> getPricesArray() {
-        return prices_array;
+        return pricesArray;
     }
 
     public void setPricesArray(ArrayList<Double> prices_array) {
-        ArrayList<Double> oldValue = this.prices_array;
-        this.prices_array = prices_array;
-        this.prices_arrayChangeSupport.firePropertyChange("prices_array",oldValue, prices_array);
+        ArrayList<Double> oldValue = this.pricesArray;
+        this.pricesArray = prices_array;
+        this.pricesArrayChangeSupport.firePropertyChange("pricesArray",oldValue, prices_array);
     }
 
     public int getMenuId() {
-        return menu_id;
+        return menuId;
     }
 
     public void setMenuId(int menu_id) {
-        int oldValue = this.menu_id;
-        this.menu_id = menu_id;
-        this.menu_idChangeSupport.firePropertyChange("menu_id",oldValue, menu_id);
+        int oldValue = this.menuId;
+        this.menuId = menu_id;
+        this.menuIdChangeSupport.firePropertyChange("menuId",oldValue, menu_id);
     }
 
     @Override

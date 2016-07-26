@@ -1,17 +1,15 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by umberto on 26/05/16.
  */
-public class Zone implements Serializable {
+public class Zone extends AbstractEntity implements Serializable {
 
-    private int id;
     private String name;
-    private Date createdAt;
-    private Date updatedAt;
 
     public String getName() {
         return name;
@@ -21,28 +19,14 @@ public class Zone implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
     }
 
     @Override

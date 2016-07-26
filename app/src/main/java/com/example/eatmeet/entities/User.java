@@ -1,34 +1,26 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by sofia on 08/06/2016.
  */
-public class User implements Serializable{
+public class User extends AbstractEntity implements Serializable{
     private String name;
     private String surname;
-    private String full_name;
+    private String fullName;
     private String email;
-    private int id;
-    private Date createdAt;
-    private Date updatedAt;
 
-    public Date getCreatedAt() {
-        return createdAt;
+    @Override
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
     }
 
     public String getName() {
@@ -48,11 +40,11 @@ public class User implements Serializable{
     }
 
     public String getFullName() {
-        return full_name;
+        return fullName;
     }
 
     public void setFullName(String full_name) {
-        this.full_name = full_name;
+        this.fullName = full_name;
     }
 
     public String getEmail() {
@@ -61,14 +53,6 @@ public class User implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

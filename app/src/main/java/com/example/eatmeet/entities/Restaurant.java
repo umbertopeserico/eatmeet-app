@@ -1,5 +1,6 @@
 package com.example.eatmeet.entities;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,32 +9,22 @@ import java.util.List;
 /**
  * Created by umberto on 08/06/16.
  */
-public class Restaurant implements Serializable {
+public class Restaurant extends AbstractEntity implements Serializable {
 
-    private int id;
     private String name;
     private String description;
     private String email;
     private String phone;
     private String street;
     private String city;
-    private String zip_code;
+    private String zipCode;
     private String province;
-    private String full_address;
-    private int restaurant_owner_id;
-    private Date createdAt;
-    private Date updatedAt;
+    private String fullAddress;
+    private int restaurantOwnerId;
     private double lat;
     private double lgt;
     private List<Event> events = new ArrayList<>();
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -84,11 +75,11 @@ public class Restaurant implements Serializable {
     }
 
     public String getZipCode() {
-        return zip_code;
+        return zipCode;
     }
 
     public void setZipCode(String zip_code) {
-        this.zip_code = zip_code;
+        this.zipCode = zip_code;
     }
 
     public String getProvince() {
@@ -100,19 +91,19 @@ public class Restaurant implements Serializable {
     }
 
     public String getFullAddress() {
-        return full_address;
+        return fullAddress;
     }
 
     public void setFullAddress(String full_address) {
-        this.full_address = full_address;
+        this.fullAddress = full_address;
     }
 
     public int getRestaurantOwnerId() {
-        return restaurant_owner_id;
+        return restaurantOwnerId;
     }
 
     public void setRestaurantOwnerId(int restaurant_owner_id) {
-        this.restaurant_owner_id = restaurant_owner_id;
+        this.restaurantOwnerId = restaurant_owner_id;
     }
 
     public double getLat() {
@@ -163,19 +154,13 @@ public class Restaurant implements Serializable {
         return this.getName();
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    @Override
+    protected void setPropertyChangeListener(PropertyChangeListener listener) {
+
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.createdAt = created_at;
-    }
+    @Override
+    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updated_at) {
-        this.updatedAt = updated_at;
     }
 }
