@@ -1,5 +1,6 @@
 package com.example.eatmeet.dao.implementations.oldrest;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
@@ -101,6 +102,11 @@ public class EventDAOImpl implements EventDAO {
         }.execute(new Configs().getBackendUrl() + "api/events/" + eventId);
 
         return myNewEvent;
+    }
+
+    @Override
+    public void getEvents(List<Event> events, BackendStatusManager backendStatusManager, JSONObject parameters) {
+
     }
 
     @Override

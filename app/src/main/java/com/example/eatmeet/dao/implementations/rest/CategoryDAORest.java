@@ -28,12 +28,12 @@ public class CategoryDAORest implements CategoryDAO {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, responseString);
-                backendStatusManager.addError(responseString);
+                backendStatusManager.addError(responseString, statusCode);
             }
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                backendStatusManager.addSuccess(responseString);
+                backendStatusManager.addSuccess(responseString, statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Category>>(){}.getType();
                 for(Category category : (List<Category>) gson.fromJson(responseString, collectionType)) {
@@ -55,8 +55,4 @@ public class CategoryDAORest implements CategoryDAO {
         return categories;
     }
 
-    @Override
-    public HashMap<String, String> getMeta() {
-        return null;
-    }
 }
