@@ -1,8 +1,11 @@
 package com.example.eatmeet.activitiestest;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,7 +26,7 @@ import org.json.JSONObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TestActivity extends AppCompatActivity {
+public class EventsTestActivity extends AppCompatActivity {
 
     ListView listView;
     ArrayAdapter arrayAdapter;
@@ -31,29 +34,29 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_events_test);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Elementi comuni a tutti i test
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         BackendStatusManager backendStatusManager = new BackendStatusManager();
+
+        EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+        ObservableArrayList<Event> eventsList = new ObservableArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
 
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(String response, Integer code) {
-                Logger.getLogger(TestActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+                Logger.getLogger(EventsTestActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
             public void onFailure(String response, Integer code) {
-                Logger.getLogger(TestActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+                Logger.getLogger(EventsTestActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
 
-        // Events Test
-        EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
-        ObservableArrayList<Event> eventsList = new ObservableArrayList<>();
         arrayAdapter = new EventsAdapterTest(this, R.layout.list_item_event, eventsList);
         listView.setAdapter(arrayAdapter);
 
@@ -76,22 +79,6 @@ public class TestActivity extends AppCompatActivity {
         }
 
         eventDAO.getEvents(eventsList, backendStatusManager, params);
-        // Categories Test
-        /*CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
-        ObservableArrayList<Category> categoryList = new ObservableArrayList<>();
-        BackendStatusManager backendStatusManager = new BackendStatusManager();
-        categoryListView = (ListView) findViewById(R.id.listView);
-        arrayAdapter = new CategoriesAdapterTest(this, R.layout.list_item_category, (List<Category>) categoryList);
-        categoryListView.setAdapter(arrayAdapter);
-
-        categoryList.setOnAddListener(new OnAddListener() {
-            @Override
-            public void onAddEvent(Object item) {
-                arrayAdapter.notifyDataSetChanged();
-            }
-        });
-
-        categoryDAO.getCategories(categoryList, backendStatusManager);*/
     }
 
 }

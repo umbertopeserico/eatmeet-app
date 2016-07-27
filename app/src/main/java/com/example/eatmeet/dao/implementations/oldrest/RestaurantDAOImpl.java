@@ -1,5 +1,6 @@
 package com.example.eatmeet.dao.implementations.oldrest;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
@@ -23,6 +24,11 @@ public class RestaurantDAOImpl implements RestaurantDAO {
 
     public RestaurantDAOImpl(Notificable notificable) {
         this.mNotificable = notificable;
+    }
+
+    @Override
+    public void getRestaurants(List<Restaurant> restaurants, BackendStatusManager backendStatusManager) {
+
     }
 
     @Override
