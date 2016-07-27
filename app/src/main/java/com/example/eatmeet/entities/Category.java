@@ -13,9 +13,11 @@ public class Category extends AbstractEntity implements Serializable {
     // Instance variables
     private String name;
     private String image;
+    private String imageTmpPath;
     private Integer eventsCount;
 
     // PropertyChangeSupport for instance variables
+    private final PropertyChangeSupport cs = new PropertyChangeSupport(this);
     private final PropertyChangeSupport nameChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport imageChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport metaChangeSupport = new PropertyChangeSupport(this);
@@ -53,8 +55,19 @@ public class Category extends AbstractEntity implements Serializable {
         this.eventsCountChangeSupport.firePropertyChange("eventsCount", oldValue, eventsCount);
     }
 
+    public String getImageTmpPath() {
+        return imageTmpPath;
+    }
+
+    public void setImageTmpPath(String imageTmpPath) {
+        String oldValue = this.imageTmpPath;
+        this.imageTmpPath = imageTmpPath;
+        this.cs.firePropertyChange("imageTmpPath", oldValue, this.imageTmpPath);
+    }
+
     @Override
     protected void setPropertyChangeListener(PropertyChangeListener listener) {
+        this.cs.addPropertyChangeListener(listener);
         this.nameChangeSupport.addPropertyChangeListener(listener);
         this.imageChangeSupport.addPropertyChangeListener(listener);
         this.metaChangeSupport.addPropertyChangeListener(listener);
@@ -63,6 +76,7 @@ public class Category extends AbstractEntity implements Serializable {
 
     @Override
     protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
+        this.cs.removePropertyChangeListener(listener);
         this.nameChangeSupport.removePropertyChangeListener(listener);
         this.imageChangeSupport.removePropertyChangeListener(listener);
         this.metaChangeSupport.removePropertyChangeListener(listener);

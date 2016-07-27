@@ -38,6 +38,7 @@ public class Images extends AsyncTask<String, Void, Bitmap> {
             connection.connect();
             InputStream input = connection.getInputStream();
             myBitmap = BitmapFactory.decodeStream(input);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

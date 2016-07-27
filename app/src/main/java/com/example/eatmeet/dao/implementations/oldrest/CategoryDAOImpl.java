@@ -9,6 +9,7 @@ import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.utils.Notificable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,11 @@ public class CategoryDAOImpl implements CategoryDAO {
     */
     @Override
     public void getCategories(List<Category> categories, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void getImage(String url, BackendStatusManager backendStatusManager, File cacheDir) {
 
     }
 

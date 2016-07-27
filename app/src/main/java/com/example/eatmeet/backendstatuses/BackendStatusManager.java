@@ -16,21 +16,21 @@ public class BackendStatusManager {
         listeners = new ArrayList<>();
     }
 
-    public void addError(String error, Integer code) {
+    public void addError(Object error, Integer code) {
         notifyErrorsListeners(error, code);
     }
 
-    public void addSuccess(String error, Integer code) {
+    public void addSuccess(Object error, Integer code) {
         notifySuccessListeners(error, code);
     }
 
-    private void notifyErrorsListeners(String response, Integer code) {
+    private void notifyErrorsListeners(Object response, Integer code) {
         for(BackendStatusListener bel : listeners) {
             bel.onFailure(response, code);
         }
     }
 
-    private void notifySuccessListeners(String response, Integer code) {
+    private void notifySuccessListeners(Object response, Integer code) {
         for(BackendStatusListener bel : listeners) {
             bel.onSuccess(response, code);
         }

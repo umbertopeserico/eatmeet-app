@@ -2,6 +2,7 @@ package com.example.eatmeet.dao.implementations.rest;
 
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
+import com.example.eatmeet.connections.TokenFileHttpResponseHandler;
 import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.entities.Category;
@@ -9,6 +10,7 @@ import com.example.eatmeet.utils.Configs;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +41,24 @@ public class CategoryDAORest implements CategoryDAO {
                 for(Category category : (List<Category>) gson.fromJson(responseString, collectionType)) {
                     categories.add(category);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
+        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
+        File file = new File(cacheDir, tmpFileName);
+        HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, Throwable throwable, File file) {
+                backendStatusManager.addError("Errore caricamento file", statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, File file) {
+                System.out.println(file.getAbsolutePath());
+                backendStatusManager.addSuccess(file, statusCode);
             }
         });
     }

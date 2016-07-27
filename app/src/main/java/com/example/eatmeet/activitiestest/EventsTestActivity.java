@@ -47,12 +47,12 @@ public class EventsTestActivity extends AppCompatActivity {
 
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
-            public void onSuccess(String response, Integer code) {
+            public void onSuccess(Object response, Integer code) {
                 Logger.getLogger(EventsTestActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
-            public void onFailure(String response, Integer code) {
+            public void onFailure(Object response, Integer code) {
                 Logger.getLogger(EventsTestActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });

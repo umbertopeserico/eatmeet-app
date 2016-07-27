@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,12 +48,12 @@ public class CategoriesTestActivity extends AppCompatActivity {
 
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
-            public void onSuccess(String response, Integer code) {
+            public void onSuccess(Object response, Integer code) {
                 Logger.getLogger(CategoriesTestActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
-            public void onFailure(String response, Integer code) {
+            public void onFailure(Object response, Integer code) {
                 Logger.getLogger(CategoriesTestActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
