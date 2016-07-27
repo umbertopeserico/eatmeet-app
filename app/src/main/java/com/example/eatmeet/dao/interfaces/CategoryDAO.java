@@ -1,8 +1,9 @@
 package com.example.eatmeet.dao.interfaces;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.entities.Category;
-import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,11 @@ import java.util.List;
  * Created by sofia on 08/06/2016.
  */
 public interface CategoryDAO {
-    public List<Category> getCategories();
-    //public HashMap<String,String> getMeta();
+
+    void getCategories(final List<Category> categories, final BackendStatusManager backendStatusManager);
+    void getImage(String url, BackendStatusManager backendStatusManager, File cacheDir);
+
+    @Deprecated
+    List<Category> getCategories();
+    
 }

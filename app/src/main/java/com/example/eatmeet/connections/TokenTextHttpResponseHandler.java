@@ -1,5 +1,6 @@
 package com.example.eatmeet.connections;
 
+import com.example.eatmeet.entities.Event;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;

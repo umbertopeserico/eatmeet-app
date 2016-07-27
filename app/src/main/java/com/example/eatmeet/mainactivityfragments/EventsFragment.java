@@ -21,7 +21,7 @@ import com.example.eatmeet.activities.EventActivity;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.dao.implementations.rest.EventDAOImpl;
+import com.example.eatmeet.dao.implementations.oldrest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Notificable;
