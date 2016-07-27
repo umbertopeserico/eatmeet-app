@@ -75,7 +75,7 @@ public class FiltersManager {
     private ArrayList<Integer> f_restaurants = new ArrayList<>();
     private boolean on_restaurants = false;
 
-    FiltersManager(){
+    public FiltersManager(){
         saveOldFilters();
     }
 
