@@ -155,4 +155,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_event_test">EventTestActivity</string>
 </resources>

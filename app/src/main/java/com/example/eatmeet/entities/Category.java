@@ -19,6 +19,7 @@ public class Category extends AbstractEntity implements Serializable {
     private final PropertyChangeSupport nameChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport imageChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport metaChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport eventsCountChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport eventsChangeSupport = new PropertyChangeSupport(this);
 
     // Getters and setters
@@ -27,7 +28,9 @@ public class Category extends AbstractEntity implements Serializable {
     }
     
     public void setName(String name) {
+        String oldValue = this.name;
         this.name = name;
+        this.nameChangeSupport.firePropertyChange("name", oldValue, name);
     }
 
     public String getImage(){
@@ -35,7 +38,9 @@ public class Category extends AbstractEntity implements Serializable {
     }
 
     public void setImage(String image){
+        String oldValue = this.image;
         this.image = image;
+        this.imageChangeSupport.firePropertyChange("image", oldValue, image);
     }
 
     public Integer getEventsCount() {
@@ -43,7 +48,9 @@ public class Category extends AbstractEntity implements Serializable {
     }
 
     public void setEventsCount(Integer eventsCount) {
+        Integer oldValue = this.eventsCount;
         this.eventsCount = eventsCount;
+        this.eventsCountChangeSupport.firePropertyChange("eventsCount", oldValue, eventsCount);
     }
 
     @Override

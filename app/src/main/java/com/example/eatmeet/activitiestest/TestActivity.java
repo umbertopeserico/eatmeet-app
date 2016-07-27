@@ -1,24 +1,17 @@
-package com.example.eatmeet.activities;
+package com.example.eatmeet.activitiestest;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
-import com.example.eatmeet.adapters.CategoriesAdapter;
-import com.example.eatmeet.adapters.CategoriesAdapterTest;
 import com.example.eatmeet.adapters.EventsAdapterTest;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
-import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
@@ -27,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

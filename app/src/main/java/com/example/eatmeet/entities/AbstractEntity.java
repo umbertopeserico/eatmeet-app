@@ -12,6 +12,7 @@ public abstract class AbstractEntity {
     private Integer id;
     private Date createdAt;
     private Date updatedAt;
+    private PropertyChangeListener listener;
 
     private final PropertyChangeSupport idChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport createdAtChangeSupport = new PropertyChangeSupport(this);
@@ -51,6 +52,7 @@ public abstract class AbstractEntity {
         this.idChangeSupport.addPropertyChangeListener(listener);
         this.createdAtChangeSupport.addPropertyChangeListener(listener);
         this.updatedAtChangeSupport.addPropertyChangeListener(listener);
+        this.listener = listener;
         this.setPropertyChangeListener(listener);
     }
 
@@ -59,6 +61,10 @@ public abstract class AbstractEntity {
         this.createdAtChangeSupport.removePropertyChangeListener(listener);
         this.updatedAtChangeSupport.removePropertyChangeListener(listener);
         this.unsetPropertyChangeListener(listener);
+    }
+
+    public PropertyChangeListener getListener() {
+        return listener;
     }
 
     /**
