@@ -17,6 +17,36 @@ import java.util.HashMap;
  */
 public class FiltersManager {
 
+    /*old values*/
+    String oldF_order_by;
+
+    ArrayList<Integer> oldF_categories;
+    boolean old_on_categories;
+
+    Date oldF_min_date;
+    Date oldF_max_date;
+    boolean old_on_min_date;
+    boolean old_on_max_date;
+
+    double oldF_min_price;
+    double oldF_max_price;
+    boolean old_on_min_price;
+    boolean old_on_max_price;
+
+    double oldF_min_actual_sale;
+    double oldF_max_actual_sale;
+    boolean old_on_min_actual_sale;
+    boolean old_on_max_actual_sale;
+
+    int oldF_min_people;
+    int oldF_max_people;
+    boolean old_on_min_people;
+    boolean old_on_max_people;
+
+    ArrayList<Integer> oldF_restaurants;
+    boolean old_on_restaurants;
+
+    /*new values*/
     private String f_order_by = "order_by_date";
 
     private ArrayList<Integer> f_categories = new ArrayList<>();
@@ -32,8 +62,10 @@ public class FiltersManager {
     private boolean on_min_price = false;
     private boolean on_max_price = false;
 
-    private double f_actual_discount = 0;
-    private boolean on_actual_discount = false;
+    private double f_min_actual_sale = 0;
+    private double f_max_actual_sale = 0;
+    private boolean on_min_actual_sale = false;
+    private boolean on_max_actual_sale = false;
 
     private int f_min_people = 0;
     private int f_max_people = 0;
@@ -42,6 +74,10 @@ public class FiltersManager {
 
     private ArrayList<Integer> f_restaurants = new ArrayList<>();
     private boolean on_restaurants = false;
+
+    FiltersManager(){
+        saveOldFilters();
+    }
 
     /*order_by*/
     public void setF_order_by(String order_by) {
@@ -100,7 +136,7 @@ public class FiltersManager {
     }
 
     /*min_date*/
-    public void f_min_date(Date min_date) {
+    public void setF_min_date(Date min_date) {
         f_min_date = min_date;
         on_min_date = true;
     }
@@ -124,7 +160,7 @@ public class FiltersManager {
     }
 
     /*min_price*/
-    public void f_min_price(double min_price) {
+    public void setF_min_price(double min_price) {
         f_min_price = min_price;
         on_min_price = true;
     }
@@ -148,15 +184,25 @@ public class FiltersManager {
     }
 
     /*actual_discount*/
-    public void setF_actual_discount(double actual_discount) {
-        f_actual_discount = actual_discount;
-        on_actual_discount = true;
+    public void setF_min_actual_sale(double min_actual_sale) {
+        f_min_actual_sale = min_actual_sale;
+        on_min_actual_sale = true;
     }
-    public void removeF_actual_discount(){
-        on_actual_discount = false;
+    public void setF_max_actual_sale(double max_actual_sale) {
+        f_max_actual_sale = max_actual_sale;
+        on_max_actual_sale = true;
     }
-    public double getF_actual_discount(){
-        return f_actual_discount;
+    public void removeF_min_actual_sale(){
+        on_min_actual_sale = false;
+    }
+    public void removeF_max_actual_sale(){
+        on_max_actual_sale = false;
+    }
+    public double getF_min_actual_sale(){
+        return f_min_actual_sale;
+    }
+    public double getF_max_actual_sale(){
+        return f_max_actual_sale;
     }
 
     /*allFilters*/
@@ -169,11 +215,13 @@ public class FiltersManager {
         removeF_min_date();
         removeF_max_price();
         removeF_min_price();
-        removeF_actual_discount();
+        removeF_min_actual_sale();
+        removeF_max_actual_sale();
     }
 
 
     public JSONObject constructParameters() throws JSONException {
+
         JSONObject parameters= new JSONObject();
         JSONObject all_filters = new JSONObject();
 
@@ -189,14 +237,57 @@ public class FiltersManager {
         all_filters.put("categories", new JSONArray(f_categories));
         all_filters.put("restaurants", new JSONArray(f_restaurants));
 
+        if(on_min_actual_sale || on_max_actual_sale) {
+            JSONObject actual_sale_range = new JSONObject();
+            if (on_min_actual_sale) {
+                double f_min_actual_sale = getF_min_actual_sale();
+                actual_sale_range.put("start", f_min_actual_sale);
+            }
+            if (on_max_actual_sale) {
+                double f_max_actual_sale = getF_max_actual_sale();
+                actual_sale_range.put("end", f_max_actual_sale);
+            }
+            all_filters.put("actual_sale_range", actual_sale_range);
+        }
+
         if(on_min_people || on_max_people) {
-            int f_min_people = getF_min_people();
             JSONObject participants_range = new JSONObject();
-            participants_range.put("start", f_min_people);
-            int f_max_people = getF_max_people();
-            if(f_max_people==0) f_max_people = 1000;
-            participants_range.put("end", f_max_people);
+            if (on_min_people) {
+                int f_min_people = getF_min_people();
+                participants_range.put("start", f_min_people);
+            }
+            if (on_max_people) {
+                int f_max_people = getF_max_people();
+                //if(f_max_people==0) f_max_people = 1000;
+                participants_range.put("end", f_max_people);
+            }
             all_filters.put("participants_range", participants_range);
+        }
+
+        if(on_min_date || on_max_date) {
+            JSONObject date_range = new JSONObject();
+            if (on_min_date) {
+                Date f_min_date = getF_min_date();
+                date_range.put("start", f_min_date);
+            }
+            if (on_max_date) {
+                Date f_max_date = getF_max_date();
+                date_range.put("end", f_max_date);
+            }
+            all_filters.put("date_range", date_range);
+        }
+
+        if(on_min_price || on_max_price) {
+            JSONObject price_range = new JSONObject();
+            if (on_min_price) {
+                double f_min_price = getF_min_price();
+                price_range.put("start", f_min_price);
+            }
+            if (on_max_price) {
+                double f_max_price = getF_max_price();
+                price_range.put("end", f_max_price);
+            }
+            all_filters.put("price_range", price_range);
         }
 
         parameters.put("filters",all_filters);
@@ -210,24 +301,71 @@ public class FiltersManager {
             price.put("actual_price","desc");
             parameters.put("order", price);
         }
-        //System.out.println("PARAMETERS: " + parameters);
-        /*
-        for (int i = 0; i < f_categories.size() ; i++){
-            System.out.println();
-            try {
-                category_parameter.put(Integer.toString(i),Integer.toString(f_categories.get(i)));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if(f_categories.get(i)==f_categories.size()-1){
-                try {
-                    parameters.put("categories",category_parameter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        */
+
+        saveOldFilters();
+
         return parameters;
     }
+
+    public void saveOldFilters(){
+        oldF_order_by = getF_order_by();
+
+        oldF_categories = getF_categories();
+        old_on_categories = on_categories;
+
+        oldF_min_date = getF_min_date();
+        oldF_max_date = getF_max_date();
+        old_on_min_date = on_min_date;
+        old_on_max_date = on_max_date;
+
+        oldF_min_price = getF_min_price();
+        oldF_max_price = getF_max_price();
+        old_on_min_price = on_min_price;
+        old_on_max_price = on_max_price;
+
+        oldF_min_actual_sale = getF_min_actual_sale();
+        oldF_max_actual_sale = getF_max_actual_sale();
+        old_on_min_actual_sale = on_min_actual_sale;
+        old_on_max_actual_sale = on_max_actual_sale;
+
+        oldF_min_people = getF_min_people();
+        oldF_max_people = getF_max_people();
+        old_on_min_people = on_min_people;
+        old_on_max_people = on_max_people;
+
+        oldF_restaurants = getF_restaurants();
+        old_on_restaurants = on_restaurants;
+    }
+
+    public void resetOldFilters(){
+
+        setF_order_by(oldF_order_by);
+
+        setF_categories(oldF_categories);
+        on_categories = old_on_categories;
+
+        setF_min_date(oldF_min_date);
+        setF_max_date(oldF_max_date);
+        on_min_date = old_on_min_date;
+        on_max_date = old_on_max_date;
+
+        setF_min_price(oldF_min_price);
+        setF_max_price(oldF_max_price);
+        on_min_price = old_on_min_price;
+        on_max_price = old_on_max_price;
+
+        setF_min_actual_sale(oldF_min_actual_sale);
+        setF_max_actual_sale(oldF_max_actual_sale);
+        on_min_actual_sale = old_on_min_actual_sale;
+        on_max_actual_sale = old_on_max_actual_sale;
+
+        setF_min_people(oldF_min_people);
+        setF_max_people(oldF_max_people);
+        on_min_people = old_on_min_people;
+        on_max_people = old_on_max_people;
+
+        setF_restaurants(oldF_restaurants);
+        on_restaurants = old_on_restaurants;
+    }
+
 }

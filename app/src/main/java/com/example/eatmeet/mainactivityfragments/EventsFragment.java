@@ -256,8 +256,8 @@ public class EventsFragment extends Fragment  implements Notificable {
         exitFilter();
     }
     public void changeFilter(){
-        Context context = getContext();
-        MainActivity mainActivity = (MainActivity) context;
+        //Context context = getContext();
+        //MainActivity mainActivity = (MainActivity) context;
         EatMeetApp.getFiltersManager().removeAllFilters();
         EditText filter_min_people = (EditText) view.findViewById(R.id.filter_min_people);
         if(filter_min_people.getText().toString() == "ernesto") {
