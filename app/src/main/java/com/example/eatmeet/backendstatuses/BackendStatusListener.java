@@ -5,7 +5,7 @@ package com.example.eatmeet.backendstatuses;
  */
 public interface BackendStatusListener {
 
-    void onSuccess();
-    void onFailure();
+    void onSuccess(String response, Integer code);
+    void onFailure(String response, Integer code);
 
 }

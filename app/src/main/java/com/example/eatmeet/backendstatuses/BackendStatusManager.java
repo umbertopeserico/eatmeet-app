@@ -11,36 +11,28 @@ import java.util.List;
 public class BackendStatusManager {
 
     private ArrayList<BackendStatusListener> listeners;
-    private List<String> errors;
-    private List<String> successes;
 
     public BackendStatusManager() {
-        errors = new ArrayList<>();
-        successes = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
-    public void addError(String error) {
-        if(errors.add(error)) {
-            notifyErrorsListeners();
-        }
+    public void addError(String error, Integer code) {
+        notifyErrorsListeners(error, code);
     }
 
-    public void addSuccess(String error) {
-        if(successes.add(error)) {
-            notifySuccessListeners();
-        }
+    public void addSuccess(String error, Integer code) {
+        notifySuccessListeners(error, code);
     }
 
-    private void notifyErrorsListeners() {
+    private void notifyErrorsListeners(String response, Integer code) {
         for(BackendStatusListener bel : listeners) {
-            bel.onFailure();
+            bel.onFailure(response, code);
         }
     }
 
-    private void notifySuccessListeners() {
+    private void notifySuccessListeners(String response, Integer code) {
         for(BackendStatusListener bel : listeners) {
-            bel.onSuccess();
+            bel.onSuccess(response, code);
         }
     }
 
