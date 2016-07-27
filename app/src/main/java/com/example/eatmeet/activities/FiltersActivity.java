@@ -26,7 +26,8 @@ public class FiltersActivity extends AppCompatActivity {
     //public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     private View view;
 
-    ExpandableListView expandableListView;
+    ExpandableListView expandable_people;
+    ExpandableListView expandable_date;
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
@@ -64,46 +65,23 @@ public class FiltersActivity extends AppCompatActivity {
         });
         */
 
-        /*
-        ExpandableLinearLayout expandableLayout = (ExpandableLinearLayout) findViewById(R.id.expandableLayout);
-        expandableLayout.setListener(new ExpandableLayoutListener() {
-            @Override
-            public void onAnimationStart() {
-
-            }
-
-            @Override
-            public void onAnimationEnd() {
-
-            }
-
-            @Override
-            public void onPreOpen() {
-
-            }
-
-            @Override
-            public void onPreClose() {
-
-            }
-
-            @Override
-            public void onOpened() {
-
-            }
-
-            @Override
-            public void onClosed() {
-
-            }
-        });
-        */
-        expandableListView = (ExpandableListView) findViewById(R.id.expandable_people);
+        expandable_people = (ExpandableListView) findViewById(R.id.expandable_people);
+        expandable_date = (ExpandableListView) findViewById(R.id.expandable_date);
         expandableListDetail = ExpandableListDataPump.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new ExpandableListAdapter(this, expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        expandable_people.setAdapter(expandableListAdapter);
+        expandable_date.setAdapter(expandableListAdapter);
+        expandable_people.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition) + " List Expanded.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        expandable_date.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -113,7 +91,17 @@ public class FiltersActivity extends AppCompatActivity {
             }
         });
 
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+        expandable_people.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition) + " List Collapsed.",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        expandable_date.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
@@ -124,7 +112,22 @@ public class FiltersActivity extends AppCompatActivity {
             }
         });
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expandable_people.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        expandableListTitle.get(groupPosition)
+                                + " -> "
+                                + expandableListDetail.get(
+                                expandableListTitle.get(groupPosition)).get(
+                                childPosition), Toast.LENGTH_SHORT
+                ).show();
+                return false;
+            }
+        });
+        expandable_date.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {

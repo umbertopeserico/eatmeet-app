@@ -23,17 +23,49 @@
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">-->
+    <com.kyo.expandablelayout.ExpandableLayout
+        android:id="@+id/expandlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp" >
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/child"
+            app:canExpand="true" />
+    </com.kyo.expandablelayout.ExpandableLayout>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ExpandableListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/expandable_people">
         </ExpandableListView>
+        <ExpandableListView
+            android:layout_below="@+id/expandable_people"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/expandable_date">
+        </ExpandableListView>
+
     </LinearLayout>
+
     <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
