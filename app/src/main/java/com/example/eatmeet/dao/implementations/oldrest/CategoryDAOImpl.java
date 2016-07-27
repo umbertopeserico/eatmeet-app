@@ -1,13 +1,15 @@
-package com.example.eatmeet.dao.implementations.rest;
+package com.example.eatmeet.dao.implementations.oldrest;
 
 import android.util.Log;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.Connection;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.utils.Notificable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,16 @@ public class CategoryDAOImpl implements CategoryDAO {
         return null;
     }
     */
+    @Override
+    public void getCategories(List<Category> categories, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void getImage(String url, BackendStatusManager backendStatusManager, File cacheDir) {
+
+    }
+
     @Override
     public List<Category> getCategories() {
         final List<Category> allCategories = new ArrayList<Category>();
@@ -60,6 +72,7 @@ public class CategoryDAOImpl implements CategoryDAO {
                             newCategory.setId(id);
                             newCategory.setName(name);
                             newCategory.setImage(icon);
+
                             newCategory.setEventsCount(events_count);
                             //HashMap<String, String> meta = new HashMap<>();
                             //meta.put("events_count", events_count);

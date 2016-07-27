@@ -4,6 +4,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by sofia on 08/06/2016.
@@ -11,23 +12,25 @@ import java.util.Date;
 public class Event extends AbstractEntity implements Serializable{
     private String title;
     private Date schedule;
-    private int maxPeople =-1;
-    private int minPeople =-1;
-    private int minPricePeople =-1;
-    private double maxPrice =-1;
-    private double actualPrice =-1;
-    private double minPrice =-1;
-    private ArrayList<Double> pricesArray;
-    private int menuId =-1;
-    private int participants=-1;
+    private Integer maxPeople;
+    private Integer minPeople;
+    private Integer minPricePeople;
+    private Double maxPrice;
+    private Double actualPrice;
+    private Double minPrice;
+    private List<Double> pricesArray;
+    private Integer menuId;
+    private Integer participants;
+    private List<Photo> photos;
     private String urlImage;
     private String urlImageThumb;
     private String urlImageMedium;
 
     private Menu menu;
     private Restaurant restaurant;
-    private ArrayList<Category> categories;
+    private List<Category> categories;
 
+    private final PropertyChangeSupport cs = new PropertyChangeSupport(this);
     private final PropertyChangeSupport titleChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport scheduleChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport maxPeopleChangeSupport = new PropertyChangeSupport(this);
@@ -64,6 +67,7 @@ public class Event extends AbstractEntity implements Serializable{
         this.urlImageChangeSupport.addPropertyChangeListener(listener);
         this.urlImageThumbChangeSupport.addPropertyChangeListener(listener);
         this.urlImageMediumChangeSupport.addPropertyChangeListener(listener);
+        this.cs.addPropertyChangeListener(listener);
     }
 
     public void unsetPropertyChangeListener(PropertyChangeListener listener) {
@@ -116,12 +120,12 @@ public class Event extends AbstractEntity implements Serializable{
         this.urlImageMediumChangeSupport.firePropertyChange("urlImageMedium",oldValue, urlImageMedium);
     }
 
-    public ArrayList<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
     public void setCategories(ArrayList<Category> categories) {
-        ArrayList<Category> oldValue = this.categories;
+        List<Category> oldValue = this.categories;
         this.categories = categories;
         this.categoriesChangeSupport.firePropertyChange("categories",oldValue, categories);
     }
@@ -146,12 +150,12 @@ public class Event extends AbstractEntity implements Serializable{
         this.restaurantChangeSupport.firePropertyChange("restaurant",oldValue, restaurant);
     }
 
-    public int getParticipants() {
+    public Integer getParticipants() {
         return participants;
     }
 
-    public void setParticipants(int participants) {
-        int oldValue = this.participants;
+    public void setParticipants(Integer participants) {
+        Integer oldValue = this.participants;
         this.participants = participants;
         this.participantsChangeSupport.firePropertyChange("participants",oldValue, participants);
     }
@@ -176,84 +180,94 @@ public class Event extends AbstractEntity implements Serializable{
         this.scheduleChangeSupport.firePropertyChange("schedule",oldValue, schedule);
     }
 
-    public int getMaxPeople() {
+    public Integer getMaxPeople() {
         return maxPeople;
     }
 
-    public void setMaxPeople(int max_people) {
-        int oldValue = this.maxPeople;
+    public void setMaxPeople(Integer max_people) {
+        Integer oldValue = this.maxPeople;
         this.maxPeople = max_people;
         this.maxPeopleChangeSupport.firePropertyChange("maxPeople",oldValue, max_people);
     }
 
-    public int getMinPeople() {
+    public Integer getMinPeople() {
         return minPeople;
     }
 
-    public void setMinPeople(int min_people) {
-        int oldValue = this.minPeople;
+    public void setMinPeople(Integer min_people) {
+        Integer oldValue = this.minPeople;
         this.minPeople = min_people;
         this.minPeopleChangeSupport.firePropertyChange("minPeople",oldValue, min_people);
     }
 
-    public int getMinPricePeople() {
+    public Integer getMinPricePeople() {
         return minPricePeople;
     }
 
-    public void setMinPricePeople(int min_price_people) {
-        int oldValue = this.minPricePeople;
+    public void setMinPricePeople(Integer min_price_people) {
+        Integer oldValue = this.minPricePeople;
         this.minPricePeople = min_price_people;
         this.minPricePeopleChangeSupport.firePropertyChange("minPricePeople",oldValue, min_price_people);
     }
 
-    public double getMaxPrice() {
+    public Double getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(double max_price) {
-        double oldValue = this.maxPrice;
+    public void setMaxPrice(Double max_price) {
+        Double oldValue = this.maxPrice;
         this.maxPrice = max_price;
         this.maxPriceChangeSupport.firePropertyChange("maxPrice",oldValue, max_price);
     }
 
-    public double getActualPrice() {
+    public Double getActualPrice() {
         return actualPrice;
     }
 
-    public void setActualPrice(double actual_price) {
-        double oldValue = this.actualPrice;
+    public void setActualPrice(Double actual_price) {
+        Double oldValue = this.actualPrice;
         this.actualPrice = actual_price;
         this.actualPriceChangeSupport.firePropertyChange("actualPrice",oldValue, actual_price);
     }
 
-    public double getMinPrice() {
+    public Double getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(double min_price) {
-        double oldValue = this.minPrice;
+    public void setMinPrice(Double min_price) {
+        Double oldValue = this.minPrice;
         this.minPrice = min_price;
         this.minPriceChangeSupport.firePropertyChange("minPrice",oldValue, min_price);
     }
 
-    public ArrayList<Double> getPricesArray() {
+    public List<Double> getPricesArray() {
         return pricesArray;
     }
 
-    public void setPricesArray(ArrayList<Double> prices_array) {
-        ArrayList<Double> oldValue = this.pricesArray;
+    public void setPricesArray(List<Double> prices_array) {
+        List<Double> oldValue = this.pricesArray;
         this.pricesArray = prices_array;
         this.pricesArrayChangeSupport.firePropertyChange("pricesArray",oldValue, prices_array);
     }
 
-    public int getMenuId() {
+    public Integer getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(int menu_id) {
-        int oldValue = this.menuId;
+    public void setMenuId(Integer menu_id) {
+        Integer oldValue = this.menuId;
         this.menuId = menu_id;
         this.menuIdChangeSupport.firePropertyChange("menuId",oldValue, menu_id);
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        List<Photo> oldValue = this.photos;
+        this.photos = photos;
+        this.cs.firePropertyChange("photos", oldValue, photos);
     }
 
     @Override

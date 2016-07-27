@@ -1,13 +1,24 @@
 package com.example.eatmeet.connections;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.cookie.Cookie;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 /**
@@ -31,11 +42,22 @@ public class HttpRestClient {
     }
 
     public static void post(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
-        if(requestParams==null) {
-            requestParams = new RequestParams();
-        }
         setTokenToHeaders(requestParams);
+        Logger.getLogger(HttpRestClient.class.getName()).log(Level.WARNING, requestParams.toString()+"REQUEST");
         client.post(url, requestParams, responseHandler);
+    }
+
+    public static void post(String url, JSONObject requestParams, AsyncHttpResponseHandler responseHandler) {
+        setTokenToHeaders(requestParams);
+        StringEntity stringEntity;
+        try {
+            stringEntity = new StringEntity(requestParams.toString());
+            stringEntity.setContentType("application/json");
+            Logger.getLogger(HttpRestClient.class.getName()).log(Level.WARNING, requestParams.toString()+"REQUEST");
+            client.post(null, url, stringEntity, "application/json", responseHandler);
+        } catch (UnsupportedEncodingException e) {
+            Logger.getLogger(HttpRestClient.class.getName(), e.getMessage());
+        }
     }
 
     public static void put(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
@@ -66,6 +88,16 @@ public class HttpRestClient {
     public static void setTokenToHeaders(RequestParams requestParams) {
         for(Cookie cookie : getCookieStore().getCookies()) {
             requestParams.put(cookie.getName(), cookie.getValue());
+        }
+    }
+
+    public static void setTokenToHeaders(JSONObject requestParams) {
+        for(Cookie cookie : getCookieStore().getCookies()) {
+            try {
+                requestParams.put(cookie.getName(), cookie.getValue());
+            } catch (JSONException e) {
+                Logger.getLogger(HttpRestClient.class.getName(), e.getMessage());
+            }
         }
     }
 

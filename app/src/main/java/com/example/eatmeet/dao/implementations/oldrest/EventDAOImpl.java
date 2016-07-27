@@ -1,5 +1,6 @@
-package com.example.eatmeet.dao.implementations.rest;
+package com.example.eatmeet.dao.implementations.oldrest;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
@@ -14,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -101,6 +103,16 @@ public class EventDAOImpl implements EventDAO {
         }.execute(new Configs().getBackendUrl() + "api/events/" + eventId);
 
         return myNewEvent;
+    }
+
+    @Override
+    public void getEvents(List<Event> events, BackendStatusManager backendStatusManager, JSONObject parameters) {
+
+    }
+
+    @Override
+    public void getEvent(PropertyChangeListener eventListener, Integer id, BackendStatusManager backendStatusManager) {
+
     }
 
     @Override

@@ -2,15 +2,11 @@ package com.example.eatmeet.mainactivityfragments;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
-import com.example.eatmeet.dao.implementations.rest.RestaurantDAOImpl;
+import com.example.eatmeet.dao.implementations.oldrest.RestaurantDAOImpl;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.utils.Notificable;
 import com.google.android.gms.maps.CameraUpdateFactory;
