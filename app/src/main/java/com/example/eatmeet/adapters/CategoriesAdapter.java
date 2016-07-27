@@ -1,5 +1,6 @@
 package com.example.eatmeet.adapters;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.entities.Category;
@@ -75,8 +76,8 @@ public class CategoriesAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 //Logger.getLogger("Logging action from category to events").log(Level.WARNING, "Entro nel cambio di fragment");
                 //set filters
-                mainActivity.removeAllFilters();
-                mainActivity.setF_categories(categories);
+                EatMeetApp.getFiltersManager().removeAllFilters();
+                EatMeetApp.getFiltersManager().setF_categories(categories);
                 //go to event fragment v1
                 //FragmentTransaction trans = mainActivity.getSupportFragmentManager().beginTransaction();
 				/*
