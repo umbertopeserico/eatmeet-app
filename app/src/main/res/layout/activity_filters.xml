@@ -23,7 +23,7 @@
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">-->
-    <com.kyo.expandablelayout.ExpandableLayout
+    <!--<com.kyo.expandablelayout.ExpandableLayout
         android:id="@+id/expandlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/child"
             app:canExpand="true" />
-    </com.kyo.expandablelayout.ExpandableLayout>
+    </com.kyo.expandablelayout.ExpandableLayout>-->
 
     <LinearLayout
         android:orientation="vertical"
