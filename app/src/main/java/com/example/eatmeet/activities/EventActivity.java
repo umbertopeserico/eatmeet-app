@@ -43,6 +43,9 @@ public class EventActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*add back button*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Button bookButton = (Button) findViewById(R.id.book);
         bookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,4 +133,11 @@ public class EventActivity extends AppCompatActivity {
         });
     }
 
+
+    /*add action for back button*/
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
 }
