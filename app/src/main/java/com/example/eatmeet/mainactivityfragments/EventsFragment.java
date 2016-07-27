@@ -3,6 +3,7 @@ package com.example.eatmeet.mainactivityfragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import android.widget.RadioButton;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.EventActivity;
+import com.example.eatmeet.activities.FilterActivity;
+import com.example.eatmeet.activities.FiltersActivity;
 import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.dao.interfaces.EventDAO;
@@ -38,7 +41,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class EventsFragment extends Fragment  implements Notificable {
-    //public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     private String order_by_temp = "order_by_date";
     private ArrayAdapter<String> eventAdapter;
     private View view;
@@ -78,79 +80,28 @@ public class EventsFragment extends Fragment  implements Notificable {
             e.printStackTrace();
         }
         refresh();
-        /*
-        Button buttonCalls2 = (Button) view.findViewById(R.id.mioBottone);
-        buttonCalls2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FilterActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-        */
 
-
-        /**
-         * filtra per
-         */
-        /*
-        List<String> filterList = new ArrayList<>();
-        filterList.add("Prezzo");
-        filterList.add("Categoria");
-        filterList.add("Date");
-        filterList.add("Vicinanza");
-        filterList.add("Sconto");
-        filterList.add("Partecipanti");
-        filterList.add("Ristorante");
-        ArrayAdapter<String> filterAdapter = new FiltersAdapter(getContext(), R.layout.list_item_filter, filterList);
-        final ListView listViewFilter = (ListView) view.findViewById(R.id.listview_filters);
-        listViewFilter.setAdapter(filterAdapter);
-        */
         Button filter = (Button) view.findViewById(R.id.filter);
         assert filter != null;
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterFilter();
-                /*
-                Visibility visibility = new Visibility();
-                visibility.toggleView(view.findViewById(R.id.listview_filters));
-                if(visibility.isVisible(view.findViewById(R.id.listview_events))==visibility.isVisible(view.findViewById(R.id.listview_filters)))
-                {
-                    visibility.toggleView(view.findViewById(R.id.listview_events));
-                }
-                visibility.makeInvisible(view.findViewById(R.id.radioGroup));
-                */
+                Intent intent = new Intent(getContext(), FiltersActivity.class);
+                //intent.putExtra(EXTRA_MESSAGE, "2");
+                startActivity(intent);
             }
         });
+
         /**
          * ordina per
          */
-        /*
-        List<String> orderList = new ArrayList<>();
-        orderList.add("Prezzo discendente");
-        orderList.add("Vicinanza");
-        orderList.add("Data");
-        ArrayAdapter<String> orderAdapter = new OrderAdapter(getContext(), R.layout.list_item_order, orderList);
-        final ListView listViewOrder = (ListView) view.findViewById(R.id.listview_orders);
-        listViewOrder.setAdapter(orderAdapter);
-        */
+
         Button order = (Button) view.findViewById(R.id.order);
         assert order != null;
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterOrder();
-                /*
-                Visibility visibility = new Visibility();
-                visibility.toggleView(view.findViewById(R.id.radioGroup));
-                if(visibility.isVisible(view.findViewById(R.id.listview_events))==visibility.isVisible(view.findViewById(R.id.radioGroup)))
-                {
-                    visibility.toggleView(view.findViewById(R.id.listview_events));
-                }
-                visibility.makeInvisible(view.findViewById(R.id.listview_filters));
-                */
             }
         });
         RadioButton order_by_price = (RadioButton) view.findViewById(R.id.order_by_price);
@@ -178,30 +129,12 @@ public class EventsFragment extends Fragment  implements Notificable {
             @Override
             public void onClick(View v) { undoOrder(); }
         });
-        Button undo_filter = (Button) view.findViewById(R.id.undo_filter);
-        undo_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { undoFilter(); }
-        });
-        Button confirm_filter = (Button) view.findViewById(R.id.confirm_filter);
-        confirm_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { changeFilter(); }
-        });
 
         setRadio();
 
         return view;
     }
 
-    /*
-    public void sendMessage(View view) {
-        Intent intent = new Intent(getContext(), FilterActivity.class);
-
-        //intent.putExtra(EXTRA_MESSAGE, "2");
-        startActivity(intent);
-    }
-    */
 
     public void setRadio(){
         if(EatMeetApp.getFiltersManager().getF_order_by()=="order_by_date"){
@@ -211,27 +144,6 @@ public class EventsFragment extends Fragment  implements Notificable {
         /*} else if (EatMeetApp.getFiltersManager().getF_order_by()=="order_by_proximity"){
             ((RadioButton) view.findViewById(R.id.order_by_proximity)).setChecked(true);*/
         }
-    }
-    public void exitFilter() {
-        Visibility visibility = new Visibility();
-        visibility.makeInvisible(view.findViewById(R.id.radioGroup));
-        visibility.makeVisible(view.findViewById(R.id.listview_events));
-        visibility.makeInvisible(view.findViewById(R.id.listview_filters));
-        visibility.makeVisible(view.findViewById(R.id.order));
-        visibility.makeVisible(view.findViewById(R.id.filter));
-        visibility.makeInvisible(view.findViewById(R.id.filter_buttons));
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-    }
-    public void enterFilter(){
-        Visibility visibility = new Visibility();
-        visibility.makeInvisible(view.findViewById(R.id.radioGroup));
-        visibility.makeInvisible(view.findViewById(R.id.listview_events));
-        visibility.makeVisible(view.findViewById(R.id.listview_filters));
-        visibility.makeInvisible(view.findViewById(R.id.order));
-        visibility.makeInvisible(view.findViewById(R.id.filter));
-        visibility.makeVisible(view.findViewById(R.id.filter_buttons));
     }
     public void exitOrder(){
         setRadio();
@@ -251,24 +163,6 @@ public class EventsFragment extends Fragment  implements Notificable {
         visibility.makeInvisible(view.findViewById(R.id.order));
         visibility.makeInvisible(view.findViewById(R.id.filter));
         visibility.makeInvisible(view.findViewById(R.id.filter_buttons));
-    }
-    public void undoFilter(){
-        exitFilter();
-    }
-    public void changeFilter(){
-        //Context context = getContext();
-        //MainActivity mainActivity = (MainActivity) context;
-        EatMeetApp.getFiltersManager().removeAllFilters();
-        EditText filter_min_people = (EditText) view.findViewById(R.id.filter_min_people);
-        if(filter_min_people.getText().toString() == "ernesto") {
-            EatMeetApp.getFiltersManager().setF_min_people(Integer.parseInt(filter_min_people.getText().toString()));
-        }
-        EditText filter_max_people = (EditText) view.findViewById(R.id.filter_max_people);
-        if(filter_max_people.getText().toString() == "ernesto") {
-            EatMeetApp.getFiltersManager().setF_max_people(Integer.parseInt(filter_max_people.getText().toString()));
-        }
-        exitFilter();
-        refresh();
     }
     public void undoOrder(){
         exitOrder();

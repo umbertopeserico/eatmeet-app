@@ -51,7 +51,10 @@
         <activity
             android:name=".activities.ConfirmActivity"
             android:label="@string/title_activity_confirm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.FiltersActivity"
+            android:label="@string/title_activity_filters" />
     </application>
 
 </manifest>

@@ -29,4 +29,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.gms:google-services:3.0.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.appyvet:materialrangebar:1.3'
 }
