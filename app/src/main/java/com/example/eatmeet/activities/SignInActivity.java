@@ -18,7 +18,6 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.activitiestest.CategoriesTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
-import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
 
@@ -96,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
 
-                userDAO.authenticate(user, backendStatusManager);
+                userDAO.signIn(user, backendStatusManager);
             }
         });
 
@@ -135,7 +134,7 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
 
-                userDAO.unauthenticate(backendStatusManager);
+                userDAO.signOut(backendStatusManager);
             }
         });
     }
