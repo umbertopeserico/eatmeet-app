@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -54,7 +55,7 @@ public class CategoriesTestActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Object response, Integer code) {
-                Logger.getLogger(CategoriesTestActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+                Toast.makeText(CategoriesTestActivity.this, "Errore di autenticazione. Si prega di riautenticarsi", Toast.LENGTH_SHORT).show();
             }
         });
 
