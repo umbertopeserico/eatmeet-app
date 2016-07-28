@@ -1,8 +1,13 @@
 package com.example.eatmeet.entities;
 
+import com.example.eatmeet.observablearraylist.ObservableArrayList;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by umberto on 11/07/16.
@@ -17,6 +22,9 @@ public abstract class AbstractEntity {
     private final PropertyChangeSupport idChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport createdAtChangeSupport = new PropertyChangeSupport(this);
     private final PropertyChangeSupport updatedAtChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport errorsChangeSupport = new PropertyChangeSupport(this);
+
+    private HashMap<String, List<String>> errors = new HashMap<>();
 
     public int getId() {
         return id;
@@ -48,11 +56,32 @@ public abstract class AbstractEntity {
         this.idChangeSupport.firePropertyChange("updatedAt",oldValue, updatedAt);
     }
 
+    public HashMap<String, List<String>> getErrors() {
+        return errors;
+    }
+
+    public void addError(String field, String error) {
+        List<String> errorsOfField = errors.get(field);
+        if(errorsOfField == null) {
+            errorsOfField = new ArrayList<>();
+            errorsOfField.add(error);
+            errors.put(field, errorsOfField);
+        } else {
+            errorsOfField.add(error);
+        }
+        this.errorsChangeSupport.firePropertyChange("addError", error+"Ol", error);
+    }
+
+    public void cleanErrors() {
+        errors.clear();
+    }
+
     public final void addPropertyChangeListener(PropertyChangeListener listener) {
         this.idChangeSupport.addPropertyChangeListener(listener);
         this.createdAtChangeSupport.addPropertyChangeListener(listener);
         this.updatedAtChangeSupport.addPropertyChangeListener(listener);
         this.listener = listener;
+        this.errorsChangeSupport.addPropertyChangeListener(listener);
         this.setPropertyChangeListener(listener);
     }
 
@@ -60,6 +89,7 @@ public abstract class AbstractEntity {
         this.idChangeSupport.removePropertyChangeListener(listener);
         this.createdAtChangeSupport.removePropertyChangeListener(listener);
         this.updatedAtChangeSupport.removePropertyChangeListener(listener);
+        this.errorsChangeSupport.removePropertyChangeListener(listener);
         this.unsetPropertyChangeListener(listener);
     }
 

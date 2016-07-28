@@ -12,9 +12,11 @@ public interface UserDAO {
 
     void getUsers(final List<User> users, final BackendStatusManager backendStatusManager);
 
-    void authenticate(User user, BackendStatusManager backendStatusManager);
+    void signIn(User user, BackendStatusManager backendStatusManager);
 
-    void unauthenticate(BackendStatusManager backendStatusManager);
+    void signOut(BackendStatusManager backendStatusManager);
+
+    void signUp(User user, final BackendStatusManager backendStatusManager);
 
     @Deprecated
     List<User> getUsers();

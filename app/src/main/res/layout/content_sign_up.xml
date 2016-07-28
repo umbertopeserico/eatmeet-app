@@ -33,6 +33,14 @@
         android:layout_gravity="center_horizontal"
         android:hint="Nome" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/nameErrors"
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,12 +48,29 @@
         android:layout_gravity="center_horizontal"
         android:hint="Cognome" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/surnameErrors"
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
         android:id="@+id/emailField"
-        android:layout_gravity="center_horizontal"
         android:hint="E-mail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/emailErrors"
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
 
     <EditText
         android:layout_width="match_parent"
@@ -56,6 +81,14 @@
         android:layout_gravity="center_horizontal"
         android:hint="Password" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/passwordErrors"
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +97,14 @@
         android:id="@+id/passwordConfirmationField"
         android:layout_gravity="center_horizontal"
         android:hint="Conferma Password" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/passwordConfirmationErrors"
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -78,25 +119,5 @@
         android:id="@+id/signUpButton"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Oppure"
-        android:id="@+id/or_text"
-        android:layout_gravity="center_horizontal" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Accedi"
-        android:id="@+id/goToSignInButton"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>
 
