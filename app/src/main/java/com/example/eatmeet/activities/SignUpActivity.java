@@ -1,5 +1,6 @@
 package com.example.eatmeet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activitiestest.CategoriesTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
@@ -114,19 +117,32 @@ public class SignUpActivity extends AppCompatActivity {
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());
                 user.setPasswordConfirmation(passwordConfirmation.getText().toString());
-                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
 
                 BackendStatusManager backendStatusManager = new BackendStatusManager();
                 backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
-                        System.out.println(response + "CODE:"+code);
+                        BackendStatusManager signInBM = new BackendStatusManager();
+                        signInBM.setBackendStatusListener(new BackendStatusListener() {
+                            @Override
+                            public void onSuccess(Object response, Integer code) {
+                                Intent intent = new Intent(SignUpActivity.this, CategoriesTestActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Object response, Integer code) {
+                                Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        userDAO.signIn(user, signInBM);
                     }
 
                     @Override
                     public void onFailure(Object response, Integer code) {
-
-                            System.out.println(response + "CODE:"+code);
+                        Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                     }
                 });
 
