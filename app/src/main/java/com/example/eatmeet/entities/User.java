@@ -1,6 +1,7 @@
 package com.example.eatmeet.entities;
 
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,15 +13,18 @@ public class User extends AbstractEntity implements Serializable{
     private String surname;
     private String fullName;
     private String email;
+    private String password;
+
+    private PropertyChangeSupport cs = new PropertyChangeSupport(this);
 
     @Override
     protected void setPropertyChangeListener(PropertyChangeListener listener) {
-
+        this.cs.addPropertyChangeListener(listener);
     }
 
     @Override
     protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-
+        this.cs.addPropertyChangeListener(listener);
     }
 
     public String getName() {
@@ -28,7 +32,9 @@ public class User extends AbstractEntity implements Serializable{
     }
 
     public void setName(String name) {
+        String oldValue = this.name;
         this.name = name;
+        this.cs.firePropertyChange("name", oldValue, this.name);
     }
 
     public String getSurname() {
@@ -36,7 +42,9 @@ public class User extends AbstractEntity implements Serializable{
     }
 
     public void setSurname(String surname) {
+        String oldValue = this.surname;
         this.surname = surname;
+        this.cs.firePropertyChange("surname", oldValue, this.surname);
     }
 
     public String getFullName() {
@@ -44,7 +52,9 @@ public class User extends AbstractEntity implements Serializable{
     }
 
     public void setFullName(String full_name) {
+        String oldValue = this.fullName;
         this.fullName = full_name;
+        this.cs.firePropertyChange("fullName", oldValue, this.fullName);
     }
 
     public String getEmail() {
@@ -52,7 +62,19 @@ public class User extends AbstractEntity implements Serializable{
     }
 
     public void setEmail(String email) {
+        String oldValue = this.email;
         this.email = email;
+        this.cs.firePropertyChange("email", oldValue, this.email);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        String oldValue = this.password;
+        this.password = password;
+        this.cs.firePropertyChange("password", oldValue, this.password);
     }
 
     @Override
