@@ -1,19 +1,26 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
-import com.example.eatmeet.utils.Configs;
-import com.example.eatmeet.utils.Post;
+import com.example.eatmeet.activitiestest.CategoriesTestActivity;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
+import com.example.eatmeet.connections.HttpRestClient;
+import com.example.eatmeet.dao.interfaces.UserDAO;
+import com.example.eatmeet.entities.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +32,9 @@ public class SignInActivity extends AppCompatActivity {
     private EditText passwordField;
     private Button signInButton;
     private Button signUpButton;
-    private TextView errorsText;
+    private Button signOutButton;
+    private TextView errorText;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,57 +48,96 @@ public class SignInActivity extends AppCompatActivity {
         passwordField = (EditText) findViewById(R.id.passwordField);
         signInButton = (Button) findViewById(R.id.signInButton);
         signUpButton = (Button) findViewById(R.id.signUpButton);
-        errorsText = (TextView) findViewById(R.id.errorText);
-
-        final JSONObject loginParams = new JSONObject();
-
+        signOutButton = (Button) findViewById(R.id.signOutButton);
+        errorText = (TextView) findViewById(R.id.errorText);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    loginParams.put("email", emailField.getText().toString());
-                    loginParams.put("password", passwordField.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                new Post() {
+                progressBar.setVisibility(View.VISIBLE);
+                errorText.setVisibility(View.VISIBLE);
+                errorText.setText("");
+
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                User user = new User();
+                user.setEmail(emailField.getText().toString());
+                user.setPassword(passwordField.getText().toString());
+
+                BackendStatusManager backendStatusManager = new BackendStatusManager();
+                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
                     @Override
-                    public void onPostExecute(String result) {
-                        try {
-                            JSONObject obj = new JSONObject(result);
-                            JSONArray errors = null;
+                    public void onSuccess(Object response, Integer code) {
+                        progressBar.setVisibility(View.GONE);
+                        Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        progressBar.setVisibility(View.GONE);
+                        errorText.setVisibility(View.VISIBLE);
+                        if(code == 401) {
                             try {
-                                // se ci sono errori continuo qui (Se il login è failed)
-                                errors = obj.getJSONArray("errors");
-                                for(int i = 0; i < errors.length(); i++) {
-                                    errorsText.setText(errors.getString(i)+"\n");
+                                String errorString = "";
+                                JSONObject jsonResponse = new JSONObject((String) response);
+                                JSONArray errors = jsonResponse.getJSONArray("errors");
+                                for (int i = 0; i < errors.length(); i++) {
+                                    errorString += errors.get(i) + "\n";
                                 }
-
+                                errorText.setText(errorString);
+                            } catch (JSONException e) {
+                                Log.e("JSON PARSE: ", "Signin response not decoded:\n" + e.getMessage());
                             }
-                            catch (JSONException e) {
-                                // Se non ci sono errori continuo qui (Se il login è successfull)
-                                JSONObject data = obj.getJSONObject("data");
-                                for(int i = 0; i < data.length(); i++) {
-                                    SharedPreferences.Editor editor = EatMeetApp.sharedPref.edit();
-                                    editor.putString("email", emailField.getText().toString());
-                                    editor.putString("password", passwordField.getText().toString());
-                                    editor.commit();
-                                }
-
-                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            errorText.setText((String) response);
                         }
                     }
-                }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);
+                });
+
+                userDAO.authenticate(user, backendStatusManager);
             }
         });
 
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                BackendStatusManager backendStatusManager = new BackendStatusManager();
+                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        Toast.makeText(SignInActivity.this, "Log out effettuato correttamente", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }, 1500);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        Toast.makeText(SignInActivity.this, "Errore nel logout. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                userDAO.unauthenticate(backendStatusManager);
+            }
+        });
     }
 
 }

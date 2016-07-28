@@ -71,6 +71,19 @@
             android:id="@+id/signUpButton" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:id="@+id/signOutButton" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,6 +98,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:layout_gravity="center_horizontal"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:visibility="gone" />
 
 </LinearLayout>
