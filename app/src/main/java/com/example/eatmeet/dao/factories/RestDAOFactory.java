@@ -3,6 +3,7 @@ package com.example.eatmeet.dao.factories;
 import com.example.eatmeet.dao.implementations.rest.CategoryDAORest;
 import com.example.eatmeet.dao.implementations.rest.EventDAORest;
 import com.example.eatmeet.dao.implementations.rest.RestaurantDAORest;
+import com.example.eatmeet.dao.implementations.rest.UserDAORest;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.dao.interfaces.MenuDAO;
@@ -43,7 +44,7 @@ public class RestDAOFactory implements DAOFactory {
 
     @Override
     public UserDAO getUserDAO() {
-        return null;
+        return new UserDAORest();
     }
 
     @Override
