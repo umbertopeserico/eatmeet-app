@@ -1,5 +1,6 @@
 package com.example.eatmeet.dao.interfaces;
 
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.entities.User;
 
 import java.util.List;
@@ -9,5 +10,12 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    public List<User> getUsers();
+    void getUsers(final List<User> users, final BackendStatusManager backendStatusManager);
+
+    void authenticate(User user, BackendStatusManager backendStatusManager);
+
+    void unauthenticate(BackendStatusManager backendStatusManager);
+
+    @Deprecated
+    List<User> getUsers();
 }

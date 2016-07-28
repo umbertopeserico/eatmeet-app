@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface ZoneDAO {
 
+    void getZones(final List<Zone> zones);
+
+    @Deprecated
     public List<Zone> getZones();
 
 }
