@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.entities.Category;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,9 +46,26 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
         convertView = inflater.inflate(mListRowLayout, null);
 
         TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItemFilterCategory);
-        Category category = mItems.get(position);
+        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxListItemFilterCategory);
+        final Category category = mItems.get(position);
 
         listItem.setText(category.getName());
+        checkBox.setId(category.getId());
+
+        checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ArrayList<Integer> alreadySetCategories = EatMeetApp.getFiltersManager().getF_categories();
+                if(isChecked){
+                    alreadySetCategories.add(category.getId());
+                    System.out.println("aggiungoo la categoria " + category.getId());
+                } else {
+                    alreadySetCategories.remove((Object) category.getId());
+                    System.out.println("tolgo la categoria " + category.getId());
+                }
+                EatMeetApp.getFiltersManager().setF_categories(alreadySetCategories);
+            }
+        });
 
         return convertView;
     }

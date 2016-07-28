@@ -48,9 +48,10 @@ public class EventsFragment extends Fragment  implements Notificable {
     JSONObject parameters = new JSONObject();
     EventDAO eventDao;
     @Override
-    public void onResume(){ super.onResume();}
+    public void onResume(){ super.onResume(); refresh();}
 
     public View refresh(){
+        System.out.println("i'm refreshing...");
         try {
             parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){

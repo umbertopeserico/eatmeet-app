@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             long i = new SectionsPagerAdapter(getSupportFragmentManager()).getItemId(position);
             EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
                     "android:switcher:" + mViewPager.getId() + ":" + i);
-            newFragment.refresh();
+            if(newFragment != null) {
+                newFragment.refresh();
+            }
             //System.out.println(getSupportFragmentManager().findFragmentByTag("unique_tag"));
             //((EventsFragment) getSupportFragmentManager().findFragmentById(fragment)).refresh();
             //((EventsFragment) getSupportFragmentManager().getFragments().get(fragment)).refresh();
@@ -124,6 +126,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
+        }
+
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras() != null && intent.getExtras().get("from") != null) {
+            String from = (String) intent.getExtras().get("from");
+            if (from.equals("FiltersActivity")) {
+                setCurrentFragment(1);
+            }
         }
 
         /*

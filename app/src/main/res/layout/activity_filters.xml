@@ -107,9 +107,10 @@
                             custom:tickEnd="200"
                             custom:tickColor="@color/colorPrimaryDark"
                             custom:tickHeight="2dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="22dp"
                             android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"/>
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
                     </android.support.v7.widget.CardView>
 
 
@@ -142,9 +143,10 @@
                             custom:tickEnd="100"
                             custom:tickColor="@color/colorPrimaryDark"
                             custom:tickHeight="2dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="22dp"
                             android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"/>
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
@@ -219,12 +221,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Sconto attuale (%)"
+                            android:id="@+id/rangebar_actual_sale_label"
                             android:layout_margin="10dp"/>
                         <com.appyvet.rangebar.RangeBar
                             xmlns:custom="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/rangebar_actual_sale"
                             android:layout_width="match_parent"
                             android:layout_height="72dp"
+                            android:layout_below="@id/rangebar_actual_sale_label"
                             custom:connectingLineColor="@color/colorPrimary"
                             custom:selectorColor="@color/colorPrimaryDark"
                             custom:rangeBarColor="@color/colorPrimaryDark"
@@ -236,9 +240,10 @@
                             custom:tickEnd="100"
                             custom:tickColor="@color/colorPrimaryDark"
                             custom:tickHeight="2dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="22dp"
                             android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"/>
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
                     </android.support.v7.widget.CardView>
 
 

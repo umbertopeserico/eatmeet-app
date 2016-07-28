@@ -1,6 +1,8 @@
 package com.example.eatmeet.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -8,20 +10,31 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.appyvet.rangebar.RangeBar;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.adapters.FilterCategoriesAdapter;
+import com.example.eatmeet.adapters.FilterRestaurantsAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
+import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.entities.Category;
+import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Visibility;
 
+import org.json.JSONException;
+
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +42,7 @@ public class FiltersActivity extends AppCompatActivity {
     //public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     private View view;
     ListView listView;
-    ArrayAdapter categoriesAdapter;
+    ArrayAdapter arrayAdapter;
     /*
     ExpandableListView expandable_people;
     ExpandableListView expandable_date;
@@ -37,20 +50,84 @@ public class FiltersActivity extends AppCompatActivity {
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
     */
+    public void retrieveCategories(){
+        ObservableArrayList<Category> observableArrayListCategory = new ObservableArrayList<>();
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        int list_item = -1;
+        int listview = -1;
+        CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
+        list_item = R.layout.list_item_filter_category;
+        listview = R.id.listview_categories;
+
+        listView = (ListView) findViewById(listview);
+        arrayAdapter = new FilterCategoriesAdapter(this, list_item, observableArrayListCategory);
+
+        listView.setAdapter(arrayAdapter);
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+
+        observableArrayListCategory.setOnAddListener(new OnAddListener() {
+            @Override
+            public void onAddEvent(Object item) {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+        categoryDAO.getCategories(observableArrayListCategory, backendStatusManager);
+    }
+    public void retrieveRestaurants(){
+        ObservableArrayList<Restaurant> observableArrayListRestaurant = new ObservableArrayList<>();
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        int list_item = -1;
+        int listview = -1;
+        RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
+        list_item = R.layout.list_item_filter_restaurant;
+        listview = R.id.listview_restaurants;
+
+        listView = (ListView) findViewById(listview);
+
+        arrayAdapter = new FilterRestaurantsAdapter(this, list_item, observableArrayListRestaurant);
+        listView.setAdapter(arrayAdapter);
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+
+        observableArrayListRestaurant.setOnAddListener(new OnAddListener() {
+            @Override
+            public void onAddEvent(Object item) {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+        restaurantDAO.getRestaurants(observableArrayListRestaurant, backendStatusManager);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filters);
         /*add back button*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        retrieveCategories();
+        retrieveRestaurants();
 
-
-        CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
-        ObservableArrayList<Category> categoryList = new ObservableArrayList<>();
-        BackendStatusManager backendStatusManager = new BackendStatusManager();
-        listView = (ListView) findViewById(R.id.listview_categories);
-        categoriesAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoryList);
-        listView.setAdapter(categoriesAdapter);
         /*
         listView.addOnLayoutChangeListener(
                 new View.OnLayoutChangeListener() {
@@ -65,43 +142,7 @@ public class FiltersActivity extends AppCompatActivity {
                     }
             });
         */
-        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
-            @Override
-            public void onSuccess(Object response, Integer code) {
-                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
-            }
 
-            @Override
-            public void onFailure(Object response, Integer code) {
-                Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
-            }
-        });
-
-        categoryList.setOnAddListener(new OnAddListener() {
-
-            @Override
-            public void onAddEvent(Object item) {
-                categoriesAdapter.notifyDataSetChanged();
-                /*
-                CardView card_view_categories = (CardView) findViewById(R.id.card_view_categories);
-                ListView listview_categories = (ListView) findViewById(R.id.listview_categories);
-                LinearLayout list_item_filter_category = (LinearLayout) findViewById(R.id.list_item_filter_category);
-                ViewGroup.LayoutParams card_view_categories_params = card_view_categories.getLayoutParams();
-                ViewGroup.LayoutParams listview_categories_params = listview_categories.getLayoutParams();
-                ViewGroup.LayoutParams list_item_filter_category_params = list_item_filter_category.getLayoutParams();
-                //card_view_categories_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                //listview_categories_params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-                //listview_categories_params.height += list_item_filter_category_params.height;
-                listview_categories_params.height += 30;
-                card_view_categories.setLayoutParams(card_view_categories_params);
-                listview_categories.setLayoutParams(listview_categories_params);
-                */
-
-            }
-        });
-
-        categoryDAO.getCategories(categoryList, backendStatusManager);
 
         /*
         CategoryDAO categoryDao = new CategoryDAOImpl(this);
@@ -123,68 +164,126 @@ public class FiltersActivity extends AppCompatActivity {
             public void onClick(View v) { undoFilter(); }
         });
 
-        CardView card_view_categories_open = (CardView) findViewById(R.id.card_view_categories_open);
-        card_view_categories_open.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.card_view_categories_open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardView card_view_categories = (CardView) findViewById(R.id.card_view_categories);
-                RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.grey_background);
-                Visibility visibility = new Visibility();
-                visibility.makeVisible(card_view_categories);
-                visibility.makeVisible(grey_background);
+                toggleCard("open","categories");
             }
         });
 
-        Button card_view_categories_close = (Button) findViewById(R.id.card_view_categories_close);
-        card_view_categories_close.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.card_view_categories_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardView card_view_categories = (CardView) findViewById(R.id.card_view_categories);
-                RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.grey_background);
-                Visibility visibility = new Visibility();
-                visibility.makeInvisible(card_view_categories);
-                visibility.makeInvisible(grey_background);
+                toggleCard("close","categories");
             }
         });
 
 
-        CardView card_view_restaurants_open = (CardView) findViewById(R.id.card_view_restaurants_open);
-        card_view_restaurants_open.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.card_view_restaurants_open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardView card_view_restaurants = (CardView) findViewById(R.id.card_view_restaurants);
-                RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.grey_background);
-                Visibility visibility = new Visibility();
-                visibility.makeVisible(card_view_restaurants);
-                visibility.makeVisible(grey_background);
+                toggleCard("open","restaurants");
             }
         });
 
-        Button card_view_restaurants_close = (Button) findViewById(R.id.card_view_restaurants_close);
-        card_view_restaurants_close.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.card_view_restaurants_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardView card_view_restaurants = (CardView) findViewById(R.id.card_view_restaurants);
-                RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.grey_background);
-                Visibility visibility = new Visibility();
-                visibility.makeInvisible(card_view_restaurants);
-                visibility.makeInvisible(grey_background);
+                toggleCard("close","restaurants");
             }
         });
+
+        findViewById(R.id.grey_background).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCard("close","restaurants");
+                toggleCard("close","categories");
+            }
+        });
+
+
+        RangeBar rangebar_people = (RangeBar) findViewById(R.id.rangebar_people);
+        RangeBar rangebar_price = (RangeBar) findViewById(R.id.rangebar_price);
+        RangeBar rangebar_actual_sale = (RangeBar) findViewById(R.id.rangebar_actual_sale);
+        DatePicker datepicker_max_date = (DatePicker) findViewById(R.id.max_date);
+        DatePicker datepicker_min_date = (DatePicker) findViewById(R.id.min_date);
+
+        Date today = new Date();
+        datepicker_max_date.init(today.getYear(), today.getMonth(), today.getDay(), new DatePicker.OnDateChangedListener(){
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Date newMaxDate = new Date(year,monthOfYear,dayOfMonth);
+                EatMeetApp.getFiltersManager().setF_max_date(newMaxDate);
+            }
+        });
+        datepicker_min_date.init(today.getYear(), today.getMonth(), today.getDay(), new DatePicker.OnDateChangedListener(){
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Date newMinxDate = new Date(year,monthOfYear,dayOfMonth);
+                EatMeetApp.getFiltersManager().setF_min_date(newMinxDate);
+            }
+        });
+
         /*
-        RangeBar price_rangebar = (RangeBar) findViewById(R.id.rangebar);
+        CheckBox checkbox_category = (CheckBox) findViewById(R.id.checkBoxListItemFilterCategory);
+        if (checkbox_category != null) {
+            checkbox_category.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    List<Integer> alreadySetCategories = EatMeetApp.getFiltersManager().getF_categories();
+                    System.out.println("aggiungo/tolgo la categoria " + buttonView.getId());
+                    if(isChecked){
+                        alreadySetCategories.add(buttonView.getId());
+                    } else {
+                        alreadySetCategories.remove(buttonView.getId());
+                    }
+                }
+            });
+        }
 
-        price_rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+        CheckBox checkbox_restaurant = (CheckBox) findViewById(R.id.checkBoxListItemFilterRestaurant);
+        if (checkbox_restaurant != null) {
+            checkbox_restaurant.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    List<Integer> alreadySetRestaurants = EatMeetApp.getFiltersManager().getF_restaurants();
+                    System.out.println("aggiungo/tolgo il ristorante " + buttonView.getId());
+                    if(isChecked){
+                        alreadySetRestaurants.add(buttonView.getId());
+                    } else {
+                        alreadySetRestaurants.remove(buttonView.getId());
+                    }
+                }
+            });
+        }
+        */
+
+        rangebar_price.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
                                               String leftPinValue, String rightPinValue) {
-                System.out.println(Integer.toString(leftPinIndex));
-                System.out.println(Integer.toString(rightPinIndex));
-                System.out.println(leftPinValue);
-                System.out.println(rightPinValue);
+                EatMeetApp.getFiltersManager().setF_max_price(Double.parseDouble(rightPinValue));
+                EatMeetApp.getFiltersManager().setF_min_price(Double.parseDouble(leftPinValue));
             }
         });
-        */
+
+        rangebar_people.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
+                                              String leftPinValue, String rightPinValue) {
+                EatMeetApp.getFiltersManager().setF_max_people(Integer.parseInt(rightPinValue));
+                EatMeetApp.getFiltersManager().setF_min_people(Integer.parseInt(leftPinValue));
+            }
+        });
+
+        rangebar_actual_sale.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
+                                              String leftPinValue, String rightPinValue) {
+                EatMeetApp.getFiltersManager().setF_max_actual_sale(Double.parseDouble(rightPinValue));
+                EatMeetApp.getFiltersManager().setF_min_actual_sale(Double.parseDouble(leftPinValue));
+            }
+        });
 
         /*expandable_people = (ExpandableListView) findViewById(R.id.expandable_people);
         expandable_date = (ExpandableListView) findViewById(R.id.expandable_date);
@@ -265,10 +364,36 @@ public class FiltersActivity extends AppCompatActivity {
         });*/
     }
 
+    private void toggleCard(String action, String target){
+        CardView target_card_view = null;
+        RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.grey_background);
+        Visibility visibility = new Visibility();
+        switch (target) {
+            case "categories":
+                target_card_view = (CardView) findViewById(R.id.card_view_categories);
+                break;
+            case "restaurants":
+                target_card_view = (CardView) findViewById(R.id.card_view_restaurants);
+        }
+        switch (action) {
+            case "open":
+                visibility.makeVisible(target_card_view);
+                visibility.makeVisible(grey_background);
+                break;
+            case "close":
+                visibility.makeInvisible(target_card_view);
+                visibility.makeInvisible(grey_background);
+        }
+    }
 
     /*add action for back button*/
     @Override
     public boolean onSupportNavigateUp(){
+        /*
+        Intent intent = NavUtils.getParentActivityIntent(this);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        NavUtils.navigateUpTo(this, intent);
+        */
         finish();
         return true;
     }
@@ -285,10 +410,20 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     public void undoFilter(){
+        EatMeetApp.getFiltersManager().resetOldFilters();
         exitFilter();
     }
     public void changeFilter(){
-        EatMeetApp.getFiltersManager().removeAllFilters();
+        try {
+            EatMeetApp.getFiltersManager().constructParameters();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("from", "FiltersActivity");
+        startActivity(intent);
         /*
         EditText filter_min_people = (EditText) findViewById(R.id.filter_min_people);
         if(filter_min_people.getText().toString() == "ernesto") {
@@ -300,7 +435,6 @@ public class FiltersActivity extends AppCompatActivity {
         }
         */
         //rangebar_people
-        exitFilter();
         //refresh();
     }
 
