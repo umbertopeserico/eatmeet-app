@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class ZoneDAOImpl implements ZoneDAO {
     @Override
+    public void getZones(List<Zone> zones) {
+
+    }
+
+    @Override
     public List<Zone> getZones() {
         ArrayList<Zone> zones = new ArrayList<>();
 
