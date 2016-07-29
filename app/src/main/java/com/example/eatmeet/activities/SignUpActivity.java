@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView passwordErrors;
     private TextView passwordConfirmationErrors;
     private Button signUpButton;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwordErrors = (TextView) findViewById(R.id.passwordErrors);
         passwordConfirmationErrors = (TextView) findViewById(R.id.passwordConfirmationErrors);
         signUpButton = (Button) findViewById(R.id.signUpButton);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         final User user = new User();
 
@@ -114,6 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 user.cleanErrors();
                 SignUpActivity.this.cleanErrors();
+                progressBar.setVisibility(View.VISIBLE);
                 user.setName(name.getText().toString());
                 user.setSurname(surname.getText().toString());
                 user.setEmail(email.getText().toString());
@@ -129,6 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
                         signInBM.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
+                                progressBar.setVisibility(View.GONE);
                                 Intent intent = new Intent(SignUpActivity.this, CategoriesTestActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -136,6 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Object response, Integer code) {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -144,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
+                        progressBar.setVisibility(View.GONE);
                         if(code!=403) {
                             Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                         }
