@@ -47,7 +47,7 @@
             app:canExpand="true" />
     </com.kyo.expandablelayout.ExpandableLayout>-->
 
-    <LinearLayout
+    <!--<LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -64,18 +64,304 @@
             android:id="@+id/expandable_date">
         </ExpandableListView>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
-    <!--<ScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
                 <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/listview_filters">
 
-                    <android.support.design.widget.TextInputLayout
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_people"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Numero di persone"
+                            android:layout_margin="10dp"/>
+                        <com.appyvet.rangebar.RangeBar
+                            xmlns:custom="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/rangebar_people"
+                            android:layout_width="match_parent"
+                            android:layout_height="72dp"
+                            custom:connectingLineColor="@color/colorPrimary"
+                            custom:selectorColor="@color/colorPrimaryDark"
+                            custom:rangeBarColor="@color/colorPrimaryDark"
+                            custom:pinColor="@color/colorPrimary"
+                            custom:selectorSize="10dp"
+                            custom:tickStart="0"
+                            custom:temporaryPins="false"
+                            custom:tickInterval="20"
+                            custom:tickEnd="200"
+                            custom:tickColor="@color/colorPrimaryDark"
+                            custom:tickHeight="2dp"
+                            android:layout_marginTop="22dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_price"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Prezzo (€)"
+                            android:layout_margin="10dp"/>
+                        <com.appyvet.rangebar.RangeBar
+                            xmlns:custom="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/rangebar_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="72dp"
+                            custom:connectingLineColor="@color/colorPrimary"
+                            custom:selectorColor="@color/colorPrimaryDark"
+                            custom:rangeBarColor="@color/colorPrimaryDark"
+                            custom:pinColor="@color/colorPrimary"
+                            custom:selectorSize="10dp"
+                            custom:tickStart="0"
+                            custom:temporaryPins="false"
+                            custom:tickInterval="10"
+                            custom:tickEnd="100"
+                            custom:tickColor="@color/colorPrimaryDark"
+                            custom:tickHeight="2dp"
+                            android:layout_marginTop="22dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_date"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:weightSum="2"
+                                android:orientation="vertical"
+                                android:layout_margin="5dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dal giorno"
+                                    android:layout_gravity="center_horizontal"/>
+                                <DatePicker
+                                    android:id="@+id/min_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:datePickerMode="spinner"
+                                    android:spinnersShown="true"
+                                    android:calendarViewShown="false"
+                                    android:layout_weight="1">
+                                </DatePicker>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:weightSum="2"
+                                android:orientation="vertical"
+                                android:layout_margin="5dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Al giorno"
+                                    android:layout_gravity="center_horizontal"/>
+                                <DatePicker
+                                    android:id="@+id/max_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:datePickerMode="spinner"
+                                    android:spinnersShown="true"
+                                    android:calendarViewShown="false"
+                                    android:layout_weight="1">
+                                </DatePicker>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_actual_sale"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Sconto attuale (%)"
+                            android:id="@+id/rangebar_actual_sale_label"
+                            android:layout_margin="10dp"/>
+                        <com.appyvet.rangebar.RangeBar
+                            xmlns:custom="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/rangebar_actual_sale"
+                            android:layout_width="match_parent"
+                            android:layout_height="72dp"
+                            android:layout_below="@id/rangebar_actual_sale_label"
+                            custom:connectingLineColor="@color/colorPrimary"
+                            custom:selectorColor="@color/colorPrimaryDark"
+                            custom:rangeBarColor="@color/colorPrimaryDark"
+                            custom:pinColor="@color/colorPrimary"
+                            custom:selectorSize="10dp"
+                            custom:tickStart="0"
+                            custom:temporaryPins="false"
+                            custom:tickInterval="10"
+                            custom:tickEnd="100"
+                            custom:tickColor="@color/colorPrimaryDark"
+                            custom:tickHeight="2dp"
+                            android:layout_marginTop="22dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            custom:pinMaxFont="15dp"/>
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_categories_open"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:id="@+id/title_categories"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Categorie (clicca per scegliere)"
+                            android:layout_margin="10dp"/>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/card_view_restaurants_open"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:id="@+id/title_restaurants"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Ristoranti (clicca per scegliere)"
+                            android:layout_margin="10dp"/>
+                    </android.support.v7.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/filter_buttons"
+                        android:weightSum="1">
+                        <Button android:id="@+id/confirm_filter"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="match_parent"
+                            android:text="@string/confirm" />
+                        <Button android:id="@+id/undo_filter"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="match_parent"
+                            android:text="@string/undo" />
+                    </LinearLayout>
+
+                </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/grey_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ccc"
+        android:visibility="gone"
+        android:alpha="0.8"></RelativeLayout>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_categories"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/card_view_categories_close"
+            android:text="Chiudi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|top" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/listview_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_restaurants"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+        <Button
+            android:id="@+id/card_view_restaurants_close"
+            android:text="Chiudi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|top" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/listview_restaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
+                    <!--<android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -132,31 +418,17 @@
                             android:maxLines="1"
                             android:singleLine="true" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>-->
 
-                    <com.appyvet.rangebar.RangeBar
-                        xmlns:custom="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/rangebar"
-                        android:layout_width="match_parent"
-                        android:layout_height="72dp"
-                        custom:connectingLineColor="@color/colorPrimary"
-                        custom:selectorColor="@color/colorPrimaryDark"
-                        custom:rangeBarColor="@color/colorPrimaryDark"
-                        custom:pinColor="@color/colorPrimary"
-                        custom:selectorSize="10dp"
-                        custom:tickStart="0"
-                        custom:temporaryPins="false"
-                        custom:tickInterval="20"
-                        custom:tickEnd="200"
-                        custom:tickColor="@color/colorPrimaryDark"
-                        custom:tickHeight="2dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"/>
-
-                    <SeekBar
+                    <!--<SeekBar
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/seekBar2" />
+
+                    <DatePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/datePicker" />
 
                     <CalendarView
                         android:layout_width="match_parent"
@@ -258,24 +530,4 @@
                             android:maxLines="1"
                             android:singleLine="true" />
 
-                    </android.support.design.widget.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/filter_buttons"
-                        android:weightSum="1">
-                        <Button android:id="@+id/confirm_filter"
-                            android:layout_width="0dp"
-                            android:layout_weight="0.5"
-                            android:layout_height="match_parent"
-                            android:text="@string/confirm" />
-                        <Button android:id="@+id/undo_filter"
-                            android:layout_width="0dp"
-                            android:layout_weight="0.5"
-                            android:layout_height="match_parent"
-                            android:text="@string/undo" />
-                    </LinearLayout>
-                </LinearLayout>
-        </ScrollView>-->
-</FrameLayout>
+                    </android.support.design.widget.TextInputLayout>-->

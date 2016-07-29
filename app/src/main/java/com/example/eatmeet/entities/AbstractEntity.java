@@ -26,7 +26,7 @@ public abstract class AbstractEntity {
 
     private HashMap<String, List<String>> errors = new HashMap<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

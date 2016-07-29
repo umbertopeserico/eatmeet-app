@@ -38,8 +38,11 @@ public class CategoryDAORest implements CategoryDAO {
                 backendStatusManager.addSuccess(responseString, statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Category>>(){}.getType();
+                System.out.println(responseString);
                 for(Category category : (List<Category>) gson.fromJson(responseString, collectionType)) {
                     categories.add(category);
+                    System.out.println(category.getEventsCount() + " Events Count");
+
                 }
             }
         });
