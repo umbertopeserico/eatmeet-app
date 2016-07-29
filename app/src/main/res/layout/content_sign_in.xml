@@ -51,7 +51,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/errorText"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/design_textinput_error_color_light" />
+        android:textColor="@color/design_textinput_error_color_light"
+        android:visibility="gone" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -85,11 +86,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Log out"
-            android:id="@+id/signOutButton" />
     </LinearLayout>
 
     <ProgressBar

@@ -84,6 +84,10 @@ public class UserDAORest implements UserDAO {
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 backendStatusManager.addError(responseString, statusCode);
 
+                if(responseString==null) {
+                    responseString = throwable.getMessage();
+                }
+
                 try {
                     JSONObject jsonResponse = new JSONObject(responseString);
                     JSONObject errors = jsonResponse.getJSONObject("errors");

@@ -49,7 +49,6 @@ public class SignInActivity extends AppCompatActivity {
         passwordField = (EditText) findViewById(R.id.passwordField);
         signInButton = (Button) findViewById(R.id.signInButton);
         signUpButton = (Button) findViewById(R.id.signUpButton);
-        signOutButton = (Button) findViewById(R.id.signOutButton);
         errorText = (TextView) findViewById(R.id.errorText);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -108,13 +107,13 @@ public class SignInActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
+                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
 
-        signOutButton.setOnClickListener(new View.OnClickListener() {
+        /*signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
@@ -141,7 +140,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 userDAO.signOut(backendStatusManager);
             }
-        });
+        });*/
     }
 
     @Override
