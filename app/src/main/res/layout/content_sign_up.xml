@@ -127,14 +127,16 @@
                 android:id="@+id/signUpButton"
                 android:layout_gravity="center_horizontal" />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center_horizontal"
+                android:indeterminate="false"
+                android:visibility="gone"
+                android:layout_margin="20dp" />
         </LinearLayout>
     </ScrollView>
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar2"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>
 

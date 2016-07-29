@@ -71,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwordErrors = (TextView) findViewById(R.id.passwordErrors);
         passwordConfirmationErrors = (TextView) findViewById(R.id.passwordConfirmationErrors);
         signUpButton = (Button) findViewById(R.id.signUpButton);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         final User user = new User();
 
@@ -149,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
+                        progressBar.setVisibility(View.GONE);
                         if(code!=403) {
                             Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                         }
