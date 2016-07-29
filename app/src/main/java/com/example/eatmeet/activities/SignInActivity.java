@@ -59,7 +59,7 @@ public class SignInActivity extends AppCompatActivity {
                 errorText.setVisibility(View.GONE);
                 errorText.setText("");
 
-                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
                 User user = new User();
                 user.setEmail(emailField.getText().toString());
                 user.setPassword(passwordField.getText().toString());
@@ -69,9 +69,29 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Object response, Integer code) {
                         progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+
+                        BackendStatusManager userBSM = new BackendStatusManager();
+                        userBSM.setBackendStatusListener(new BackendStatusListener() {
+                            @Override
+                            public void onSuccess(Object response, Integer code) {
+                                User user = (User) response;
+                                EatMeetApp.setCurrentUser(user);
+                                Log.w("CURRENT USER: ", ""+ response.toString());
+
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Object response, Integer code) {
+                                EatMeetApp.setCurrentUser(null);
+                                Log.e("CURRENT USER: ", "Retrieve current user failed: "+code);
+                            }
+                        });
+                        User user = new User();
+                        user.setId((Integer) response);
+                        userDAO.getUser(user, userBSM);
                     }
 
                     @Override
@@ -121,6 +141,7 @@ public class SignInActivity extends AppCompatActivity {
                 backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
+                        EatMeetApp.setCurrentUser(null);
                         Toast.makeText(SignInActivity.this, "Log out effettuato correttamente", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override

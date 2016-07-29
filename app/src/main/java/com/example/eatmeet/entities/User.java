@@ -15,6 +15,8 @@ public class User extends AbstractEntity implements Serializable{
     private String email;
     private String password;
     private String passwordConfirmation;
+    private String provider;
+    private String uid;
 
     private PropertyChangeSupport cs = new PropertyChangeSupport(this);
 
@@ -86,6 +88,26 @@ public class User extends AbstractEntity implements Serializable{
         String oldValue = this.passwordConfirmation;
         this.passwordConfirmation = passwordConfirmation;
         this.cs.firePropertyChange("passwordConfirmation", oldValue, this.passwordConfirmation);
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        String oldValue = this.provider;
+        this.provider = provider;
+        this.cs.firePropertyChange("provider", oldValue, this.provider);
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        String oldValue = this.uid;
+        this.uid = uid;
+        this.cs.firePropertyChange("provider", oldValue, this.uid);
     }
 
     @Override

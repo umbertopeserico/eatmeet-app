@@ -26,6 +26,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void getUser(User user, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
     public void signOut(BackendStatusManager backendStatusManager) {
 
     }
