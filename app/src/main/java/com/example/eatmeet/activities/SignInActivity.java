@@ -69,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Object response, Integer code) {
                         progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
+                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
