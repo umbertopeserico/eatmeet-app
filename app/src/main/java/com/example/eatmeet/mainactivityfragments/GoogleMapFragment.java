@@ -14,9 +14,14 @@ import android.view.ViewGroup;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.dao.implementations.oldrest.RestaurantDAOImpl;
+import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
+import com.example.eatmeet.observablearraylist.ObservableArrayList;
+import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Notificable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +34,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,8 +108,23 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
 
     private void ifAllowedGetData(){
         System.out.println("MAP READY TO LOAD DATA");
-        RestaurantDAO restaurantDAO = new RestaurantDAOImpl(this);
-        restaurantList = restaurantDAO.getRestaurants();
+        RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
+        ObservableArrayList<Event> restaurantList = new ObservableArrayList<>();
+
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                Logger.getLogger(GoogleMapFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                Logger.getLogger(GoogleMapFragment.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+
+        restaurantDAO.getRestaurants(restaurantList, backendStatusManager);
     }
 
     @Override

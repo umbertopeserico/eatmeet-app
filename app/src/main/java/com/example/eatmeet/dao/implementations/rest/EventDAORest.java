@@ -1,6 +1,7 @@
 package com.example.eatmeet.dao.implementations.rest;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
@@ -44,6 +45,7 @@ public class EventDAORest implements EventDAO {
                 backendStatusManager.addSuccess(responseString,statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Event>>(){}.getType();
+                Log.d("GET EVENTS", responseString);
                 for(Event event : (List<Event>) gson.fromJson(responseString, collectionType)) {
                     events.add(event);
                 }
