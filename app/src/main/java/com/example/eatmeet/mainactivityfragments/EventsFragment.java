@@ -53,40 +53,33 @@ public class EventsFragment extends Fragment  implements Notificable {
     private String order_by_temp = "order_by_date";
     private ArrayAdapter eventAdapter;
     private View view;
-    ObservableArrayList<Event> eventList = null;
-    JSONObject parameters = new JSONObject();
+    ObservableArrayList<Event> eventList;
+    BackendStatusManager backendStatusManager;
+    JSONObject parameters;
     EventDAO eventDao;
     @Override
     public void onResume(){ super.onResume(); refresh();}
 
     public View refresh(){
-        System.out.println("i'm refreshing...");
+        eventList.clear();
         try {
             parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){
             e.printStackTrace();
         }
-        eventList = null;
-        eventList = new ObservableArrayList<>();
-        //eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
-        //ListView listView = (ListView) view.findViewById(R.id.listview_events);
-        //listView.setAdapter(eventAdapter);
+        eventDao.getEvents(eventList, backendStatusManager, parameters);
         return view;
     }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_events,this)
-                .commit();*/
-        view = inflater.inflate(R.layout.fragment_events, container, false);
+
+    public View retrieve(){
+
+        eventList = new ObservableArrayList<>();
+        backendStatusManager = new BackendStatusManager();
+        parameters = new JSONObject();
 
         eventDao = EatMeetApp.getDaoFactory().getEventDAO();
-        eventList = new ObservableArrayList<>();
         ListView listView = (ListView) view.findViewById(R.id.listview_events);
 
-        BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
@@ -109,14 +102,23 @@ public class EventsFragment extends Fragment  implements Notificable {
                 eventAdapter.notifyDataSetChanged();
             }
         });
+        //eventList = new ObservableArrayList<>();
+        //eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
+        //ListView listView = (ListView) view.findViewById(R.id.listview_events);
+        //listView.setAdapter(eventAdapter);
+        refresh();
+        return view;
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_events,this)
+                .commit();*/
+        view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        try {
-            parameters = EatMeetApp.getFiltersManager().constructParameters();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        eventDao.getEvents(eventList, backendStatusManager, parameters);
-        //refresh();
+        retrieve();
 
         Button filter = (Button) view.findViewById(R.id.filter);
         assert filter != null;
