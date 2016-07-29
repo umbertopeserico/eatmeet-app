@@ -45,6 +45,9 @@ public class FilterRestaurantsAdapter extends ArrayAdapter {
 
         listItem.setText(restaurant.getName());
         checkBox.setId(restaurant.getId());
+        if(EatMeetApp.getFiltersManager().getF_restaurants().contains(restaurant.getId())){
+            checkBox.setChecked(true);
+        }
 
         checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
@@ -52,11 +55,8 @@ public class FilterRestaurantsAdapter extends ArrayAdapter {
                 ArrayList<Integer> alreadySetRestaurants = EatMeetApp.getFiltersManager().getF_restaurants();
                 if(isChecked){
                     alreadySetRestaurants.add(restaurant.getId());
-                    System.out.println("aggiungoo il ristorante " + restaurant.getId());
                 } else {
                     alreadySetRestaurants.remove((Object) restaurant.getId());
-                    alreadySetRestaurants.remove(restaurant.getId());
-                    System.out.println("tolgo il ristorante " + restaurant.getId());
                 }
                 EatMeetApp.getFiltersManager().setF_restaurants(alreadySetRestaurants);
             }

@@ -51,6 +51,9 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
 
         listItem.setText(category.getName());
         checkBox.setId(category.getId());
+        if(EatMeetApp.getFiltersManager().getF_categories().contains(category.getId())){
+            checkBox.setChecked(true);
+        }
 
         checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
@@ -58,10 +61,8 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
                 ArrayList<Integer> alreadySetCategories = EatMeetApp.getFiltersManager().getF_categories();
                 if(isChecked){
                     alreadySetCategories.add(category.getId());
-                    System.out.println("aggiungoo la categoria " + category.getId());
                 } else {
                     alreadySetCategories.remove((Object) category.getId());
-                    System.out.println("tolgo la categoria " + category.getId());
                 }
                 EatMeetApp.getFiltersManager().setF_categories(alreadySetCategories);
             }
