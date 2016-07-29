@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.dao.factories.DAOFactory;
 import com.example.eatmeet.dao.factories.RestDAOFactory;
+import com.example.eatmeet.entities.User;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Post;
@@ -20,8 +21,8 @@ import org.json.JSONObject;
 public class EatMeetApp extends Application {
     public static SharedPreferences sharedPref;
     private static FiltersManager filtersManager;
-
     private static final DAOFactory daoFactory = new RestDAOFactory();
+    private static User currentUser;
 
     @Override
     public void onCreate() {
@@ -84,5 +85,13 @@ public class EatMeetApp extends Application {
 
     public static DAOFactory getDaoFactory() {
         return daoFactory;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        EatMeetApp.currentUser = currentUser;
     }
 }

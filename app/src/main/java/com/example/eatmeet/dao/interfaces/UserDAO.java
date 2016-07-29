@@ -18,6 +18,8 @@ public interface UserDAO {
 
     void signUp(User user, final BackendStatusManager backendStatusManager);
 
+    void getUser(User user, BackendStatusManager backendStatusManager);
+
     @Deprecated
     List<User> getUsers();
 }

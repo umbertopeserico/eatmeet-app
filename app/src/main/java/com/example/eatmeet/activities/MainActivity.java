@@ -20,9 +20,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
+import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
@@ -118,15 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(EatMeetApp.sharedPref.contains("email"))
-        {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
-        } else
-        {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer);
-        }
+        setMenuLayout();
 
         Intent intent = getIntent();
         if(intent != null && intent.getExtras() != null && intent.getExtras().get("from") != null) {
@@ -135,17 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setCurrentFragment(1);
             }
         }
-
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
 
     }
 
@@ -156,14 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.menu_main, menu);
         TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
 
-        if(EatMeetApp.sharedPref.contains("email")) {
-            assert emailText != null;
-            emailText.setText(EatMeetApp.sharedPref.getString("email", "Ospite"));
-        }
-        else
-        {
-            emailText.setText("Ospite");
-        }
+        setMenuLayout();
 
         return true;
     }
@@ -174,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        setMenuLayout();
 
         return super.onOptionsItemSelected(item);
     }
@@ -197,10 +175,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.sidebar_signout:
-                SharedPreferences.Editor editor = EatMeetApp.sharedPref.edit();
-                editor.clear();
-                editor.commit();
-                CookiesUtil.getCookieManager().getCookieStore().removeAll();
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                BackendStatusManager backendStatusManager = new BackendStatusManager();
+                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        EatMeetApp.setCurrentUser(null);
+                        Toast.makeText(MainActivity.this, "Log out effettuato correttamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        Toast.makeText(MainActivity.this, "Errore nel logout. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                userDAO.signOut(backendStatusManager);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
                 break;
@@ -266,5 +259,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return null;
         }
+    }
+
+    private void setMenuLayout() {
+        if(EatMeetApp.getCurrentUser()!=null)
+        {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_logged);
+        } else
+        {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setMenuLayout();
     }
 }
