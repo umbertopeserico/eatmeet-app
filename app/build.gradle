@@ -35,4 +35,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.appyvet:materialrangebar:1.3'
     //compile 'com.kyo.expandablelayout.ExpandableLayout:2.0'
+    compile 'com.android.support:cardview-v7:23.+'
+    compile 'com.android.support:recyclerview-v7:23.+'
 }

@@ -1,6 +1,7 @@
 package com.example.eatmeet.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.example.eatmeet.activities.MainActivity;
 
@@ -8,9 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 /**
  * Created by sofia on 26/07/2016.
@@ -28,18 +31,18 @@ public class FiltersManager {
     boolean old_on_min_date;
     boolean old_on_max_date;
 
-    double oldF_min_price;
-    double oldF_max_price;
+    Double oldF_min_price;
+    Double oldF_max_price;
     boolean old_on_min_price;
     boolean old_on_max_price;
 
-    double oldF_min_actual_sale;
-    double oldF_max_actual_sale;
+    Double oldF_min_actual_sale;
+    Double oldF_max_actual_sale;
     boolean old_on_min_actual_sale;
     boolean old_on_max_actual_sale;
 
-    int oldF_min_people;
-    int oldF_max_people;
+    Integer oldF_min_people;
+    Integer oldF_max_people;
     boolean old_on_min_people;
     boolean old_on_max_people;
 
@@ -52,23 +55,23 @@ public class FiltersManager {
     private ArrayList<Integer> f_categories = new ArrayList<>();
     private boolean on_categories = false;
 
-    private Date f_min_date = null;
-    private Date f_max_date = null;
+    private Date f_min_date;
+    private Date f_max_date;
     private boolean on_min_date = false;
     private boolean on_max_date = false;
 
-    private double f_min_price = 0;
-    private double f_max_price = 0;
+    private Double f_min_price = 0.0;
+    private Double f_max_price = 100.0;
     private boolean on_min_price = false;
     private boolean on_max_price = false;
 
-    private double f_min_actual_sale = 0;
-    private double f_max_actual_sale = 0;
+    private Double f_min_actual_sale = 0.0;
+    private Double f_max_actual_sale = 100.0;
     private boolean on_min_actual_sale = false;
     private boolean on_max_actual_sale = false;
 
-    private int f_min_people = 0;
-    private int f_max_people = 0;
+    private Integer f_min_people = 0;
+    private Integer f_max_people = 200;
     private boolean on_min_people = false;
     private boolean on_max_people = false;
 
@@ -112,7 +115,7 @@ public class FiltersManager {
     }
 
     /*min_people*/
-    public void setF_min_people(int min_people) {
+    public void setF_min_people(Integer min_people) {
         f_min_people = min_people;
         on_min_people = true;
     }
@@ -124,7 +127,7 @@ public class FiltersManager {
     }
 
     /*max_people*/
-    public void setF_max_people(int max_people) {
+    public void setF_max_people(Integer max_people) {
         f_max_people = max_people;
         on_max_people = true;
     }
@@ -160,7 +163,7 @@ public class FiltersManager {
     }
 
     /*min_price*/
-    public void setF_min_price(double min_price) {
+    public void setF_min_price(Double min_price) {
         f_min_price = min_price;
         on_min_price = true;
     }
@@ -172,7 +175,7 @@ public class FiltersManager {
     }
 
     /*max_price*/
-    public void setF_max_price(double max_price) {
+    public void setF_max_price(Double max_price) {
         f_max_price = max_price;
         on_max_price = true;
     }
@@ -184,11 +187,11 @@ public class FiltersManager {
     }
 
     /*actual_discount*/
-    public void setF_min_actual_sale(double min_actual_sale) {
+    public void setF_min_actual_sale(Double min_actual_sale) {
         f_min_actual_sale = min_actual_sale;
         on_min_actual_sale = true;
     }
-    public void setF_max_actual_sale(double max_actual_sale) {
+    public void setF_max_actual_sale(Double max_actual_sale) {
         f_max_actual_sale = max_actual_sale;
         on_max_actual_sale = true;
     }
@@ -265,14 +268,18 @@ public class FiltersManager {
         }
 
         if(on_min_date || on_max_date) {
+            SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd");
+            parserSDF.setTimeZone(TimeZone.getTimeZone("GMT"));
             JSONObject date_range = new JSONObject();
             if (on_min_date) {
                 Date f_min_date = getF_min_date();
-                date_range.put("start", f_min_date);
+                String string_f_min_date = parserSDF.format(f_min_date);
+                date_range.put("start", string_f_min_date);
             }
             if (on_max_date) {
                 Date f_max_date = getF_max_date();
-                date_range.put("end", f_max_date);
+                String string_f_max_date = parserSDF.format(f_max_date);
+                date_range.put("end", string_f_max_date);
             }
             all_filters.put("date_range", date_range);
         }
