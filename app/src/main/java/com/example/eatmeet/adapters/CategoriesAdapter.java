@@ -3,6 +3,9 @@ package com.example.eatmeet.adapters;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.MainActivity;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
+import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
@@ -14,6 +17,7 @@ import com.example.eatmeet.utils.Post;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -64,13 +68,13 @@ public class CategoriesAdapter extends ArrayAdapter {
                 (Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mListRowLayout, null);
 
-        Category element = mItems.get(position);
+        Category category = mItems.get(position);
 
         final TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItem);
-        final ImageView icon = (ImageView) convertView.findViewById(R.id.categoryIcon);
+        final ImageView categoryImage = (ImageView) convertView.findViewById(R.id.categoryIcon);
         final MainActivity mainActivity = (MainActivity) mContext;
         final ArrayList<Integer> categories = new ArrayList<>();
-        categories.add(element.getId());
+        categories.add(category.getId());
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,27 +104,42 @@ public class CategoriesAdapter extends ArrayAdapter {
                 mainActivity.setCurrentFragment(1);
             }
         });
+        CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
 
-        new Images(){
-            @Override public void onPostExecute(Bitmap result){
-                icon.setImageBitmap(result);
+        String tmpFileName = category.getImage().substring(category.getImage().lastIndexOf("/")+1);
+
+        final File file = new File(this.getContext().getCacheDir(), tmpFileName);
+        if(!file.exists()) {
+            System.out.println("Cache non esiste");
+            BackendStatusManager imageStatusManager = new BackendStatusManager();
+            imageStatusManager.setBackendStatusListener(new BackendStatusListener() {
+                @Override
+                public void onSuccess(Object response, Integer code) {
+                    System.out.println("Immagine scaricata");
+                    categoryImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                }
+
+                @Override
+                public void onFailure(Object response, Integer code) {
+                    System.out.println("Immagine NON scaricata");
+                }
+            });
+            categoryDAO.getImage(category.getImage(), imageStatusManager, this.getContext().getCacheDir());
+        }
+        else
+        {
+            System.out.println("Cache esiste");
+            if(!file.isDirectory()) {
+                categoryImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
-        }.execute(element.getImage());
-
-        /*
-        ImageView icon = (ImageView) convertView.findViewById(R.id.categoryIcon);
-        String uri = "@drawable/"+element.getIcon();
-        uri = Environment.getExternalStorageDirectory().toString() + element.getName() + ".jpg";
-        int imageResource = getContext().getResources().getIdentifier(uri, null, getContext().getPackageName());
-        icon.setImageDrawable(getContext().getResources().getDrawable(imageResource));
-        */
+        }
 
         TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
-        text.setText(element.getName());
+        text.setText(category.getName());
 
         TextView count = (TextView) convertView.findViewById(R.id.countViewListItem);
 
-        count.setText(element.getEventsCount());
+        count.setText(category.getEventsCount().toString());
 
         return convertView;
     }
