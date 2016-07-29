@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,16 @@ import com.example.eatmeet.activities.EventActivity;
 import com.example.eatmeet.activities.FilterActivity;
 import com.example.eatmeet.activities.FiltersActivity;
 import com.example.eatmeet.activities.MainActivity;
+import com.example.eatmeet.activitiestest.EventsTestActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
+import com.example.eatmeet.adapters.EventsAdapterTest;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.dao.implementations.oldrest.EventDAOImpl;
 import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.observablearraylist.ObservableArrayList;
+import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Notificable;
 import com.example.eatmeet.utils.Visibility;
@@ -36,32 +43,70 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class EventsFragment extends Fragment  implements Notificable {
     private String order_by_temp = "order_by_date";
-    private ArrayAdapter<String> eventAdapter;
+    private ArrayAdapter eventAdapter;
     private View view;
-    List<Event> eventList = null;
-    JSONObject parameters = new JSONObject();
+    ObservableArrayList<Event> eventList;
+    BackendStatusManager backendStatusManager;
+    JSONObject parameters;
     EventDAO eventDao;
     @Override
     public void onResume(){ super.onResume(); refresh();}
 
     public View refresh(){
-        System.out.println("i'm refreshing...");
+        eventList.clear();
         try {
             parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){
             e.printStackTrace();
         }
-        eventList = null;
-        eventList = eventDao.getEvents(parameters);
-        eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
+        eventDao.getEvents(eventList, backendStatusManager, parameters);
+        return view;
+    }
+
+    public View retrieve(){
+
+        eventList = new ObservableArrayList<>();
+        backendStatusManager = new BackendStatusManager();
+        parameters = new JSONObject();
+
+        eventDao = EatMeetApp.getDaoFactory().getEventDAO();
         ListView listView = (ListView) view.findViewById(R.id.listview_events);
+
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                Logger.getLogger(EventsFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                Logger.getLogger(EventsFragment.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+
+        eventAdapter = new EventsAdapter(this.getContext(), R.layout.list_item_event, eventList);
         listView.setAdapter(eventAdapter);
+
+        eventList.setOnAddListener(new OnAddListener() {
+            @Override
+            public void onAddEvent(Object item) {
+                Log.d("EVENTS :", "add element "+item.toString());
+                eventAdapter.notifyDataSetChanged();
+            }
+        });
+        //eventList = new ObservableArrayList<>();
+        //eventAdapter = new EventsAdapter(getContext(), R.layout.list_item_event, eventList);
+        //ListView listView = (ListView) view.findViewById(R.id.listview_events);
+        //listView.setAdapter(eventAdapter);
+        refresh();
         return view;
     }
     @Override
@@ -73,14 +118,7 @@ public class EventsFragment extends Fragment  implements Notificable {
                 .commit();*/
         view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        eventDao = new EventDAOImpl(this);
-        eventList = new ArrayList<>();
-        try {
-            parameters = EatMeetApp.getFiltersManager().constructParameters();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        refresh();
+        retrieve();
 
         Button filter = (Button) view.findViewById(R.id.filter);
         assert filter != null;

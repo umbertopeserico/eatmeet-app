@@ -301,15 +301,19 @@ public class FiltersManager {
         /*set order parameters*/
         if(getF_order_by()=="order_by_date") {
             JSONObject schedule = new JSONObject();
-            schedule.put("schedule","asc");
+            schedule.put("field","schedule");
+            schedule.put("direction","asc");
             parameters.put("order", schedule);
         } else if (getF_order_by()=="order_by_price") {
             JSONObject price = new JSONObject();
-            price.put("actual_price","desc");
+            price.put("field","actual_price");
+            price.put("direction","desc");
             parameters.put("order", price);
         }
 
         saveOldFilters();
+
+        System.out.println("QQQ " + parameters);
 
         return parameters;
     }

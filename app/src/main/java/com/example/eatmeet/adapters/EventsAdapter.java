@@ -3,6 +3,7 @@ package com.example.eatmeet.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +43,18 @@ public class EventsAdapter extends ArrayAdapter {
 
         final Event event = mItems.get(position);
 
+        Log.d("EVENTS: ", "Add element to listview "+event.toString());
+
         /*
         TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
         text.setText(event.getTitle());
         */
         final ImageView eventsImage = (ImageView) convertView.findViewById(R.id.eventsImage);
-        new Images(){
+        /*new Images(){
             @Override public void onPostExecute(Bitmap result){
                 eventsImage.setImageBitmap(result);
             }
-        }.execute((String) event.getUrlImageMedium());
+        }.execute((String) event.getUrlImageMedium());*/
         TextView eventsTitle = (TextView) convertView.findViewById(R.id.eventsTitle);
         eventsTitle.setText(event.getTitle());
 
