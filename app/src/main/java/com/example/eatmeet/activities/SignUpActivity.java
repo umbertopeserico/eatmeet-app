@@ -54,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Inizializzo parametri della vista
         name = (EditText) findViewById(R.id.nameField);
         surname = (EditText) findViewById(R.id.surnameField);
@@ -142,7 +144,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
-                        Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                        if(code!=403) {
+                            Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -162,5 +166,11 @@ public class SignUpActivity extends AppCompatActivity {
         passwordErrors.setVisibility(View.GONE);
         passwordConfirmationErrors.setText("");
         passwordConfirmationErrors.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 }

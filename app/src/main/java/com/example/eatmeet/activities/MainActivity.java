@@ -194,6 +194,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
                 break;
+            case R.id.sidebar_privacy_policy:
+                intent = new Intent(MainActivity.this, PrivacyPolicyActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
             default:
         }
 

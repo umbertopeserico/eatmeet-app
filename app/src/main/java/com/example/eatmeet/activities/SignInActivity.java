@@ -42,6 +42,8 @@ public class SignInActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Inizializzo le variabili di istanza con i riferimenti della vists
         emailField = (EditText) findViewById(R.id.emailField);
         passwordField = (EditText) findViewById(R.id.passwordField);
@@ -55,7 +57,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                errorText.setVisibility(View.VISIBLE);
+                errorText.setVisibility(View.GONE);
                 errorText.setText("");
 
                 UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
@@ -83,7 +85,10 @@ public class SignInActivity extends AppCompatActivity {
                                 JSONObject jsonResponse = new JSONObject((String) response);
                                 JSONArray errors = jsonResponse.getJSONArray("errors");
                                 for (int i = 0; i < errors.length(); i++) {
-                                    errorString += errors.get(i) + "\n";
+                                    errorString += errors.get(i);
+                                    if(i!=errors.length()-1)  {
+                                        errorString+= "\n";
+                                    }
                                 }
                                 errorText.setText(errorString);
                             } catch (JSONException e) {
@@ -137,6 +142,12 @@ public class SignInActivity extends AppCompatActivity {
                 userDAO.signOut(backendStatusManager);
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
 }
