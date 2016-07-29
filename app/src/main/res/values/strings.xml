@@ -7,6 +7,7 @@
     <string name="title_activity_events">EventsActivity</string>
     <string name="title_activity_filter">FilterActivity</string>
     <string name="title_activity_main_fragment_activuty">MainFragmentActivuty</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="category_tab_title">Categorie</string>

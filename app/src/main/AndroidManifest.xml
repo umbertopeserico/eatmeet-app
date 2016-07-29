@@ -30,7 +30,6 @@
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,13 +40,11 @@
             android:name=".activities.SignInActivity"
             android:label="@string/title_activity_sign_in"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
@@ -64,18 +61,17 @@
         <activity
             android:name=".activitiestest.CategoriesTestActivity"
             android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activitiestest.EventsTestActivity"
             android:label="@string/title_activity_events_test"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.FiltersActivity"
             android:label="@string/title_activity_filters" />
-
+        <activity
+            android:name=".activities.PrivacyPolicyActivity"
+            android:label="@string/title_activity_privacy_policy" />
     </application>
 
 </manifest>
