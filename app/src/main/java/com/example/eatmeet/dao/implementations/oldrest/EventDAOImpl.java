@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -103,6 +104,11 @@ public class EventDAOImpl implements EventDAO {
         }.execute(new Configs().getBackendUrl() + "api/events/" + eventId);
 
         return myNewEvent;
+    }
+
+    @Override
+    public void getImage(String url, BackendStatusManager backendStatusManager, File cacheDir) {
+
     }
 
     @Override
