@@ -3,6 +3,7 @@ package com.example.eatmeet.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.activities.MainActivity;
 
 import org.json.JSONArray;
@@ -79,6 +80,7 @@ public class FiltersManager {
     private boolean on_restaurants = false;
 
     public FiltersManager(){
+        System.out.println("FILTERS MANAGER CONSTRUCTOR");
         saveOldFilters();
     }
 
@@ -93,26 +95,38 @@ public class FiltersManager {
     /*restaurants*/
     public void setF_restaurants(ArrayList<Integer> restaurants) {
         f_restaurants = restaurants;
-        on_restaurants = true;
+        if(f_restaurants.size() != 0){
+            on_restaurants = true;
+        } else {
+            on_restaurants = false;
+        }
     }
     public void removeF_restaurants(){
         on_restaurants = false;
+        f_restaurants.clear();
     }
     public ArrayList<Integer> getF_restaurants(){
         return f_restaurants;
     }
+    public boolean isActiveF_restaurants() {return on_restaurants;}
 
     /*categories*/
     public void setF_categories(ArrayList<Integer> categories) {
         f_categories = categories;
-        on_categories = true;
+        if(f_categories.size() != 0){
+            on_categories = true;
+        } else {
+            on_categories = false;
+        }
     }
     public void removeF_categories(){
         on_categories = false;
+        f_categories.clear();
     }
     public ArrayList<Integer> getF_categories(){
         return f_categories;
     }
+    public boolean isActiveF_categories() {return on_categories;}
 
     /*min_people*/
     public void setF_min_people(Integer min_people) {
@@ -121,10 +135,12 @@ public class FiltersManager {
     }
     public void removeF_min_people(){
         on_min_people = false;
+        f_min_people = 0;
     }
     public int getF_min_people(){
         return f_min_people;
     }
+    public boolean isActiveF_min_people() {return on_min_people;}
 
     /*max_people*/
     public void setF_max_people(Integer max_people) {
@@ -133,10 +149,12 @@ public class FiltersManager {
     }
     public void removeF_max_people(){
         on_max_people = false;
+        f_max_people = 200;
     }
     public int getF_max_people(){
         return f_max_people;
     }
+    public boolean isActiveF_max_people() {return on_max_people;}
 
     /*min_date*/
     public void setF_min_date(Date min_date) {
@@ -145,10 +163,12 @@ public class FiltersManager {
     }
     public void removeF_min_date(){
         on_min_date = false;
+        f_min_date = new Date();
     }
     public Date getF_min_date(){
         return f_min_date;
     }
+    public boolean isActiveF_min_date() {return on_min_date;}
 
     /*max_date*/
     public void setF_max_date(Date max_date) {
@@ -157,10 +177,12 @@ public class FiltersManager {
     }
     public void removeF_max_date(){
         on_max_date = false;
+        f_max_date = new Date();
     }
     public Date getF_max_date(){
         return f_max_date;
     }
+    public boolean isActiveF_max_date() {return on_max_date;}
 
     /*min_price*/
     public void setF_min_price(Double min_price) {
@@ -169,10 +191,12 @@ public class FiltersManager {
     }
     public void removeF_min_price(){
         on_min_price = false;
+        f_min_price = 0.0;
     }
     public double getF_min_price(){
         return f_min_price;
     }
+    public boolean isActiveF_min_price() {return on_min_price;}
 
     /*max_price*/
     public void setF_max_price(Double max_price) {
@@ -181,10 +205,12 @@ public class FiltersManager {
     }
     public void removeF_max_price(){
         on_max_price = false;
+        f_min_price = 100.0;
     }
     public double getF_max_price(){
         return f_max_price;
     }
+    public boolean isActiveF_max_price() {return on_max_price;}
 
     /*actual_discount*/
     public void setF_min_actual_sale(Double min_actual_sale) {
@@ -197,9 +223,11 @@ public class FiltersManager {
     }
     public void removeF_min_actual_sale(){
         on_min_actual_sale = false;
+        f_min_actual_sale = 0.0;
     }
     public void removeF_max_actual_sale(){
         on_max_actual_sale = false;
+        f_max_actual_sale = 100.0;
     }
     public double getF_min_actual_sale(){
         return f_min_actual_sale;
@@ -207,6 +235,8 @@ public class FiltersManager {
     public double getF_max_actual_sale(){
         return f_max_actual_sale;
     }
+    public boolean isActiveF_min_actual_sale() {return on_min_actual_sale;}
+    public boolean isActiveF_max_actual_sale() {return on_max_actual_sale;}
 
     /*allFilters*/
     public void removeAllFilters(){

@@ -11,7 +11,8 @@ public class Configs {
         if(development)
             return "http://192.168.1.138:3000/";
         else
-            return "http://eatmeet.herokuapp.com/";
+            //return "http://eatmeet.herokuapp.com/";
+            return "http://eatmeet.peserico.me/";
     }
 
 }

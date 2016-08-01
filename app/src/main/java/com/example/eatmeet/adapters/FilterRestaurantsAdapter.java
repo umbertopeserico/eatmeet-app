@@ -52,7 +52,7 @@ public class FilterRestaurantsAdapter extends ArrayAdapter {
         checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ArrayList<Integer> alreadySetRestaurants = EatMeetApp.getFiltersManager().getF_restaurants();
+            final ArrayList<Integer> alreadySetRestaurants = EatMeetApp.getFiltersManager().getF_restaurants();
                 if(isChecked){
                     alreadySetRestaurants.add(restaurant.getId());
                 } else {
