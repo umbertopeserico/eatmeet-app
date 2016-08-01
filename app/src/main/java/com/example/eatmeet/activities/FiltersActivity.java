@@ -128,19 +128,30 @@ public class FiltersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filters);
         /*add back button*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
         retrieveCategories();
         retrieveRestaurants();
-
         /*add actions to buttons*/
         Button confirm_filter = (Button) findViewById(R.id.confirm_filter);
         confirm_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { changeFilter(); }
         });
+        /*
         Button undo_filter = (Button) findViewById(R.id.undo_filter);
         undo_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { undoFilter(); }
+        });
+        */
+        Button reset_filter = (Button) findViewById(R.id.reset_filter);
+        reset_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { resetFilter(); }
         });
         findViewById(R.id.card_view_categories_open).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,8 +290,12 @@ public class FiltersActivity extends AppCompatActivity {
 
     public void undoFilter(){
         EatMeetApp.getFiltersManager().resetOldFilters();
-        changeFilters = false;
-        onSupportNavigateUp();
+        changeFilter();
+    }
+
+    public void resetFilter(){
+        EatMeetApp.getFiltersManager().removeAllFilters();
+        changeFilter();
     }
 
     public void changeFilter(){

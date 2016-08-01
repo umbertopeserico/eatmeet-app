@@ -30,12 +30,12 @@ public class RestaurantDAORest implements RestaurantDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                backendStatusManager.addSuccess(responseString, statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Restaurant>>(){}.getType();
                 for(Restaurant restaurant : (List<Restaurant>) gson.fromJson(responseString, collectionType)) {
                     restaurants.add(restaurant);
                 }
+                backendStatusManager.addSuccess(responseString, statusCode);
             }
         });
     }
