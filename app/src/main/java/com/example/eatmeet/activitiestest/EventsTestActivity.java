@@ -38,7 +38,6 @@ public class EventsTestActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         BackendStatusManager backendStatusManager = new BackendStatusManager();
 
         EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();

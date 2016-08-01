@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,10 +88,10 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         map = googleMap;
 
         if (map == null) {
-            System.out.println("ERROR 1");
+            System.out.println("ERROR map == null");
             return;
         }
-
+        /*
         if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_POSITION);
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_POSITION);
@@ -103,13 +104,14 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        */
         ifAllowedGetData();
     }
 
     private void ifAllowedGetData(){
         System.out.println("MAP READY TO LOAD DATA");
         RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
-        ObservableArrayList<Event> restaurantList = new ObservableArrayList<>();
+        final ObservableArrayList<Event> restaurantList = new ObservableArrayList<>();
 
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
@@ -121,6 +123,31 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             @Override
             public void onFailure(Object response, Integer code) {
                 Logger.getLogger(GoogleMapFragment.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_POSITION);
+            return;
+        }
+        map.setMyLocationEnabled(true);
+        map.setOnInfoWindowClickListener(this);
+
+        restaurantList.setOnAddListener(new OnAddListener() {
+            @Override
+            public void onAddEvent(Object item) {
+                Restaurant r = (Restaurant) item;
+                LatLng pos = new LatLng(r.getLat(), r.getLgt());
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .title(r.getName())
+                        .snippet(r.getDescription())
+                        .position(pos);
+                Marker marker = map.addMarker(markerOptions);
+                markers.put(marker, r.getId());
+                if(restaurantList.size()==1) {
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(((Restaurant) restaurantList.get(0)).getLat(), ((Restaurant) restaurantList.get(0)).getLgt()), 12.0f));
+                }
             }
         });
 
@@ -207,8 +234,8 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
 
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
         for(Restaurant r : this.restaurantList) {
+            System.out.println("ADD NEW RESTAURANT " + r);
             LatLng pos = new LatLng(r.getLat(), r.getLgt());
-            System.err.println("FROM DAO REST"+r.getName());
             MarkerOptions markerOptions = new MarkerOptions()
                     .title(r.getName())
                     .snippet(r.getDescription())
