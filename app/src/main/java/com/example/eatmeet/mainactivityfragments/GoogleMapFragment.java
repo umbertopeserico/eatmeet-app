@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -46,7 +48,10 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     MapView mapView;
     HashMap<Marker,Integer> markers = new HashMap<>();
     GoogleMap map;
+    View view;
     private List<Restaurant> restaurantList;
+    LayoutInflater infoWindowLayoutInflater;
+    ViewGroup infoWindowContainer;
 
     public GoogleMapFragment() {
         // Required empty public constructor
@@ -56,8 +61,10 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        infoWindowContainer = container;
+        infoWindowLayoutInflater = inflater;
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        view = inflater.inflate(R.layout.fragment_map, container, false);
 
         mapView = (MapView) view.findViewById(R.id.googleMapView);
         mapView.onCreate(savedInstanceState);
@@ -132,16 +139,44 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             return;
         }
         map.setMyLocationEnabled(true);
+        // Setting a custom info window adapter for the google map
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+            @Override
+            public View getInfoContents(Marker arg0) {
+                View infoWindowView = infoWindowLayoutInflater.inflate(R.layout.fragment_map_info_window, infoWindowContainer, false);
+                /*
+                LatLng latLng = arg0.getPosition();
+                TextView tvLat = (TextView) infoWindowView.findViewById(R.id.tv_lat);
+                tvLat.setText("Latitude:" + latLng.latitude);
+                */
+                TextView textViewTitle = (TextView) infoWindowView.findViewById(R.id.fragment_map_info_window_title);
+                textViewTitle.setText(arg0.getTitle());
+                TextView textViewDescription = (TextView) infoWindowView.findViewById(R.id.fragment_map_info_window_description);
+                textViewDescription.setText(arg0.getSnippet());
+                return infoWindowView;
+            }
+        });
         map.setOnInfoWindowClickListener(this);
 
         restaurantList.setOnAddListener(new OnAddListener() {
             @Override
             public void onAddEvent(Object item) {
                 Restaurant r = (Restaurant) item;
+                Float markerColor = BitmapDescriptorFactory.HUE_RED;
+                Float markerAlpha = 1.0f;
+                if(r.getEvents().size()==0){
+                    markerAlpha = 0.5f;
+                }
                 LatLng pos = new LatLng(r.getLat(), r.getLgt());
                 MarkerOptions markerOptions = new MarkerOptions()
                         .title(r.getName())
-                        .snippet(r.getDescription())
+                        .snippet("\n" + r.getEvents().size() + " eventi.\n\n" + r.getDescription())
+                        .icon(BitmapDescriptorFactory.defaultMarker(markerColor))
+                        .alpha(markerAlpha)
                         .position(pos);
                 Marker marker = map.addMarker(markerOptions);
                 markers.put(marker, r.getId());
