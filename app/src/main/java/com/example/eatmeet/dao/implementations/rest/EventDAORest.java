@@ -44,13 +44,14 @@ public class EventDAORest implements EventDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                backendStatusManager.addSuccess(responseString,statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Event>>(){}.getType();
                 Log.d("GET EVENTS", responseString);
-                for(Event event : (List<Event>) gson.fromJson(responseString, collectionType)) {
+                List<Event> eventsList = (List<Event>) gson.fromJson(responseString, collectionType);
+                for(Event event : eventsList) {
                     events.add(event);
                 }
+                backendStatusManager.addSuccess(eventsList,statusCode);
             }
         });
     }

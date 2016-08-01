@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.ActionBarOverlayLayout;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
@@ -50,6 +53,7 @@ import java.util.logging.Logger;
  * A simple {@link Fragment} subclass.
  */
 public class EventsFragment extends Fragment  implements Notificable {
+    final Visibility visibility = new Visibility();
     private String order_by_temp = "order_by_date";
     private ArrayAdapter eventAdapter;
     private View view;
@@ -65,6 +69,14 @@ public class EventsFragment extends Fragment  implements Notificable {
 
     public View refresh(){
         eventList.clear();
+
+        LinearLayout button_filter = (LinearLayout) view.findViewById(R.id.button_filter);
+        android.widget.LinearLayout.LayoutParams button_filter_layout_params = (android.widget.LinearLayout.LayoutParams) button_filter.getLayoutParams();
+        button_filter_layout_params.bottomMargin = 12;
+        button_filter.setLayoutParams(button_filter_layout_params);
+        CardView noEvents = (CardView) view.findViewById(R.id.card_view_events_summary);
+        visibility.makeInvisible(noEvents);
+
         try {
             parameters = EatMeetApp.getFiltersManager().constructParameters();
         } catch (Exception e){
@@ -87,6 +99,14 @@ public class EventsFragment extends Fragment  implements Notificable {
             @Override
             public void onSuccess(Object response, Integer code) {
                 Logger.getLogger(EventsFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+                if (((List<Event>) response).size() == 0){
+                    CardView noEvents = (CardView) view.findViewById(R.id.card_view_events_summary);
+                    visibility.makeVisible(noEvents);
+                    LinearLayout button_filter = (LinearLayout) view.findViewById(R.id.button_filter);
+                    android.widget.LinearLayout.LayoutParams button_filter_layout_params = (android.widget.LinearLayout.LayoutParams) button_filter.getLayoutParams();
+                    button_filter_layout_params.bottomMargin = 18;
+                    button_filter.setLayoutParams(button_filter_layout_params);
+                }
             }
 
             @Override
