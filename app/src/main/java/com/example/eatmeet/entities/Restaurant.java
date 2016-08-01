@@ -131,25 +131,6 @@ public class Restaurant extends AbstractEntity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Restaurant that = (Restaurant) o;
-
-        if (getId() != that.getId()) return false;
-        return getEmail().equals(that.getEmail());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getEmail().hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return this.getName();
     }
