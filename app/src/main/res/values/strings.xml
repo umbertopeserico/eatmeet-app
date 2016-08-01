@@ -160,4 +160,5 @@
     <string name="title_activity_event_test">EventTestActivity</string>
     <string name="title_activity_events_test">EventsTestActivity</string>
     <string name="title_activity_restaurants_test">RestaurantsTestActivity</string>
+    <string name="title_activity_event_participation_test">EventParticipationTestActivity</string>
 </resources>

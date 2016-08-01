@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONObject;
 
@@ -85,7 +86,6 @@ public class EventDAORest implements EventDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                backendStatusManager.addSuccess(responseString,statusCode);
                 Gson gson = new Gson();
                 Event event = gson.fromJson(responseString, Event.class);
                 Event newEvent = new Event();
@@ -100,9 +100,39 @@ public class EventDAORest implements EventDAO {
                 newEvent.setParticipants(event.getParticipants());
                 newEvent.setActualPrice(event.getActualPrice());
                 newEvent.setPhotos(event.getPhotos());
+                backendStatusManager.addSuccess(event,statusCode);
             }
 
         });
+    }
+
+    @Override
+    public void addParticipation(Event event, Integer participants, final BackendStatusManager backendStatusManager) {
+        final RequestParams requestParams = new RequestParams();
+        requestParams.put("event_id", event.getId());
+        requestParams.put("seats", participants);
+        HttpRestClient.post(Configs.getBackendUrl() + "/api/events/"+event.getId()+"/participation", requestParams, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                backendStatusManager.addError(responseString, statusCode);
+                if(responseString != null) {
+                    Log.e("EVENT PARTCIPATION", responseString);
+                }
+                if(throwable != null) {
+                    Log.e("EVENT PARTCIPATION", throwable.getStackTrace().toString());
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                backendStatusManager.addSuccess(responseString, statusCode);
+            }
+        });
+    }
+
+    @Override
+    public void removeParticipation(Event event, BackendStatusManager backendStatusManager) {
+
     }
 
     @Override

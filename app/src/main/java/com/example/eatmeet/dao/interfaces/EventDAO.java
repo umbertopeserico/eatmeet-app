@@ -33,6 +33,10 @@ public interface EventDAO {
      */
     void getEvent(final PropertyChangeListener eventListener, final Integer id, final BackendStatusManager backendStatusManager);
 
+    void addParticipation(Event event, Integer participants, BackendStatusManager backendStatusManager);
+
+    void removeParticipation(Event event, BackendStatusManager backendStatusManager);
+
     @Deprecated
     List<Event> getEvents(JSONObject parameters);
     @Deprecated
