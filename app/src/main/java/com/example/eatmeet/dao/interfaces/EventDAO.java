@@ -6,12 +6,15 @@ import com.example.eatmeet.entities.Event;
 import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.List;
 
 /**
  * Created by sofia on 08/06/2016.
  */
 public interface EventDAO {
+
+    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir);
 
     /**
      * This method is used to get the events from the implemented backend.

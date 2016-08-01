@@ -58,7 +58,10 @@ public class EventsFragment extends Fragment  implements Notificable {
     JSONObject parameters;
     EventDAO eventDao;
     @Override
-    public void onResume(){ super.onResume(); refresh();}
+    public void onResume(){
+        super.onResume();
+        //refresh();
+    }
 
     public View refresh(){
         eventList.clear();

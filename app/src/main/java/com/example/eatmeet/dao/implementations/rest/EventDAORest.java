@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
+import com.example.eatmeet.connections.TokenFileHttpResponseHandler;
 import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Category;
@@ -19,6 +20,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -49,6 +51,25 @@ public class EventDAORest implements EventDAO {
                 for(Event event : (List<Event>) gson.fromJson(responseString, collectionType)) {
                     events.add(event);
                 }
+            }
+        });
+    }
+
+
+    @Override
+    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
+        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
+        File file = new File(cacheDir, tmpFileName);
+        HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, Throwable throwable, File file) {
+                backendStatusManager.addError("Errore caricamento file", statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, File file) {
+                System.out.println(file.getAbsolutePath());
+                backendStatusManager.addSuccess(file, statusCode);
             }
         });
     }

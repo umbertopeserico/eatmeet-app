@@ -2,7 +2,9 @@ package com.example.eatmeet.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -48,6 +50,7 @@ public class FiltersActivity extends AppCompatActivity {
     private View view;
     ListView listView;
     ArrayAdapter arrayAdapter;
+    boolean changeFilters = false;
 
     public void retrieveCategories(){
         ObservableArrayList<Category> observableArrayListCategory = new ObservableArrayList<>();
@@ -264,8 +267,8 @@ public class FiltersActivity extends AppCompatActivity {
     /*add action for back button*/
     @Override
     public boolean onSupportNavigateUp(){
-        finish();
-        return true;
+            finish();
+            return true;
     }
 
     public void closeKeyboard(){
@@ -276,15 +279,18 @@ public class FiltersActivity extends AppCompatActivity {
 
     public void undoFilter(){
         EatMeetApp.getFiltersManager().resetOldFilters();
+        changeFilters = false;
         onSupportNavigateUp();
     }
 
     public void changeFilter(){
+        /*
         try {
             EatMeetApp.getFiltersManager().constructParameters();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
         /*go to main activity that will refresh events and send you to events*/
         Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

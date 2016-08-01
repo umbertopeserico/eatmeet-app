@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setCurrentFragment(int position){
         mViewPager.setCurrentItem(position, true);
         if(position==1) {
-            long i = new SectionsPagerAdapter(getSupportFragmentManager()).getItemId(position);
+            long i = mSectionsPagerAdapter.getItemId(position);
             EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
                     "android:switcher:" + mViewPager.getId() + ":" + i);
             if(newFragment != null) {
@@ -123,15 +123,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         setMenuLayout();
-
-        Intent intent = getIntent();
-        if(intent != null && intent.getExtras() != null && intent.getExtras().get("from") != null) {
-            String from = (String) intent.getExtras().get("from");
-            if (from.equals("FiltersActivity")) {
-                setCurrentFragment(1);
-            }
-        }
-
     }
 
 
@@ -277,6 +268,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras() != null && intent.getExtras().get("from") != null) {
+            String from = (String) intent.getExtras().get("from");
+            if (from.equals("FiltersActivity")) {
+                setCurrentFragment(1);
+            }
+        }
         setMenuLayout();
     }
 }

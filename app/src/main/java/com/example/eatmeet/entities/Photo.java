@@ -9,8 +9,8 @@ import java.beans.PropertyChangeSupport;
 public class Photo extends AbstractEntity {
 
     private String image;
-    private String imageMedium;
-    private String imageThumb;
+    private String image_medium;
+    private String image_thumb;
     private PropertyChangeSupport cs = new PropertyChangeSupport(this);
 
     @Override
@@ -34,22 +34,22 @@ public class Photo extends AbstractEntity {
     }
 
     public String getImageMedium() {
-        return imageMedium;
+        return image_medium;
     }
 
     public void setImageMedium(String imageMedium) {
-        String oldValue = this.imageMedium;
-        this.imageMedium = imageMedium;
-        this.cs.firePropertyChange("imageMedium", oldValue, this.imageMedium);
+        String oldValue = this.image_medium;
+        this.image_medium = imageMedium;
+        this.cs.firePropertyChange("image_medium", oldValue, this.image_medium);
     }
 
     public String getImageThumb() {
-        return imageThumb;
+        return image_thumb;
     }
 
     public void setImageThumb(String imageThumb) {
-        String oldValue = this.imageThumb;
-        this.imageThumb = imageThumb;
-        this.cs.firePropertyChange("imageThumb", oldValue, this.imageThumb);
+        String oldValue = this.image_thumb;
+        this.image_thumb = imageThumb;
+        this.cs.firePropertyChange("image_thumb", oldValue, this.image_thumb);
     }
 }

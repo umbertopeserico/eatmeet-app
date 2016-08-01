@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
+    android:weightSum="4"
     android:id="@+id/list_item_events">
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:id="@+id/eventsImage"
-        android:checked="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="2"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp" />
     <TextView
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="75dp"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="New Text"
         android:id="@+id/eventsTitle"
-        android:layout_weight="0.5" />
+        android:layout_weight="2"
+        android:singleLine="false"
+        android:minLines="3"/>
     <!--<CheckBox
         android:layout_width="wrap_content"
         android:layout_height="58dp"
