@@ -16,11 +16,11 @@ public class Event extends AbstractEntity implements Serializable{
     private Integer minPeople;
     private Integer minPricePeople;
     private Double maxPrice;
-    private Double actualPrice;
+    private Double actual_price;
     private Double minPrice;
     private List<Double> pricesArray;
     private Integer menuId;
-    private Integer participants;
+    private Integer participants_count;
     private List<Photo> photos;
     private String urlImage;
     private String urlImageThumb;
@@ -151,14 +151,14 @@ public class Event extends AbstractEntity implements Serializable{
         this.restaurantChangeSupport.firePropertyChange("restaurant",oldValue, restaurant);
     }
 
-    public Integer getParticipants() {
-        return participants;
+    public Integer getParticipantsCount() {
+        return participants_count;
     }
 
-    public void setParticipants(Integer participants) {
-        Integer oldValue = this.participants;
-        this.participants = participants;
-        this.participantsChangeSupport.firePropertyChange("participants",oldValue, participants);
+    public void setParticipantsCount(Integer participants_count) {
+        Integer oldValue = this.participants_count;
+        this.participants_count = participants_count;
+        this.participantsChangeSupport.firePropertyChange("participants_count",oldValue, participants_count);
     }
 
     public String getTitle() {
@@ -222,13 +222,13 @@ public class Event extends AbstractEntity implements Serializable{
     }
 
     public Double getActualPrice() {
-        return actualPrice;
+        return actual_price;
     }
 
     public void setActualPrice(Double actual_price) {
-        Double oldValue = this.actualPrice;
-        this.actualPrice = actual_price;
-        this.actualPriceChangeSupport.firePropertyChange("actualPrice",oldValue, actual_price);
+        Double oldValue = this.actual_price;
+        this.actual_price = actual_price;
+        this.actualPriceChangeSupport.firePropertyChange("actual_price",oldValue, actual_price);
     }
 
     public Double getMinPrice() {

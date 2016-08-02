@@ -35,13 +35,12 @@ public class CategoryDAORest implements CategoryDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                backendStatusManager.addSuccess(responseString, statusCode);
                 Gson gson = new Gson();
                 Type collectionType = new TypeToken<List<Category>>(){}.getType();
                 for(Category category : (List<Category>) gson.fromJson(responseString, collectionType)) {
                     categories.add(category);
-
                 }
+                backendStatusManager.addSuccess(responseString, statusCode);
             }
         });
     }

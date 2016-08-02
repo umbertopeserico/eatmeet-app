@@ -52,6 +52,7 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
         listItem.setText(category.getName());
         checkBox.setId(category.getId());
         if(EatMeetApp.getFiltersManager().getF_categories().contains(category.getId())){
+            System.out.println("STO AGGIUNGENDO LA CATEGORIA " + category.getName() + " ai filtri");
             checkBox.setChecked(true);
         }
 

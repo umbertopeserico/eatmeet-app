@@ -24,6 +24,9 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Images;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -95,6 +98,26 @@ public class EventsAdapter extends ArrayAdapter {
 
         TextView eventsTitle = (TextView) convertView.findViewById(R.id.eventsTitle);
         eventsTitle.setText(event.getTitle());
+
+        TextView eventsDate = (TextView) convertView.findViewById(R.id.eventsDate);
+        Date scheduleDate = (Date) event.getSchedule();
+        String scheduleString="il ";
+        Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+        calendar.setTime(scheduleDate);   // assigns calendar to given date
+        scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
+        scheduleString+=calendar.get(Calendar.MONTH) + "/";
+        scheduleString+=calendar.get(Calendar.YEAR) + " alle ";
+        int hrs = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+        int mnts = calendar.get(Calendar.MINUTE); // gets hour in 24h format
+        String hrsMnts = String.format("%02d:%02d", hrs, mnts);
+        scheduleString += hrsMnts;
+        eventsDate.setText(scheduleString);
+
+        TextView eventsPrice = (TextView) convertView.findViewById(R.id.eventsPrice);
+        eventsPrice.setText(event.getActualPrice() + "€");
+
+        TextView eventsParticipants = (TextView) convertView.findViewById(R.id.eventsParticipants);
+        eventsParticipants.setText(event.getParticipantsCount() + " partecipanti");
 
         final LinearLayout eventLayout = (LinearLayout) convertView.findViewById(R.id.list_item_events);
         eventLayout.setOnClickListener(new View.OnClickListener() {
