@@ -9,9 +9,8 @@ public class Configs {
 
     public static String getBackendUrl() {
         if(development)
-            return "http://192.168.1.138:3000/";
+            return "http://umberto-desktop:3000/";
         else
-            //return "http://eatmeet.herokuapp.com/";
             return "http://eatmeet.peserico.me/";
     }
 

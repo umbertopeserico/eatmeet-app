@@ -39,13 +39,7 @@
         <activity
             android:name=".activities.SignInActivity"
             android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up"
@@ -61,17 +55,22 @@
         <activity
             android:name=".activitiestest.CategoriesTestActivity"
             android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activitiestest.EventsTestActivity"
             android:label="@string/title_activity_events_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.FiltersActivity"
             android:label="@string/title_activity_filters" />
         <activity
             android:name=".activities.PrivacyPolicyActivity"
             android:label="@string/title_activity_privacy_policy" />
+        <activity
+            android:name=".activitiestest.EventParticipationTestActivity"
+            android:label="@string/title_activity_event_participation_test"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

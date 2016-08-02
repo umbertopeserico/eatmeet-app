@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by sofia on 08/06/2016.
@@ -17,6 +18,7 @@ public class User extends AbstractEntity implements Serializable{
     private String passwordConfirmation;
     private String provider;
     private String uid;
+    private List<EventParticipation> eventParticipations;
 
     private PropertyChangeSupport cs = new PropertyChangeSupport(this);
 
@@ -108,6 +110,16 @@ public class User extends AbstractEntity implements Serializable{
         String oldValue = this.uid;
         this.uid = uid;
         this.cs.firePropertyChange("provider", oldValue, this.uid);
+    }
+
+    public List<EventParticipation> getEventParticipations() {
+        return eventParticipations;
+    }
+
+    public void setEventParticipations(List<EventParticipation> eventParticipations) {
+        List<EventParticipation> oldValue = eventParticipations;
+        this.eventParticipations = eventParticipations;
+        this.cs.firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
     }
 
     @Override
