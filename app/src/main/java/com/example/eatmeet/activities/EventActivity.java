@@ -118,12 +118,7 @@ public class EventActivity extends AppCompatActivity {
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
-        eventDAO.getEvent(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-
-            }
-        },eventId,backendStatusManager);
+        eventDAO.getEvent(eventId,backendStatusManager);
 
         setContentView(R.layout.activity_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

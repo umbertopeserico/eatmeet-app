@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
-import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.CategoriesAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
-import com.example.eatmeet.dao.implementations.oldrest.CategoryDAOImpl;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
