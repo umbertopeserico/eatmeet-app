@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -90,10 +91,12 @@ public class EventParticipationTestActivity extends AppCompatActivity {
                 unbookButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Log.i("ON BUTT SUCC","Cliked me");
                         EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
                         BackendStatusManager unbookBSM = new BackendStatusManager();
-
-
+                        Event event = new Event();
+                        event.setId(1);
+                        eventDAO.removeParticipation(event, unbookBSM);
                     }
                 });
             }

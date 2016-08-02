@@ -131,9 +131,23 @@ public class EventDAORest implements EventDAO {
     }
 
     @Override
-    public void removeParticipation(Event event, BackendStatusManager backendStatusManager) {
+    public void removeParticipation(Event event, final BackendStatusManager backendStatusManager) {
         final RequestParams requestParams = new RequestParams();
         requestParams.put("event_id", event.getId());
+
+        HttpRestClient.delete(Configs.getBackendUrl() + "/api/events/"+event.getId()+"/participation/destroy", requestParams, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("ON REM ERR",responseString);
+                backendStatusManager.addError(responseString, statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                Log.i("ON REM SUCC",responseString);
+                backendStatusManager.addSuccess(responseString, statusCode);
+            }
+        });
     }
 
     @Override
