@@ -2,6 +2,7 @@ package com.example.eatmeet.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -190,6 +191,12 @@ public class FiltersActivity extends AppCompatActivity {
         RangeBar rangebar_actual_sale = (RangeBar) findViewById(R.id.rangebar_actual_sale);
         DatePicker datepicker_max_date = (DatePicker) findViewById(R.id.max_date);
         DatePicker datepicker_min_date = (DatePicker) findViewById(R.id.min_date);
+        if (datepicker_max_date != null) {
+            datepicker_max_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);
+        }
+        if (datepicker_min_date != null) {
+            datepicker_min_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);
+        }
 
         /*set initial value as the actual filter value*/
         FiltersManager fm = EatMeetApp.getFiltersManager();
@@ -206,7 +213,8 @@ public class FiltersActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar cal = Calendar.getInstance();
-                cal.set(year,monthOfYear,dayOfMonth);
+                int yearNow = cal.get(Calendar.YEAR);
+                cal.set(yearNow,monthOfYear,dayOfMonth);
                 EatMeetApp.getFiltersManager().setF_min_date(cal.getTime());
             }
         });
@@ -220,7 +228,8 @@ public class FiltersActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar cal = Calendar.getInstance();
-                cal.set(year,monthOfYear,dayOfMonth);
+                int yearNow = cal.get(Calendar.YEAR);
+                cal.set(yearNow,monthOfYear,dayOfMonth);
                 EatMeetApp.getFiltersManager().setF_max_date(cal.getTime());
             }
         });
