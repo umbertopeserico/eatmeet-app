@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="15">
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view_filters_summary"
@@ -41,7 +41,7 @@
                     android:id="@+id/active_filters_restaurant"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_below="@id/active_filters_restaurant"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -59,7 +59,7 @@
                     android:layout_below="@id/active_filters_categories"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -68,7 +68,7 @@
                     android:layout_below="@id/active_filters_min_date"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -77,7 +77,7 @@
                     android:layout_below="@id/active_filters_max_date"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -86,7 +86,7 @@
                     android:layout_below="@id/active_filters_min_actual_sale"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -95,7 +95,7 @@
                     android:layout_below="@id/active_filters_max_actual_sale"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -104,7 +104,7 @@
                     android:layout_below="@id/active_filters_min_people"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -113,7 +113,7 @@
                     android:layout_below="@id/active_filters_max_people"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
 
@@ -122,7 +122,7 @@
                     android:layout_below="@id/active_filters_min_price"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:visibility="gone" />
             </LinearLayout>
@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="8" />
+            android:layout_weight="8"/>
 
         <include layout="@layout/content_filter" />
 

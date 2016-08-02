@@ -192,10 +192,10 @@ public class FiltersActivity extends AppCompatActivity {
         DatePicker datepicker_max_date = (DatePicker) findViewById(R.id.max_date);
         DatePicker datepicker_min_date = (DatePicker) findViewById(R.id.min_date);
         if (datepicker_max_date != null) {
-            datepicker_max_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);
+            datepicker_max_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);//always actual year
         }
         if (datepicker_min_date != null) {
-            datepicker_min_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);
+            datepicker_min_date.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);//always actual year
         }
 
         /*set initial value as the actual filter value*/
@@ -213,7 +213,7 @@ public class FiltersActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar cal = Calendar.getInstance();
-                int yearNow = cal.get(Calendar.YEAR);
+                int yearNow = cal.get(Calendar.YEAR);//always actual year
                 cal.set(yearNow,monthOfYear,dayOfMonth);
                 EatMeetApp.getFiltersManager().setF_min_date(cal.getTime());
             }
@@ -228,7 +228,7 @@ public class FiltersActivity extends AppCompatActivity {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar cal = Calendar.getInstance();
-                int yearNow = cal.get(Calendar.YEAR);
+                int yearNow = cal.get(Calendar.YEAR);//always actual year
                 cal.set(yearNow,monthOfYear,dayOfMonth);
                 EatMeetApp.getFiltersManager().setF_max_date(cal.getTime());
             }

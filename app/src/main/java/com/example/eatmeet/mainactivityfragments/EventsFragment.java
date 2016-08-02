@@ -210,8 +210,8 @@ public class EventsFragment extends Fragment  implements Notificable {
             String scheduleString = "Data da: ";
             calendar.setTime(EatMeetApp.getFiltersManager().getF_min_date());   // assigns calendar to given date
             scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
-            scheduleString+=calendar.get(Calendar.MONTH) + "/";
-            active_filters_min_date.setText(scheduleString);
+            scheduleString+=calendar.get(Calendar.MONTH) + 1;
+            active_filters_min_date.setText(scheduleString + "\n");
         }
         if(EatMeetApp.getFiltersManager().isActiveF_max_date()){
             visibility.makeInvisible(active_filters_none);
@@ -219,8 +219,8 @@ public class EventsFragment extends Fragment  implements Notificable {
             String scheduleString = "Data fino a: ";
             calendar.setTime(EatMeetApp.getFiltersManager().getF_max_date());   // assigns calendar to given date
             scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
-            scheduleString+=calendar.get(Calendar.MONTH) + "/";
-            active_filters_max_date.setText(scheduleString);
+            scheduleString+=calendar.get(Calendar.MONTH) + 1;
+            active_filters_max_date.setText(scheduleString + "\n");
         }
 
         if(EatMeetApp.getFiltersManager().isActiveF_min_people()){

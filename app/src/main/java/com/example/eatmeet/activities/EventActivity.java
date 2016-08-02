@@ -10,12 +10,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.dao.implementations.oldrest.EventDAOImpl;
+import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Menu;
 import com.example.eatmeet.entities.Restaurant;
+import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.utils.Images;
 
 import java.beans.PropertyChangeEvent;
@@ -23,6 +28,8 @@ import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -36,8 +43,87 @@ public class EventActivity extends AppCompatActivity {
         }
         final int newEventId = eventId;
 
-        EventDAO eventDAO = new EventDAOImpl(null);
-        final Event myNewEvent = eventDAO.getEventById(eventId);
+        //EventDAO eventDAO = new EventDAOImpl(null);
+        //final Event myNewEvent = eventDAO.getEventById(eventId);
+        EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
+                Event event = (Event) response;
+
+                TextView title = (TextView) findViewById(R.id.titleEvent);//textViewEvent
+                if (title != null) {
+                    title.setText(event.getTitle());
+                }
+
+                System.out.println("SCHEDULE LISTENER WORKING");
+                TextView scheduleView = (TextView) findViewById(R.id.scheduleEvent);
+                Date scheduleDate = event.getSchedule();
+                String scheduleString="il ";
+                Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+                calendar.setTime(scheduleDate);   // assigns calendar to given date
+                scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
+                scheduleString+=calendar.get(Calendar.MONTH) + "/";
+                scheduleString+=calendar.get(Calendar.YEAR) + " alle ";
+                int hrs = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+                int mnts = calendar.get(Calendar.MINUTE); // gets hour in 24h format
+                String hrsMnts = String.format("%02d:%02d", hrs, mnts);
+                scheduleString += hrsMnts;
+                if (scheduleView != null) {
+                    scheduleView.setText(scheduleString);
+                }
+
+                System.out.println("restaurant LISTENER WORKING");
+                TextView address = (TextView) findViewById(R.id.address);
+                if (address != null) {
+                    String newValue = event.getRestaurant().getStreet().toString();
+                    newValue += " - "+ event.getRestaurant().getZipCode().toString();
+                    newValue += " "+ event.getRestaurant().getCity().toString();
+                    newValue += " ("+ event.getRestaurant().getProvince().toString()+")";
+                    address.setText(newValue);
+                }
+                TextView restaurant = (TextView) findViewById(R.id.restaurant);
+                if (restaurant != null) {
+                    String newValue = event.getRestaurant().getName().toString();
+                    restaurant.setText(newValue);
+                }
+
+                System.out.println("participants LISTENER WORKING");
+                TextView participants = (TextView) findViewById(R.id.participants_count);
+                if (participants != null) {
+                    participants.setText("Partecipanti: " + event.getParticipantsCount().toString());
+                }
+
+                TextView actual_price = (TextView) findViewById(R.id.price);
+                if (actual_price != null) {
+                    actual_price.setText("Prezzo: " + event.getActualPrice().toString() + "€");
+                }
+
+                TextView menu = (TextView) findViewById(R.id.menu);
+                if (menu != null) {
+                    menu.setText(event.getMenu().getTextMenu().toString());
+                }
+
+                final ImageView image = (ImageView) findViewById(R.id.eventImage);
+                new Images(){
+                    @Override public void onPostExecute(Bitmap result){
+                        image.setImageBitmap(result);
+                    }
+                }.execute((String) event.getUrlImage());
+            }
+            @Override
+            public void onFailure(Object response, Integer code) {
+                Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
+            }
+        });
+        eventDAO.getEvent(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+
+            }
+        },eventId,backendStatusManager);
 
         setContentView(R.layout.activity_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -57,6 +143,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        /*
         myNewEvent.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
@@ -69,6 +156,7 @@ public class EventActivity extends AppCompatActivity {
                         }
                         break;
                     case "schedule":
+                        System.out.println("SCHEDULE LISTENER WORKING");
                         TextView scheduleView = (TextView) findViewById(R.id.scheduleEvent);
                         Date scheduleDate = (Date) event.getNewValue();
                         String scheduleString="il ";
@@ -86,6 +174,7 @@ public class EventActivity extends AppCompatActivity {
                         }
                         break;
                     case "restaurant":
+                        System.out.println("restaurant LISTENER WORKING");
                         TextView address = (TextView) findViewById(R.id.address);
                         if (address != null) {
                             String newValue = ((Restaurant) event.getNewValue()).getStreet().toString();
@@ -100,7 +189,8 @@ public class EventActivity extends AppCompatActivity {
                             restaurant.setText(newValue);
                         }
                         break;
-                    case "participants":
+                    case "participants_count":
+                        System.out.println("participants LISTENER WORKING");
                         TextView participants = (TextView) findViewById(R.id.participants_count);
                         if (participants != null) {
                             participants.setText("Partecipanti: " + event.getNewValue().toString());
@@ -131,6 +221,7 @@ public class EventActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 
 
