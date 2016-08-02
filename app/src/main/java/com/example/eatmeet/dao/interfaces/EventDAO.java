@@ -28,10 +28,9 @@ public interface EventDAO {
     /**
      * This method is used to get an event from the backend.
      * It takes an output parameter to fill with data retrieved
-     * @param eventListener PropertyChangeListener to add to event
      * @param backendStatusManager the backend status manager
      */
-    void getEvent(final PropertyChangeListener eventListener, final Integer id, final BackendStatusManager backendStatusManager);
+    void getEvent(final Integer id, final BackendStatusManager backendStatusManager);
 
     void addParticipation(Event event, Integer participants, BackendStatusManager backendStatusManager);
 

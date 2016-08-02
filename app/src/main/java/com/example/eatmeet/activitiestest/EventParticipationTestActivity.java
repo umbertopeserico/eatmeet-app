@@ -108,12 +108,7 @@ public class EventParticipationTestActivity extends AppCompatActivity {
             }
         });
 
-        eventDAO.getEvent(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-
-            }
-        }, 1, eventBSM);
+        eventDAO.getEvent(1, eventBSM);
 
     }
 

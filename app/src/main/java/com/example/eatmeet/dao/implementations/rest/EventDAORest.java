@@ -70,7 +70,7 @@ public class EventDAORest implements EventDAO {
     }
 
     @Override
-    public void getEvent(final PropertyChangeListener eventListener, Integer id, final BackendStatusManager backendStatusManager) {
+    public void getEvent(Integer id, final BackendStatusManager backendStatusManager) {
         HttpRestClient.get(Configs.getBackendUrl() + "/api/events/" + id, null, new TokenTextHttpResponseHandler() {
 
             @Override
@@ -82,18 +82,6 @@ public class EventDAORest implements EventDAO {
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
                 Gson gson = new Gson();
                 Event event = gson.fromJson(responseString, Event.class);
-                Event newEvent = new Event();
-                newEvent.addPropertyChangeListener(eventListener);
-                newEvent.setTitle(event.getTitle());
-                newEvent.setSchedule(event.getSchedule());
-                newEvent.setMaxPeople(event.getMaxPeople());
-                newEvent.setMinPeople(event.getMinPeople());
-                newEvent.setPricesArray(event.getPricesArray());
-                newEvent.setMenu(event.getMenu());
-                newEvent.setRestaurant(event.getRestaurant());
-                newEvent.setParticipantsCount(event.getParticipantsCount());
-                newEvent.setActualPrice(event.getActualPrice());
-                newEvent.setPhotos(event.getPhotos());
                 backendStatusManager.addSuccess(event,statusCode);
             }
 
