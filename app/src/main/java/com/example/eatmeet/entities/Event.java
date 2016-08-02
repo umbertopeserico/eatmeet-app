@@ -29,6 +29,7 @@ public class Event extends AbstractEntity implements Serializable{
     private Menu menu;
     private Restaurant restaurant;
     private List<Category> categories;
+    private List<EventParticipation> eventParticipations;
 
     private final PropertyChangeSupport cs = new PropertyChangeSupport(this);
     private final PropertyChangeSupport titleChangeSupport = new PropertyChangeSupport(this);
@@ -268,6 +269,16 @@ public class Event extends AbstractEntity implements Serializable{
         List<Photo> oldValue = this.photos;
         this.photos = photos;
         this.cs.firePropertyChange("photos", oldValue, photos);
+    }
+
+    public List<EventParticipation> getEventParticipations() {
+        return eventParticipations;
+    }
+
+    public void setEventParticipations(List<EventParticipation> eventParticipations) {
+        List<EventParticipation> oldValue = eventParticipations;
+        this.eventParticipations = eventParticipations;
+        this.cs.firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
     }
 
     @Override
