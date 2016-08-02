@@ -101,7 +101,7 @@ public class EventActivity extends AppCompatActivity {
                         }
                         break;
                     case "participants":
-                        TextView participants = (TextView) findViewById(R.id.participants);
+                        TextView participants = (TextView) findViewById(R.id.participants_count);
                         if (participants != null) {
                             participants.setText("Partecipanti: " + event.getNewValue().toString());
                         }

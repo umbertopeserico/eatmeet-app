@@ -62,7 +62,7 @@ public class EventDAOImpl implements EventDAO {
                     myNewEvent.setMaxPrice(Double.parseDouble(myEventJson.getString("max_price")));
                     myNewEvent.setMinPrice(Double.parseDouble(myEventJson.getString("min_price")));
                     myNewEvent.setActualPrice(Double.parseDouble(myEventJson.getString("actual_price")));
-                    myNewEvent.setParticipants(myEventJson.getInt("participants_count"));
+                    myNewEvent.setParticipantsCount(myEventJson.getInt("participants_count"));
                     myNewEvent.setMenuId(myEventJson.getInt("menu_id"));
                     JSONArray prices_json_array = myEventJson.getJSONArray("prices_array");
                     ArrayList<Double> prices_array = new ArrayList<>();
@@ -165,7 +165,7 @@ public class EventDAOImpl implements EventDAO {
                                     myNewEvent.setMaxPrice(Double.parseDouble(myEventJson.getString("max_price")));
                                     myNewEvent.setMinPrice(Double.parseDouble(myEventJson.getString("min_price")));
                                     myNewEvent.setActualPrice(Double.parseDouble(myEventJson.getString("actual_price")));
-                                    myNewEvent.setParticipants(myEventJson.getInt("participants_count"));
+                                    myNewEvent.setParticipantsCount(myEventJson.getInt("participants_count"));
                                     myNewEvent.setMenuId(myEventJson.getInt("menu_id"));
                                     JSONArray prices_json_array = myEventJson.getJSONArray("prices_array");
                                     ArrayList<Double> prices_array = new ArrayList<>();

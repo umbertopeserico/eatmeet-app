@@ -1,6 +1,5 @@
 package com.example.eatmeet.dao.implementations.rest;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -8,27 +7,19 @@ import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.connections.TokenFileHttpResponseHandler;
 import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.entities.Photo;
 import com.example.eatmeet.utils.Configs;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by umberto on 27/07/16.
@@ -98,7 +89,7 @@ public class EventDAORest implements EventDAO {
                 newEvent.setPricesArray(event.getPricesArray());
                 newEvent.setMenu(event.getMenu());
                 newEvent.setRestaurant(event.getRestaurant());
-                newEvent.setParticipants(event.getParticipants());
+                newEvent.setParticipantsCount(event.getParticipantsCount());
                 newEvent.setActualPrice(event.getActualPrice());
                 newEvent.setPhotos(event.getPhotos());
             }

@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARTICIPANTS"
-        android:id="@+id/participants"
+        android:id="@+id/participants_count"
         android:layout_marginTop="33dp"
         android:layout_below="@+id/address"
         android:layout_alignLeft="@+id/address"
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:text="PRICE"
         android:id="@+id/price"
-        android:layout_below="@+id/participants"
+        android:layout_below="@+id/participants_count"
         android:layout_alignLeft="@+id/restaurant"
         android:layout_centerHorizontal="true" />
 
@@ -99,7 +99,7 @@
         android:text="menu"
         android:id="@+id/menu"
         android:layout_below="@+id/book"
-        android:layout_alignLeft="@+id/participants"
-        android:layout_alignStart="@+id/participants" />
+        android:layout_alignLeft="@+id/participants_count"
+        android:layout_alignStart="@+id/participants_count" />
 </RelativeLayout>
 </ScrollView>
