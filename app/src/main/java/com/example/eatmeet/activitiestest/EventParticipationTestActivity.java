@@ -48,7 +48,7 @@ public class EventParticipationTestActivity extends AppCompatActivity {
 
         UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         User user = new User();
-        user.setEmail("umberto@peserico.me");
+        user.setEmail("umberto2@peserico.me");
         user.setPassword("ciao1234");
         userDAO.signIn(user, new BackendStatusManager());
 
@@ -83,7 +83,7 @@ public class EventParticipationTestActivity extends AppCompatActivity {
                             }
                         });
 
-                        eventDAO.addParticipation(currentEvent, 3, eventParticipationBSM);
+                        eventDAO.addParticipation(currentEvent, 18, eventParticipationBSM);
                     }
                 });
 

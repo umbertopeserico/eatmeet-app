@@ -127,6 +127,11 @@ public class EventDAOImpl implements EventDAO {
     }
 
     @Override
+    public void removeParticipation(Event event, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
     public List<Event> getEvents(JSONObject parameters) {
         final List<Event> allEvents = new ArrayList<Event>();
         if(parameters!=null) {

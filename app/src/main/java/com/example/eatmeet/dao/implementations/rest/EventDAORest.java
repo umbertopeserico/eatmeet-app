@@ -111,7 +111,7 @@ public class EventDAORest implements EventDAO {
         final RequestParams requestParams = new RequestParams();
         requestParams.put("event_id", event.getId());
         requestParams.put("seats", participants);
-        HttpRestClient.post(Configs.getBackendUrl() + "/api/events/"+event.getId()+"/participation", requestParams, new TextHttpResponseHandler() {
+        HttpRestClient.post(Configs.getBackendUrl() + "/api/events/"+event.getId()+"/participation/create", requestParams, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 backendStatusManager.addError(responseString, statusCode);
@@ -132,7 +132,8 @@ public class EventDAORest implements EventDAO {
 
     @Override
     public void removeParticipation(Event event, BackendStatusManager backendStatusManager) {
-
+        final RequestParams requestParams = new RequestParams();
+        requestParams.put("event_id", event.getId());
     }
 
     @Override
