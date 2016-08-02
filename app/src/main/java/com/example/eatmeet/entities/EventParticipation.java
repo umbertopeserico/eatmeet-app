@@ -12,6 +12,7 @@ public class EventParticipation extends AbstractEntity {
     private Integer eventId;
     private User user;
     private Event event;
+    private Integer seats;
 
     private PropertyChangeSupport cs = new PropertyChangeSupport(this);
 
@@ -53,6 +54,16 @@ public class EventParticipation extends AbstractEntity {
         Event oldValue = this.event;
         this.event = event;
         this.cs.firePropertyChange("event",oldValue, this.event);
+    }
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        Integer oldValue = this.seats;
+        this.seats = seats;
+        this.cs.firePropertyChange("seats", oldValue, this.seats);
     }
 
     @Override
