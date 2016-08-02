@@ -117,7 +117,7 @@ public class EventDAOImpl implements EventDAO {
     }
 
     @Override
-    public void getEvent(PropertyChangeListener eventListener, Integer id, BackendStatusManager backendStatusManager) {
+    public void getEvent(Integer id, BackendStatusManager backendStatusManager) {
 
     }
 
