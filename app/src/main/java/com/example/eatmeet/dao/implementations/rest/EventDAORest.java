@@ -44,31 +44,11 @@ public class EventDAORest implements EventDAO {
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                         .create();
                 Type collectionType = new TypeToken<List<Event>>(){}.getType();
-                Log.d("GET EVENTS", responseString);
-                List<Event> eventsList = (List<Event>) gson.fromJson(responseString, collectionType);
+                List<Event> eventsList = gson.fromJson(responseString, collectionType);
                 for(Event event : eventsList) {
                     events.add(event);
                 }
                 backendStatusManager.addSuccess(eventsList,statusCode);
-            }
-        });
-    }
-
-
-    @Override
-    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
-        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
-        File file = new File(cacheDir, tmpFileName);
-        HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
-            @Override
-            public void onFailureAction(int statusCode, Header[] headers, Throwable throwable, File file) {
-                backendStatusManager.addError("Errore caricamento file", statusCode);
-            }
-
-            @Override
-            public void onSuccessAction(int statusCode, Header[] headers, File file) {
-                System.out.println(file.getAbsolutePath());
-                backendStatusManager.addSuccess(file, statusCode);
             }
         });
     }
@@ -84,11 +64,30 @@ public class EventDAORest implements EventDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
                 Event event = gson.fromJson(responseString, Event.class);
                 backendStatusManager.addSuccess(event,statusCode);
             }
 
+        });
+    }
+
+    @Override
+    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
+        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
+        File file = new File(cacheDir, tmpFileName);
+        HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, Throwable throwable, File file) {
+                backendStatusManager.addError("Errore caricamento file", statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, File file) {
+                backendStatusManager.addSuccess(file, statusCode);
+            }
         });
     }
 
