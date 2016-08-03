@@ -38,6 +38,7 @@ public class EatMeetApp extends Application {
         filtersManager = new FiltersManager();
         HttpRestClient.setConfigurations(this);
 
+
         final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         BackendStatusManager validateBSM = new BackendStatusManager();
         validateBSM.setBackendStatusListener(new BackendStatusListener() {

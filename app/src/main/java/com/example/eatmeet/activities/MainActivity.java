@@ -1,7 +1,6 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -17,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -27,15 +27,13 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
-import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
-import com.example.eatmeet.mainactivityfragments.EventsFragment;
-import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
-import com.example.eatmeet.utils.CookiesUtil;
+import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
+import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
+import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
+import com.example.eatmeet.entities.User;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -136,17 +134,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
 
         setMenuLayout();
 
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,9 +164,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.sidebar_my_events:
-                /*intent = new Intent(MainActivity.this, MyEventsActivity.class);
+                intent = new Intent(MainActivity.this, MyEventsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);*/
+                startActivity(intent);
                 break;
             case R.id.sidebar_signup:
                 intent = new Intent(MainActivity.this, SignUpActivity.class);
@@ -278,8 +275,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
         }
-    }
 
+        View view = navigationView.getHeaderView(0);
+        TextView fullNameTextSideBar = (TextView) view.findViewById(R.id.fullNameTextSideBar);
+        TextView emailText = (TextView) view.findViewById(R.id.emailTextSideBar);
+
+        User currentUser = EatMeetApp.getCurrentUser();
+        if(currentUser!=null) {
+            fullNameTextSideBar.setText(currentUser.getFullName());
+            emailText.setText(currentUser.getEmail());
+            emailText.setVisibility(View.VISIBLE);
+        } else {
+            fullNameTextSideBar.setText("Ospite");
+            emailText.setText("");
+            emailText.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onResume() {

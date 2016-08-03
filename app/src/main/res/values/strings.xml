@@ -14,6 +14,9 @@
     <string name="events_tab_title">Eventi</string>
     <string name="map_tab_title">Mappa</string>
 
+    <string name="my_past_events_tab_title">Eventi prossimi</string>
+    <string name="my_future_events_tab_title">Eventi passati</string>
+
     <string name="example_text_categories">Welcome to categories!!</string>
     <string name="example_text_events">Welcome to events!!</string>
     <string name="example_text_map">Welcome to map!!</string>
@@ -161,4 +164,8 @@
     <string name="title_activity_events_test">EventsTestActivity</string>
     <string name="title_activity_restaurants_test">RestaurantsTestActivity</string>
     <string name="title_activity_event_participation_test">EventParticipationTestActivity</string>
+    <string name="title_activity_my_events">I miei eventi</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
