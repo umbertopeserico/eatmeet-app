@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/tabsviewer_padding"
     android:weightSum="2"
-    tools:context="com.example.eatmeet.mainactivityfragments.EventsFragment">
+    tools:context=".activities.mainactivityfragments.EventsFragment">
 
     <LinearLayout
         android:id="@+id/wrapping_events"

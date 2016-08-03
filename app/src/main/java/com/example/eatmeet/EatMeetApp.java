@@ -29,7 +29,8 @@ public class EatMeetApp extends Application {
         super.onCreate();
         filtersManager = new FiltersManager();
         HttpRestClient.setConfigurations(this);
-        EatMeetApp.sharedPref= getSharedPreferences(
+
+        /*EatMeetApp.sharedPref= getSharedPreferences(
                 getString(R.string.saved_credentials_file), Context.MODE_PRIVATE);
         final JSONObject loginParams = new JSONObject();
         try {
@@ -44,7 +45,7 @@ public class EatMeetApp extends Application {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
         /*new Post() {
             @Override
             public void onPostExecute(String result) {

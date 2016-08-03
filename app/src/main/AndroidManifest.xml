@@ -39,7 +39,7 @@
         <activity
             android:name=".activities.SignInActivity"
             android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up"
@@ -69,8 +69,11 @@
         <activity
             android:name=".activitiestest.EventParticipationTestActivity"
             android:label="@string/title_activity_event_participation_test"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.MyEventsActivity"
+            android:label="@string/title_activity_my_events"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

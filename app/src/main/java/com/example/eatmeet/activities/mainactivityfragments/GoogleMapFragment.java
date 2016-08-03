@@ -1,4 +1,4 @@
-package com.example.eatmeet.mainactivityfragments;
+package com.example.eatmeet.activities.mainactivityfragments;
 
 
 import android.Manifest;
@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
-import com.example.eatmeet.dao.implementations.oldrest.RestaurantDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;

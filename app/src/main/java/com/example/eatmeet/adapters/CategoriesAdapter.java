@@ -7,44 +7,19 @@ import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.entities.Category;
-import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.mainactivityfragments.CategoriesFragment;
-import com.example.eatmeet.mainactivityfragments.EventsFragment;
-import com.example.eatmeet.utils.Configs;
-import com.example.eatmeet.utils.Images;
-import com.example.eatmeet.utils.Post;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.TintContextWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by sofia on 15/06/2016.
