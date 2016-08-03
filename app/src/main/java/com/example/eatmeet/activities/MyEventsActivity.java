@@ -89,18 +89,11 @@ public class MyEventsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new FutureEventsFragment();
-                case 1:
-                    return new PastEventsFragment();
-            }
-            return null;
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
