@@ -158,6 +158,23 @@ public class UserDAORest implements UserDAO {
     }
 
     @Override
+    public void validateToken(final BackendStatusManager backendStatusManager) {
+        HttpRestClient.get(Configs.getBackendUrl() + "/api/users/auth/validate_token", null, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+                backendStatusManager.addError(responseString, statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+
+                backendStatusManager.addSuccess(responseString, statusCode);
+            }
+        });
+    }
+
+    @Override
     public List<User> getUsers() {
         return null;
     }

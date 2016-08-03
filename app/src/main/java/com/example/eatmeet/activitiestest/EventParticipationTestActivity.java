@@ -51,7 +51,65 @@ public class EventParticipationTestActivity extends AppCompatActivity {
         User user = new User();
         user.setEmail("umberto2@peserico.me");
         user.setPassword("ciao1234");
-        userDAO.signIn(user, new BackendStatusManager());
+
+        BackendStatusManager signInBSM = new BackendStatusManager();
+        signInBSM.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+
+                BackendStatusManager valBSM = new BackendStatusManager();
+                valBSM.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        System.out.println(response);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        System.out.println(response);
+                    }
+                });
+
+                userDAO.validateToken(valBSM);
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+
+                BackendStatusManager valBSM = new BackendStatusManager();
+                valBSM.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        System.out.println(response);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        System.out.println(response);
+                    }
+                });
+
+                userDAO.validateToken(valBSM);
+            }
+        });
+        userDAO.signIn(user,signInBSM );
+
+        BackendStatusManager valBSM = new BackendStatusManager();
+        valBSM.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                System.out.println(response);
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                System.out.println(response);
+            }
+        });
+
+        userDAO.validateToken(valBSM);
 
         bookButton = (Button) findViewById(R.id.bookButton);
         unbookButton = (Button) findViewById(R.id.unbookButton);
@@ -109,7 +167,6 @@ public class EventParticipationTestActivity extends AppCompatActivity {
         });
 
         eventDAO.getEvent(1, eventBSM);
-
     }
 
 }
