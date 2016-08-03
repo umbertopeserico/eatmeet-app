@@ -2,11 +2,16 @@ package com.example.eatmeet;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.example.eatmeet.backendstatuses.BackendStatusListener;
+import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.dao.factories.DAOFactory;
 import com.example.eatmeet.dao.factories.RestDAOFactory;
+import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
 import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.FiltersManager;
@@ -15,14 +20,17 @@ import com.example.eatmeet.utils.Post;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  * Created by umberto on 25/06/16.
  */
 public class EatMeetApp extends Application {
-    public static SharedPreferences sharedPref;
     private static FiltersManager filtersManager;
     private static final DAOFactory daoFactory = new RestDAOFactory();
     private static User currentUser;
+    private static PropertyChangeSupport cs = new PropertyChangeSupport(EatMeetApp.class);
 
     @Override
     public void onCreate() {
@@ -30,53 +38,50 @@ public class EatMeetApp extends Application {
         filtersManager = new FiltersManager();
         HttpRestClient.setConfigurations(this);
 
-        /*EatMeetApp.sharedPref= getSharedPreferences(
-                getString(R.string.saved_credentials_file), Context.MODE_PRIVATE);
-        final JSONObject loginParams = new JSONObject();
-        try {
-            String email = sharedPref.getString("email", null);
-            String password = sharedPref.getString("password", null);
-            if( email != null && password != null ) {
-                loginParams.put("email", email);
-                loginParams.put("password",password);
-            }
-            else
-                return;
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-        /*new Post() {
+        final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+        BackendStatusManager validateBSM = new BackendStatusManager();
+        validateBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
-            public void onPostExecute(String result) {
-                /*try {
-                    JSONObject obj = new JSONObject(result);
-                    JSONArray errors = null;
-                    try {
-                        // se ci sono errori continuo qui (Se il login è failed)
-                        errors = obj.getJSONArray("errors");
+            public void onSuccess(Object response, Integer code) {
+                System.out.println(response);
+                try {
+                    JSONObject jsonResponse = new JSONObject((String) response);
+                    Boolean status = Boolean.parseBoolean(jsonResponse.getString("success"));
+                    if(status) {
+                        JSONObject data = jsonResponse.getJSONObject("data");
+                        Integer id = data.getInt("id");
+                        User user = new User();
+                        user.setId(id);
+                        BackendStatusManager userBSM = new BackendStatusManager();
+                        userBSM.setBackendStatusListener(new BackendStatusListener() {
+                            @Override
+                            public void onSuccess(Object response, Integer code) {
+                                User user = (User) response;
+                                Log.i("FOUND CURRENT USER:", "Trovato current user: "+user.toString());
+                                EatMeetApp.setCurrentUser(user);
+                            }
 
-                    }
-                    catch (JSONException e) {
-                        // Se non ci sono errori continuo qui (Se il login è successfull)
-                        JSONObject data = obj.getJSONObject("data");
-                        for(int i = 0; i < data.length(); i++) {
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString("email", emailField.getText().toString());
-                            editor.putString("password", passwordField.getText().toString());
-                            editor.commit();
-                        }
-
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                            @Override
+                            public void onFailure(Object response, Integer code) {
+                                Log.e("CURRENT USER NOT FOUND:", response.toString());
+                            }
+                        });
+                        userDAO.getUser(user, userBSM);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
-            /*}
-        }.execute(Configs.getBackendUrl()+"/api/users/auth/sign_in", loginParams);*/
+                }
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+
+            }
+        });
+
+        userDAO.validateToken(validateBSM);
     }
 
 
@@ -93,6 +98,12 @@ public class EatMeetApp extends Application {
     }
 
     public static void setCurrentUser(User currentUser) {
+        User oldValue = EatMeetApp.currentUser;
         EatMeetApp.currentUser = currentUser;
+        EatMeetApp.cs.firePropertyChange("currentUser", oldValue, EatMeetApp.currentUser);
+    }
+
+    public static void addListener(PropertyChangeListener listener) {
+        cs.addPropertyChangeListener(listener);
     }
 }

@@ -31,6 +31,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void validateToken(BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
     public void signOut(BackendStatusManager backendStatusManager) {
 
     }

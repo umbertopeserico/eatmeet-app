@@ -20,6 +20,8 @@ public interface UserDAO {
 
     void getUser(User user, BackendStatusManager backendStatusManager);
 
+    void validateToken(BackendStatusManager backendStatusManager);
+
     @Deprecated
     List<User> getUsers();
 }
