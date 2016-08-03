@@ -15,6 +15,7 @@ import com.example.eatmeet.adapters.EventsAdapterTest;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
+import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;

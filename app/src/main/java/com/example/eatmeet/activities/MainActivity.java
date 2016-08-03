@@ -32,6 +32,8 @@ import com.example.eatmeet.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.utils.CookiesUtil;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -123,6 +125,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         setMenuLayout();
+
+        EatMeetApp.addListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                if(propertyChangeEvent.getPropertyName().equals("currentUser")) {
+                    setMenuLayout();
+                }
+            }
+        });
     }
 
 
