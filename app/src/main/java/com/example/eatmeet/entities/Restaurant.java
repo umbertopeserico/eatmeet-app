@@ -20,11 +20,13 @@ public class Restaurant extends AbstractEntity implements Serializable {
     private String zipCode;
     private String province;
     private String fullAddress;
-    private int restaurantOwnerId;
-    private double lat;
-    private double lgt;
-    private List<Event> events = new ArrayList<>();
+    private Integer restaurantOwnerId;
+    private Double lat;
+    private Double lgt;
 
+    private List<Event> events;
+    private Integer pastEventsCount;
+    private Integer futureEventsCount;
 
     public String getName() {
         return name;
@@ -98,27 +100,27 @@ public class Restaurant extends AbstractEntity implements Serializable {
         this.fullAddress = full_address;
     }
 
-    public int getRestaurantOwnerId() {
+    public Integer getRestaurantOwnerId() {
         return restaurantOwnerId;
     }
 
-    public void setRestaurantOwnerId(int restaurant_owner_id) {
+    public void setRestaurantOwnerId(Integer restaurant_owner_id) {
         this.restaurantOwnerId = restaurant_owner_id;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLgt() {
+    public Double getLgt() {
         return lgt;
     }
 
-    public void setLgt(double lgt) {
+    public void setLgt(Double lgt) {
         this.lgt = lgt;
     }
 
@@ -128,6 +130,22 @@ public class Restaurant extends AbstractEntity implements Serializable {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public Integer getPastEventsCount() {
+        return pastEventsCount;
+    }
+
+    public void setPastEventsCount(Integer pastEventsCount) {
+        this.pastEventsCount = pastEventsCount;
+    }
+
+    public Integer getFutureEventsCount() {
+        return futureEventsCount;
+    }
+
+    public void setFutureEventsCount(Integer futureEventsCount) {
+        this.futureEventsCount = futureEventsCount;
     }
 
     @Override
