@@ -8,7 +8,9 @@ import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.utils.Configs;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -30,7 +32,9 @@ public class RestaurantDAORest implements RestaurantDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
                 Type collectionType = new TypeToken<List<Restaurant>>(){}.getType();
                 for(Restaurant restaurant : (List<Restaurant>) gson.fromJson(responseString, collectionType)) {
                     restaurants.add(restaurant);

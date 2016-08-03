@@ -9,7 +9,9 @@ import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Configs;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -38,7 +40,9 @@ public class EventDAORest implements EventDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
                 Type collectionType = new TypeToken<List<Event>>(){}.getType();
                 Log.d("GET EVENTS", responseString);
                 List<Event> eventsList = (List<Event>) gson.fromJson(responseString, collectionType);
