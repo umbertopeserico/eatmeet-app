@@ -5,9 +5,11 @@
     tools:context="com.example.eatmeet.activities.myeventsactivityfragments.FutureEventsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="FUTURE EVENTS" />
-
+        android:id="@+id/eventsListView"
+        android:layout_gravity="left|top"
+        android:choiceMode="none" />
 </FrameLayout>

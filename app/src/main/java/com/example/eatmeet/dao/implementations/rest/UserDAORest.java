@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -170,6 +171,52 @@ public class UserDAORest implements UserDAO {
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
 
                 backendStatusManager.addSuccess(responseString, statusCode);
+            }
+        });
+    }
+
+    @Override
+    public void getPastEvents(final List<Event> events, final BackendStatusManager backendStatusManager) {
+        HttpRestClient.get(Configs.getBackendUrl() + "/api/user_profile/past_events", null, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("GET PAST EVENTS:", responseString);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
+                Type collectionType = new TypeToken<List<Event>>(){}.getType();
+                List<Event> eventsList = gson.fromJson(responseString, collectionType);
+                for(Event event : eventsList) {
+                    events.add(event);
+                }
+                backendStatusManager.addSuccess(eventsList,statusCode);
+            }
+        });
+    }
+
+    @Override
+    public void getFutureEvents(final List<Event> events, final BackendStatusManager backendStatusManager) {
+        HttpRestClient.get(Configs.getBackendUrl() + "/api/user_profile/future_events", null, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("GET FUTURE EVENTS:", responseString);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
+                Type collectionType = new TypeToken<List<Event>>(){}.getType();
+                List<Event> eventsList = gson.fromJson(responseString, collectionType);
+                for(Event event : eventsList) {
+                    events.add(event);
+                }
+                backendStatusManager.addSuccess(eventsList,statusCode);
             }
         });
     }
