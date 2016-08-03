@@ -19,7 +19,6 @@ import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
-import com.example.eatmeet.dao.implementations.oldrest.RestaurantDAOImpl;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;

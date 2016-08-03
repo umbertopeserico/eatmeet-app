@@ -34,7 +34,6 @@ import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.dao.implementations.oldrest.EventDAOImpl;
 import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
