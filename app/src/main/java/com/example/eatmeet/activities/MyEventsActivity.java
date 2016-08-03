@@ -83,24 +83,17 @@ public class MyEventsActivity extends AppCompatActivity {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            fragments.add(new PastEventsFragment());
             fragments.add(new FutureEventsFragment());
+            fragments.add(new PastEventsFragment());
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new PastEventsFragment();
-                case 1:
-                    return new FutureEventsFragment();
-            }
-            return null;
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
