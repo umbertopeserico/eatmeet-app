@@ -12,9 +12,14 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
-        android:id="@+id/emailTextSideBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="eatmeet.example.com" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/fullNameTextSideBar" />
+
+    <TextView
+        android:id="@+id/emailTextSideBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

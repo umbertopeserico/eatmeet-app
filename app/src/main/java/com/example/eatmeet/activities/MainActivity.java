@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
+import com.example.eatmeet.entities.User;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -132,17 +134,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        TextView emailText = (TextView) findViewById(R.id.emailTextSideBar);
 
         setMenuLayout();
 
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -274,8 +275,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
         }
-    }
 
+        View view = navigationView.getHeaderView(0);
+        TextView fullNameTextSideBar = (TextView) view.findViewById(R.id.fullNameTextSideBar);
+        TextView emailText = (TextView) view.findViewById(R.id.emailTextSideBar);
+
+        User currentUser = EatMeetApp.getCurrentUser();
+        if(currentUser!=null) {
+            fullNameTextSideBar.setText(currentUser.getFullName());
+            emailText.setText(currentUser.getEmail());
+            emailText.setVisibility(View.VISIBLE);
+        } else {
+            fullNameTextSideBar.setText("Ospite");
+            emailText.setText("");
+            emailText.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onResume() {
