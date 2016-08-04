@@ -23,7 +23,6 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -232,7 +231,7 @@ public class UserDAORest implements UserDAO {
         if( !(user.getPassword().equals("") || user.getPassword()== null) ) {
             requestParams.put("password", user.getPassword());
             requestParams.put("password_confirmation", user.getPasswordConfirmation());
-            requestParams.put("old_password", user.getOldPassword());
+            requestParams.put("current_password", user.getCurrentPassword());
         }
 
         HttpRestClient.put(Configs.getBackendUrl() + "/api/user_profile/update", requestParams, new TokenTextHttpResponseHandler() {

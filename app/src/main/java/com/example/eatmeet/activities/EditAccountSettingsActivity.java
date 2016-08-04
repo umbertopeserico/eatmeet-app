@@ -21,7 +21,6 @@ import com.example.eatmeet.entities.User;
 import com.example.eatmeet.entities.errors.ErrorsMap;
 
 import java.util.List;
-import java.util.Map;
 
 public class EditAccountSettingsActivity extends AppCompatActivity {
 
@@ -91,7 +90,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
         user.setEmail(emailField.getText().toString());
         user.setPassword(passwordField.getText().toString());
         user.setPasswordConfirmation(passwordConfirmationField.getText().toString());
-        user.setOldPassword(oldPasswordField.getText().toString());
+        user.setCurrentPassword(oldPasswordField.getText().toString());
 
         UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         BackendStatusManager userBSM = new BackendStatusManager();
@@ -147,8 +146,8 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                     }
                 }
 
-                if(errorsMap.get("old_password")!=null) {
-                    List<String> errors = errorsMap.get("old_password");
+                if(errorsMap.get("current_password")!=null) {
+                    List<String> errors = errorsMap.get("current_password");
                     for(String e : errors) {
                         int index = errors.lastIndexOf(e);
                         String ret = "\n";
