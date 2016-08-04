@@ -16,6 +16,7 @@ public class User extends AbstractEntity implements Serializable{
     private String email;
     private String password;
     private String passwordConfirmation;
+    private String oldPassword;
     private String provider;
     private String uid;
     private List<EventParticipation> eventParticipations;
@@ -90,6 +91,16 @@ public class User extends AbstractEntity implements Serializable{
         String oldValue = this.passwordConfirmation;
         this.passwordConfirmation = passwordConfirmation;
         this.cs.firePropertyChange("passwordConfirmation", oldValue, this.passwordConfirmation);
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        String oldValue = this.oldPassword;
+        this.oldPassword = oldPassword;
+        this.cs.firePropertyChange("oldPassword", oldValue, this.oldPassword);
     }
 
     public String getProvider() {

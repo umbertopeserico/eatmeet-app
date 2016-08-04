@@ -1,4 +1,4 @@
-package com.example.eatmeet.mainactivityfragments;
+package com.example.eatmeet.activities.mainactivityfragments;
 
 
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Notificable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

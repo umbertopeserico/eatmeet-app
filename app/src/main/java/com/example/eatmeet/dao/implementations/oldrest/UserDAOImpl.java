@@ -2,6 +2,7 @@ package com.example.eatmeet.dao.implementations.oldrest;
 
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
+import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.User;
 
 import java.util.List;
@@ -27,6 +28,26 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void getUser(User user, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void validateToken(BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void getPastEvents(List<Event> events, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void getFutureEvents(List<Event> events, BackendStatusManager backendStatusManager) {
+
+    }
+
+    @Override
+    public void updateProfile(User user, BackendStatusManager backendStatusManager) {
 
     }
 

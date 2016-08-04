@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.mainactivityfragments.CategoriesFragment"
-    android:id="@+id/fragment_categories">
+    tools:context="com.example.eatmeet.activities.myeventsactivityfragments.FutureEventsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listview_categories"
-        android:layout_gravity="center_horizontal" />
-    </FrameLayout>
+        android:id="@+id/eventsListView"
+        android:layout_gravity="left|top"
+        android:choiceMode="none" />
+</FrameLayout>
