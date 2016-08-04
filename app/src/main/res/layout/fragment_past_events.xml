@@ -5,7 +5,7 @@
     tools:context="com.example.eatmeet.activities.myeventsactivityfragments.PastEventsFragment"
     android:nestedScrollingEnabled="false">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/loading_bar" />
 
     <ListView
         android:layout_width="match_parent"
