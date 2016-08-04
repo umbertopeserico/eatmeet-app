@@ -206,6 +206,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
+            case R.id.sidebar_account_settings:
+                intent = new Intent(MainActivity.this, AccountSettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
             default:
         }
 
