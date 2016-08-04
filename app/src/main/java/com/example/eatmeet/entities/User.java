@@ -3,7 +3,6 @@ package com.example.eatmeet.entities;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ public class User extends AbstractEntity implements Serializable{
     private String email;
     private String password;
     private String passwordConfirmation;
-    private String oldPassword;
+    private String currentPassword;
     private String provider;
     private String uid;
     private List<EventParticipation> eventParticipations;
@@ -93,14 +92,14 @@ public class User extends AbstractEntity implements Serializable{
         this.cs.firePropertyChange("passwordConfirmation", oldValue, this.passwordConfirmation);
     }
 
-    public String getOldPassword() {
-        return oldPassword;
+    public String getCurrentPassword() {
+        return currentPassword;
     }
 
-    public void setOldPassword(String oldPassword) {
-        String oldValue = this.oldPassword;
-        this.oldPassword = oldPassword;
-        this.cs.firePropertyChange("oldPassword", oldValue, this.oldPassword);
+    public void setCurrentPassword(String currentPassword) {
+        String oldValue = this.currentPassword;
+        this.currentPassword = currentPassword;
+        this.cs.firePropertyChange("oldPassword", oldValue, this.currentPassword);
     }
 
     public String getProvider() {
