@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
     private TextView oldPasswordErrors;
     private TextView passwordErrors;
     private TextView passwordConfirmationErrors;
+    private ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
         oldPasswordErrors = (TextView) findViewById(R.id.oldPasswordErrors);
         passwordErrors = (TextView) findViewById(R.id.passwordErrors);
         passwordConfirmationErrors = (TextView) findViewById(R.id.passwordConfirmationErrors);
+
+        loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
         setOldValues();
     }
@@ -97,6 +101,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
         userBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
                 EatMeetApp.setCurrentUser((User) response);
                 Toast.makeText(EditAccountSettingsActivity.this, "Salvataggio completato", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(EditAccountSettingsActivity.this, AccountSettingsActivity.class);
@@ -105,6 +110,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
                 ErrorsMap errorsMap = (ErrorsMap) response;
 
                 if(errorsMap.get("name")!=null) {
@@ -207,6 +213,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveButton:
+                loadingBar.setVisibility(View.VISIBLE);
                 saveSettings();
                 break;
             case R.id.backButton:
