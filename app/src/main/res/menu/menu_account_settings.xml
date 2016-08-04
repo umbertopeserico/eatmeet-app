@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/saveButton"
-        android:icon="@drawable/ic_done_white_24dp"
+        android:id="@+id/editButton"
+        android:icon="@drawable/ic_create_white_24dp"
         app:showAsAction="always"
-        android:title="Save">
-    </item>
-    <item
-        android:id="@+id/backButton"
-        android:icon="@drawable/ic_clear_white_24dp"
-        app:showAsAction="always"
-        android:title="Clear">
+        android:title="Edit">
     </item>
 </menu>

@@ -39,7 +39,7 @@
         <activity
             android:name=".activities.SignInActivity"
             android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up"
@@ -59,7 +59,7 @@
         <activity
             android:name=".activitiestest.EventsTestActivity"
             android:label="@string/title_activity_events_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.FiltersActivity"
             android:label="@string/title_activity_filters" />
@@ -73,6 +73,10 @@
         <activity
             android:name=".activities.MyEventsActivity"
             android:label="@string/title_activity_my_events"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.EditAccountSettingsActivity"
+            android:label="@string/title_activity_account_settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AccountSettingsActivity"

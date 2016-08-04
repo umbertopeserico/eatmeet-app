@@ -1,5 +1,6 @@
 package com.example.eatmeet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,20 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 
 public class AccountSettingsActivity extends AppCompatActivity {
 
-    private EditText nameField;
-    private EditText surnameField;
-    private EditText emailField;
-    private EditText oldPasswordField;
-    private EditText passwordField;
-    private EditText passwordConfirmationField;
+    private TextView fullNameField;
+    private TextView emailField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +27,11 @@ public class AccountSettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Set variables from view
-        nameField = (EditText) findViewById(R.id.nameField);
-        surnameField = (EditText) findViewById(R.id.surnameField);
-        emailField = (EditText) findViewById(R.id.emailField);
-        oldPasswordField = (EditText) findViewById(R.id.oldPasswordField);
-        passwordField = (EditText) findViewById(R.id.passwordField);
-        passwordConfirmationField = (EditText) findViewById(R.id.passwordConfirmationField);
+        fullNameField = (TextView) findViewById(R.id.fullNameField);
+        emailField = (TextView) findViewById(R.id.emailField);
 
-        setOldValues();
-
-    }
-
-    private void setOldValues() {
-        nameField.setText(EatMeetApp.getCurrentUser().getName());
-        surnameField.setText(EatMeetApp.getCurrentUser().getSurname());
+        fullNameField.setText(EatMeetApp.getCurrentUser().getFullName());
         emailField.setText(EatMeetApp.getCurrentUser().getEmail());
-    }
-
-    private void saveSettings() {
 
     }
 
@@ -68,11 +50,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.saveButton:
-                saveSettings();
-                break;
-            case R.id.backButton:
-                setOldValues();
+            case R.id.editButton:
+                Intent intent = new Intent(AccountSettingsActivity.this, EditAccountSettingsActivity.class);
+                startActivity(intent);
                 break;
             default:
         }

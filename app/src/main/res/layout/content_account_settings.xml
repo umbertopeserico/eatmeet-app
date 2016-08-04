@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.eatmeet.activities.AccountSettingsActivity"
-    tools:showIn="@layout/activity_account_settings"
-    android:background="#eee">
+    tools:context=".activities.AccountSettingsActivity"
+    tools:showIn="@layout/activity_account_settings">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,87 +42,45 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="Informazioni di base"
-                        android:id="@+id/basicInfoLabel" />
+                        android:id="@+id/basicInfoLabel"
+                        android:layout_marginBottom="15dp" />
 
-                    <EditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/nameField"
-                        android:hint="Nome" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/surnameField"
-                        android:hint="Cognome" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:ems="10"
-                        android:id="@+id/emailField"
-                        android:hint="E-mail" />
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/passwordInfoCard"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/fullNameField"
+                        android:layout_marginBottom="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Password"
-                        android:id="@+id/passwordInfoLabel" />
+                        android:text="Nome completo"
+                        android:id="@+id/fullNameLabel" />
 
-                    <EditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:ems="10"
-                        android:id="@+id/oldPasswordField"
-                        android:hint="Vecchia password" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/emailField"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="20dp"
+                        android:textIsSelectable="true" />
 
-                    <EditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:ems="10"
-                        android:id="@+id/passwordField"
-                        android:hint="Nuova password" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Email"
+                        android:id="@+id/emailLabel" />
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:ems="10"
-                        android:id="@+id/passwordConfirmationField"
-                        android:hint="Conferma password" />
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
 
