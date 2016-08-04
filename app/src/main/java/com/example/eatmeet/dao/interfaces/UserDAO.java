@@ -27,6 +27,8 @@ public interface UserDAO {
 
     void getFutureEvents(final List<Event> events, BackendStatusManager backendStatusManager);
 
+    void updateProfile(User user, BackendStatusManager backendStatusManager);
+
     @Deprecated
     List<User> getUsers();
 }

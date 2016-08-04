@@ -8,6 +8,8 @@ import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.User;
+import com.example.eatmeet.entities.errors.ErrorsMap;
+import com.example.eatmeet.entities.errors.FieldErrorsDeserializer;
 import com.example.eatmeet.utils.Configs;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -217,6 +219,48 @@ public class UserDAORest implements UserDAO {
                     events.add(event);
                 }
                 backendStatusManager.addSuccess(eventsList,statusCode);
+            }
+        });
+    }
+
+    @Override
+    public void updateProfile(User user, final BackendStatusManager backendStatusManager) {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("name", user.getName());
+        requestParams.put("surname", user.getSurname());
+        requestParams.put("email", user.getEmail());
+        if( !(user.getPassword().equals("") || user.getPassword()== null) ) {
+            requestParams.put("password", user.getPassword());
+            requestParams.put("password_confirmation", user.getPasswordConfirmation());
+            requestParams.put("old_password", user.getOldPassword());
+        }
+
+        HttpRestClient.put(Configs.getBackendUrl() + "/api/user_profile/update", requestParams, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                ErrorsMap errorsMap = null;
+                if(responseString!=null) {
+                    Log.e("USER PROFILE UPDATE: ", responseString);
+                    Type collectionType = new TypeToken<ErrorsMap>(){}.getType();
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.registerTypeAdapter(collectionType, new FieldErrorsDeserializer());
+                    Gson gson = gsonBuilder.create();
+                    errorsMap = gson.fromJson(responseString, collectionType);
+                }
+                backendStatusManager.addError(errorsMap, statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                User user = null;
+                if(responseString!=null) {
+                    Log.i("USER PROFILE UPDATE: ", responseString);
+                    Gson gson = new GsonBuilder()
+                            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                            .create();
+                    user = gson.fromJson(responseString, User.class);
+                }
+                backendStatusManager.addSuccess(user, statusCode);
             }
         });
     }
