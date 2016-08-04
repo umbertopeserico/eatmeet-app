@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -203,6 +202,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.sidebar_privacy_policy:
                 intent = new Intent(MainActivity.this, PrivacyPolicyActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case R.id.sidebar_account_settings:
+                intent = new Intent(MainActivity.this, AccountSettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
