@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -29,12 +30,12 @@ public class FutureEventsFragment extends Fragment {
 
     private ListView eventsListView;
     private ArrayAdapter arrayAdapter;
+    private ProgressBar loadingBar;
     private ObservableArrayList<Event> eventsList;
 
     public FutureEventsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,17 +46,20 @@ public class FutureEventsFragment extends Fragment {
         eventsList = new ObservableArrayList<>();
         arrayAdapter = new EventsAdapter(getActivity(),R.layout.list_item_event, eventsList);
         eventsListView.setAdapter(arrayAdapter);
+        loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
 
         UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         BackendStatusManager eventsBSM = new BackendStatusManager();
         eventsBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
                 Log.i("USER FUTURE EVENTS: ", ""+ ((List<Event>) response).size());
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
                 Log.e("USER FUTURE EVENTS: ", "Errore");
             }
         });
@@ -65,6 +69,8 @@ public class FutureEventsFragment extends Fragment {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+
+        loadingBar.setVisibility(View.VISIBLE);
         userDAO.getFutureEvents(eventsList,eventsBSM);
 
         return view;
