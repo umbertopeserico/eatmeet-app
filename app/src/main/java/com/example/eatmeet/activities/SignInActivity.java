@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -111,7 +112,10 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.e("JSON PARSE: ", "Signin response not decoded:\n" + e.getMessage());
                             }
                         } else {
-                            errorText.setText((String) response);
+                            loadingBar.setVisibility(View.GONE);
+                            errorText.setVisibility(View.GONE);
+                            Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                            //errorText.setText((String) response);
                         }
                     }
                 });

@@ -218,6 +218,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                 break;
             case R.id.backButton:
                 setOldValues();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_setting_reset, Toast.LENGTH_SHORT).show();
                 break;
             default:
         }

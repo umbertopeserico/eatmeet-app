@@ -2,6 +2,7 @@
 <resources>
     <string name="account_settings_save_success">Salvataggio utente completato</string>
     <string name="account_settings_save_failure">Errore nel salvataggio utente</string>
+    <string name="account_setting_reset">Ripristinati i dati precedenti</string>
 
     <string name="my_events_no_past_events">Non hai partecipato ad eventi in passato</string>
     <string name="my_events_no_future_events">Non hai prenotato eventi prossimamente</string>
@@ -9,4 +10,7 @@
     <string name="network_error">Errore di rete. Impossibile caricare i dati</string>
 
     <string name="registration_error">Errore nella registrazione</string>
+
+    <string name="sign_out_success">Logout effettuato correttamente</string>
+    <string name="sign_out_error">Logout non completato</string>
 </resources>
