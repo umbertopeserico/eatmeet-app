@@ -76,14 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(newFragment != null) {
                 newFragment.refresh();
             }
-            //System.out.println(getSupportFragmentManager().findFragmentByTag("unique_tag"));
-            //((EventsFragment) getSupportFragmentManager().findFragmentById(fragment)).refresh();
-            //((EventsFragment) getSupportFragmentManager().getFragments().get(fragment)).refresh();
-            /*
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.fragment_events, new EventsFragment());
-            trans.commit();
-            */
         }
     }
 
