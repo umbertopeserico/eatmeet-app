@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback, Notificable {
+public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback {
     final int MY_PERMISSIONS_REQUEST_ACCESS_POSITION = 12;
     MapView mapView;
     HashMap<Marker,Integer> markers = new HashMap<>();
@@ -232,54 +232,5 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
-
-    @Override
-    public void sendNotify() {
-        System.out.println("ENDLOAD DATA. STARTING CALLBACK");
-        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                // Should we show an explanation?
-                //if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-                //} else {
-                    // No explanation needed, we can request the permission.
-                    //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_POSITION);
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_POSITION);
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-                //}
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        System.out.println("ENDLOAD DATA. STARTING CALLBACK");
-        map.setMyLocationEnabled(true);
-        map.setOnInfoWindowClickListener(this);
-
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-        for(Restaurant r : this.restaurantList) {
-            System.out.println("ADD NEW RESTAURANT " + r);
-            LatLng pos = new LatLng(r.getLat(), r.getLgt());
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .title(r.getName())
-                    .snippet(r.getDescription())
-                    .position(pos);
-            Marker marker = map.addMarker(markerOptions);
-            markers.put(marker,r.getId());
-        }
-
-        if(restaurantList.size()>0) {
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(restaurantList.get(0).getLat(), restaurantList.get(0).getLgt()), 12.0f));
-        }
-
     }
 }
