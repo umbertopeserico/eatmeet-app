@@ -65,12 +65,11 @@ public class SignInActivity extends AppCompatActivity {
                 backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
-                        loadingBar.setVisibility(View.GONE);
-
                         BackendStatusManager userBSM = new BackendStatusManager();
                         userBSM.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
+                                loadingBar.setVisibility(View.GONE);
                                 User user = (User) response;
                                 EatMeetApp.setCurrentUser(user);
                                 Log.w("CURRENT USER: ", ""+ response.toString());
@@ -82,6 +81,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Object response, Integer code) {
+                                loadingBar.setVisibility(View.GONE);
                                 EatMeetApp.setCurrentUser(null);
                                 Log.e("CURRENT USER: ", "Retrieve current user failed: "+code);
                             }
