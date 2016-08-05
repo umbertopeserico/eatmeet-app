@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.sidebar_my_events:
-                intent = new Intent(MainActivity.this, MyEventsActivity.class);
+                intent = new Intent(MainActivity.this, UserEventsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
