@@ -37,7 +37,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        Intent intent = new Intent(AccountSettingsActivity.this, MainActivity.class);
+        startActivity(intent);
         return super.onSupportNavigateUp();
     }
 

@@ -199,7 +199,8 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        Intent intent = new Intent(EditAccountSettingsActivity.this, AccountSettingsActivity.class);
+        startActivity(intent);
         return super.onSupportNavigateUp();
     }
 
