@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -31,6 +32,7 @@ public class PastEventsFragment extends Fragment {
     private ListView eventsListView;
     private ArrayAdapter arrayAdapter;
     private ProgressBar loadingBar;
+    private TextView messagesLabel;
     private ObservableArrayList<Event> eventsList;
 
     public PastEventsFragment() {
@@ -47,6 +49,7 @@ public class PastEventsFragment extends Fragment {
         arrayAdapter = new EventsAdapter(getActivity(),R.layout.list_item_event, eventsList);
         eventsListView.setAdapter(arrayAdapter);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+        messagesLabel = (TextView) view.findViewById(R.id.messagesLabel);
 
         UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         BackendStatusManager eventsBSM = new BackendStatusManager();
@@ -54,6 +57,12 @@ public class PastEventsFragment extends Fragment {
             @Override
             public void onSuccess(Object response, Integer code) {
                 loadingBar.setVisibility(View.GONE);
+                if(eventsList.size() == 0) {
+                    messagesLabel.setText(R.string.my_events_no_past_events);
+                    messagesLabel.setVisibility(View.VISIBLE);
+                } else {
+                    messagesLabel.setVisibility(View.GONE);
+                }
                 Log.i("USER PAST EVENTS: ", ""+ ((List<Event>) response).size());
             }
 

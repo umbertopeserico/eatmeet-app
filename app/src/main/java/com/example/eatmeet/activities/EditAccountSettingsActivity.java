@@ -103,7 +103,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
             public void onSuccess(Object response, Integer code) {
                 loadingBar.setVisibility(View.GONE);
                 EatMeetApp.setCurrentUser((User) response);
-                Toast.makeText(EditAccountSettingsActivity.this, "Salvataggio completato", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_success, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(EditAccountSettingsActivity.this, AccountSettingsActivity.class);
                 startActivity(intent);
             }
@@ -191,7 +191,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(EditAccountSettingsActivity.this, "Errore nel salvataggio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_failure, Toast.LENGTH_SHORT).show();
             }
         });
         userDAO.updateProfile(user, userBSM);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_settings_save_success">Salvataggio utente completato</string>
+    <string name="account_settings_save_failure">Errore nel salvataggio utente</string>
+
+    <string name="my_events_no_past_events">Non hai partecipato ad eventi in passato</string>
+    <string name="my_events_no_future_events">Non hai prenotato eventi prossimamente</string>
+
+    <string name="network_error">Errore di rete. Impossibile caricare i dati</string>
+
+    <string name="registration_error">Errore nella registrazione</string>
+</resources>
