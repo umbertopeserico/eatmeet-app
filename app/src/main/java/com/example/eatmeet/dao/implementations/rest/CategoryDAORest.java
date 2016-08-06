@@ -31,7 +31,6 @@ public class CategoryDAORest implements CategoryDAO {
         HttpRestClient.get(Configs.getBackendUrl() + "/api/categories", null, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, responseString);
                 backendStatusManager.addError(responseString, statusCode);
             }
 

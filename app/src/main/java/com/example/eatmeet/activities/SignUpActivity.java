@@ -2,12 +2,8 @@ package com.example.eatmeet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,19 +16,11 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.activitiestest.CategoriesTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
-import com.example.eatmeet.dao.interfaces.RestaurantDAO;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
+import com.example.eatmeet.entities.errors.ErrorsMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -47,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView passwordErrors;
     private TextView passwordConfirmationErrors;
     private Button signUpButton;
-    private ProgressBar progressBar;
+    private ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,53 +59,16 @@ public class SignUpActivity extends AppCompatActivity {
         passwordErrors = (TextView) findViewById(R.id.passwordErrors);
         passwordConfirmationErrors = (TextView) findViewById(R.id.passwordConfirmationErrors);
         signUpButton = (Button) findViewById(R.id.signUpButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
         final User user = new User();
-
-        user.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-
-                if(event.getPropertyName().equals("addError")) {
-                    for(String fieldName : user.getErrors().keySet()) {
-                        for(String error : user.getErrors().get(fieldName)) {
-                            switch (fieldName) {
-                                case "name":
-                                    nameErrors.setVisibility(View.VISIBLE);
-                                    nameErrors.setText(error+"\n");
-                                    break;
-                                case "surname":
-                                    surnameErrors.setText(error+"\n");
-                                    surnameErrors.setVisibility(View.VISIBLE);
-                                    break;
-                                case "email":
-                                    emailErrors.setText(error+"\n");
-                                    emailErrors.setVisibility(View.VISIBLE);
-                                    break;
-                                case "password":
-                                    passwordErrors.setText(error+"\n");
-                                    passwordErrors.setVisibility(View.VISIBLE);
-                                    break;
-                                case "password_confirmaion":
-                                    passwordConfirmationErrors.setText(error+"\n");
-                                    passwordConfirmationErrors.setVisibility(View.VISIBLE);
-                                    break;
-                                default:
-
-                            }
-                        }
-                    }
-                }
-            }
-        });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.cleanErrors();
                 SignUpActivity.this.cleanErrors();
-                progressBar.setVisibility(View.VISIBLE);
+                loadingBar.setVisibility(View.VISIBLE);
                 user.setName(name.getText().toString());
                 user.setSurname(surname.getText().toString());
                 user.setEmail(email.getText().toString());
@@ -133,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                         signInBM.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
-                                progressBar.setVisibility(View.GONE);
+                                loadingBar.setVisibility(View.GONE);
                                 Intent intent = new Intent(SignUpActivity.this, CategoriesTestActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -141,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Object response, Integer code) {
-                                progressBar.setVisibility(View.GONE);
+                                loadingBar.setVisibility(View.GONE);
                                 Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -150,9 +101,76 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
-                        progressBar.setVisibility(View.GONE);
-                        if(code!=403) {
-                            Toast.makeText(SignUpActivity.this, "Errore nella registrazione. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                        loadingBar.setVisibility(View.GONE);
+                        if(response!=null) {
+                            ErrorsMap errorsMap = (ErrorsMap) response;
+                            if(errorsMap.get("name")!=null) {
+                                List<String> errors = errorsMap.get("name");
+                                for(String e : errors) {
+                                    int index = errors.lastIndexOf(e);
+                                    String ret = "\n";
+                                    if(index == errors.size()-1) {
+                                        ret = "";
+                                    }
+                                    nameErrors.setText(e+ret);
+                                    nameErrors.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if(errorsMap.get("surname")!=null) {
+                                List<String> errors = errorsMap.get("surname");
+                                for(String e : errors) {
+                                    int index = errors.lastIndexOf(e);
+                                    String ret = "\n";
+                                    if(index == errors.size()-1) {
+                                        ret = "";
+                                    }
+                                    surnameErrors.setText(e+ret);
+                                    surnameErrors.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if(errorsMap.get("email")!=null) {
+                                List<String> errors = errorsMap.get("email");
+                                for(String e : errors) {
+                                    int index = errors.lastIndexOf(e);
+                                    String ret = "\n";
+                                    if(index == errors.size()-1) {
+                                        ret = "";
+                                    }
+                                    emailErrors.setText(e+ret);
+                                    emailErrors.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if(errorsMap.get("password")!=null) {
+                                List<String> errors = errorsMap.get("password");
+                                for(String e : errors) {
+                                    int index = errors.lastIndexOf(e);
+                                    String ret = "\n";
+                                    if(index == errors.size()-1) {
+                                        ret = "";
+                                    }
+                                    passwordErrors.setText(e+ret);
+                                    passwordErrors.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if(errorsMap.get("password_confirmation")!=null) {
+                                List<String> errors = errorsMap.get("password_confirmation");
+                                for(String e : errors) {
+                                    int index = errors.lastIndexOf(e);
+                                    String ret = "\n";
+                                    if(index == errors.size()-1) {
+                                        ret = "";
+                                    }
+                                    passwordConfirmationErrors.setText(e+ret);
+                                    passwordConfirmationErrors.setVisibility(View.VISIBLE);
+                                }
+                            }
+                            Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

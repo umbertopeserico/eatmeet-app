@@ -39,7 +39,7 @@ public class UserDAORest implements UserDAO {
 
     @Override
     public void signIn(User user, final BackendStatusManager backendStatusManager) {
-        final RequestParams requestParams = new RequestParams();
+        RequestParams requestParams = new RequestParams();
         requestParams.add("email", user.getEmail());
         requestParams.add("password", user.getPassword());
         HttpRestClient.post(Configs.getBackendUrl() + "/api/users/auth/sign_in", requestParams, new TokenTextHttpResponseHandler() {
@@ -96,9 +96,21 @@ public class UserDAORest implements UserDAO {
         HttpRestClient.post(Configs.getBackendUrl() + "/api/users/auth", requestParams, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                backendStatusManager.addError(responseString, statusCode);
+                if(responseString!=null) {
+                    ErrorsMap errorsMap = null;
+                    Type collectionType = new TypeToken<ErrorsMap>(){}.getType();
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.registerTypeAdapter(collectionType, new FieldErrorsDeserializer());
+                    Gson gson = gsonBuilder.create();
+                    System.out.print(responseString);
+                    errorsMap = gson.fromJson(responseString, collectionType);
+                    backendStatusManager.addError(errorsMap, statusCode);
+                } else {
+                    backendStatusManager.addError(null, statusCode);
+                }
 
-                if(responseString==null) {
+
+                /*if(responseString==null) {
                     responseString = throwable.getMessage();
                 }
 
@@ -124,7 +136,7 @@ public class UserDAORest implements UserDAO {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
 
             @Override
@@ -136,15 +148,12 @@ public class UserDAORest implements UserDAO {
 
     @Override
     public void getUser(User user, final BackendStatusManager backendStatusManager) {
-        final RequestParams requestParams = new RequestParams();
+        RequestParams requestParams = new RequestParams();
         requestParams.put("id", user.getId());
         HttpRestClient.get(Configs.getBackendUrl() + "/api/user_profile", requestParams, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 backendStatusManager.addError(responseString, statusCode);
-                System.out.println(responseString);
-                System.out.println(throwable.getMessage());
-                System.out.println("GET USER FAIL: "+responseString);
             }
 
             @Override
@@ -164,13 +173,11 @@ public class UserDAORest implements UserDAO {
         HttpRestClient.get(Configs.getBackendUrl() + "/api/users/auth/validate_token", null, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
                 backendStatusManager.addError(responseString, statusCode);
             }
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
-
                 backendStatusManager.addSuccess(responseString, statusCode);
             }
         });
@@ -181,7 +188,7 @@ public class UserDAORest implements UserDAO {
         HttpRestClient.get(Configs.getBackendUrl() + "/api/user_profile/past_events", null, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e("GET PAST EVENTS:", responseString);
+                backendStatusManager.addError(responseString, statusCode);
             }
 
             @Override
@@ -204,7 +211,7 @@ public class UserDAORest implements UserDAO {
         HttpRestClient.get(Configs.getBackendUrl() + "/api/user_profile/future_events", null, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e("GET FUTURE EVENTS:", responseString);
+                backendStatusManager.addError(responseString, statusCode);
             }
 
             @Override
@@ -237,28 +244,25 @@ public class UserDAORest implements UserDAO {
         HttpRestClient.put(Configs.getBackendUrl() + "/api/user_profile/update", requestParams, new TokenTextHttpResponseHandler() {
             @Override
             public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                ErrorsMap errorsMap = null;
                 if(responseString!=null) {
-                    Log.e("USER PROFILE UPDATE: ", responseString);
+                    ErrorsMap errorsMap = null;
                     Type collectionType = new TypeToken<ErrorsMap>(){}.getType();
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.registerTypeAdapter(collectionType, new FieldErrorsDeserializer());
                     Gson gson = gsonBuilder.create();
                     errorsMap = gson.fromJson(responseString, collectionType);
+                    backendStatusManager.addError(errorsMap, statusCode);
                 }
-                backendStatusManager.addError(errorsMap, statusCode);
             }
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
                 User user = null;
-                if(responseString!=null) {
-                    Log.i("USER PROFILE UPDATE: ", responseString);
-                    Gson gson = new GsonBuilder()
-                            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                            .create();
-                    user = gson.fromJson(responseString, User.class);
-                }
+                Gson gson = new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create();
+                user = gson.fromJson(responseString, User.class);
+
                 backendStatusManager.addSuccess(user, statusCode);
             }
         });

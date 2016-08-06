@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,8 @@ import java.beans.PropertyChangeListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private RelativeLayout overlay;
+    private ProgressBar loadingBar;
     NavigationView navigationView;
 
     private void chooseMenuType() {
@@ -94,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        overlay = (RelativeLayout) findViewById(R.id.overlay);
+        loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -178,27 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.sidebar_signout:
-                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
-                BackendStatusManager backendStatusManager = new BackendStatusManager();
-                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
-                    @Override
-                    public void onSuccess(Object response, Integer code) {
-                        EatMeetApp.setCurrentUser(null);
-                        Toast.makeText(MainActivity.this, "Log out effettuato correttamente", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onFailure(Object response, Integer code) {
-                        Toast.makeText(MainActivity.this, "Errore nel logout. Si prega di riprovare", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                userDAO.signOut(backendStatusManager);
-                navigationView.getMenu().clear();
-                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                doLogout();
                 break;
             case R.id.sidebar_privacy_policy:
                 intent = new Intent(MainActivity.this, PrivacyPolicyActivity.class);
@@ -217,6 +203,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawers();
 
         return true;
+    }
+
+    private void doLogout() {
+        overlay.setVisibility(View.VISIBLE);
+        loadingBar.setVisibility(View.VISIBLE);
+        UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                overlay.setVisibility(View.GONE);
+                loadingBar.setVisibility(View.GONE);
+                EatMeetApp.setCurrentUser(null);
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                Toast.makeText(MainActivity.this, R.string.sign_out_success, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                overlay.setVisibility(View.GONE);
+                loadingBar.setVisibility(View.GONE);
+                Toast.makeText(MainActivity.this, R.string.sign_out_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        userDAO.signOut(backendStatusManager);
     }
 
     /**
