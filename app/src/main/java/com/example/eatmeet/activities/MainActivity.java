@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,9 @@ import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.entities.User;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -85,6 +89,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Codice per fixare il freeze della mappa sul primo cambio tab
+        MapView mapView = new MapView(this);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                Log.i("LOADED MAP", "OK");
+            }
+        });
+        // Fine codice per fixare il freeze della mappa sul primo cambio tab
 
         //chooseMenuType();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
