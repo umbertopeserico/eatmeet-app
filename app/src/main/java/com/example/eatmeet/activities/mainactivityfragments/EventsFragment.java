@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ public class EventsFragment extends Fragment  implements Notificable {
     private String order_by_temp = "order_by_date";
     private ArrayAdapter eventAdapter;
     private View view;
+    private TextView messageLabel;
+    private ProgressBar loadingBar;
     ObservableArrayList<Event> eventList;
     BackendStatusManager backendStatusManager;
     JSONObject parameters;
@@ -237,6 +240,8 @@ public class EventsFragment extends Fragment  implements Notificable {
             visibility.makeVisible(active_filters_max_price);
             active_filters_max_price.setText("Prezzo fino a: " + EatMeetApp.getFiltersManager().getF_max_price() + "€");
         }
+
+        loadingBar.setVisibility(View.VISIBLE);
         eventDao.getEvents(eventList, backendStatusManager, parameters);
         return view;
     }
@@ -253,6 +258,7 @@ public class EventsFragment extends Fragment  implements Notificable {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
                 Logger.getLogger(EventsFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
                 if (((List<Event>) response).size() == 0){
                     /*add feedback of no events*/
@@ -267,6 +273,9 @@ public class EventsFragment extends Fragment  implements Notificable {
 
             @Override
             public void onFailure(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
+                messageLabel.setVisibility(View.VISIBLE);
+                messageLabel.setText(getString(R.string.network_error));
                 Logger.getLogger(EventsFragment.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
@@ -291,11 +300,9 @@ public class EventsFragment extends Fragment  implements Notificable {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_events,this)
-                .commit();*/
         view = inflater.inflate(R.layout.fragment_events, container, false);
+        loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+        messageLabel = (TextView) view.findViewById(R.id.messagesLabel);
 
         retrieve();
 
