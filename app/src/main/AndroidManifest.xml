@@ -71,7 +71,7 @@
             android:label="@string/title_activity_event_participation_test"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.MyEventsActivity"
+            android:name=".activities.UserEventsActivity"
             android:label="@string/title_activity_my_events"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +33,14 @@ import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.entities.User;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProgressBar loadingBar;
     NavigationView navigationView;
 
-    private void chooseMenuType() {
+    /*private void chooseMenuType() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //Use navigationView
             System.out.println("version >= lollipop");
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //use NavigationView
             System.out.println("version < lollipop");
         }
-    }
+    }*/
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -76,14 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(newFragment != null) {
                 newFragment.refresh();
             }
-            //System.out.println(getSupportFragmentManager().findFragmentByTag("unique_tag"));
-            //((EventsFragment) getSupportFragmentManager().findFragmentById(fragment)).refresh();
-            //((EventsFragment) getSupportFragmentManager().getFragments().get(fragment)).refresh();
-            /*
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.fragment_events, new EventsFragment());
-            trans.commit();
-            */
         }
     }
 
@@ -92,7 +90,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chooseMenuType();
+        // Codice per fixare il freeze della mappa sul primo cambio tab
+        MapView mapView = new MapView(this);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                Log.i("LOADED MAP", "OK");
+            }
+        });
+        // Fine codice per fixare il freeze della mappa sul primo cambio tab
+
+        //chooseMenuType();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         };
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -148,19 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        setMenuLayout();
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -169,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.sidebar_my_events:
-                intent = new Intent(MainActivity.this, MyEventsActivity.class);
+                intent = new Intent(MainActivity.this, UserEventsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
@@ -241,28 +237,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private List<Fragment> fragments = new ArrayList<>();
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragments.add(new CategoriesFragment());
+            fragments.add(new EventsFragment());
+            fragments.add(new GoogleMapFragment());
         }
 
         @Override
         public Fragment getItem(int position) {
-            Fragment f = null;
-            switch (position) {
-                case 0:
-                    f =  new CategoriesFragment();
-                    break;
-                case 1:
-                    f =  new EventsFragment();
-                    break;
-                case 2:
-                    f =  new GoogleMapFragment();
-                    break;
-                default:
-                    f =  new CategoriesFragment();
-            }
-
-            return f;
+            return fragments.get(position);
         }
 
         @Override
