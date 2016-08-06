@@ -43,7 +43,7 @@ public class CategoryDAORest implements CategoryDAO {
                 for(Category category : (List<Category>) gson.fromJson(responseString, collectionType)) {
                     categories.add(category);
                 }
-                backendStatusManager.addSuccess(responseString, statusCode);
+                backendStatusManager.addSuccess(categories, statusCode);
             }
         });
     }

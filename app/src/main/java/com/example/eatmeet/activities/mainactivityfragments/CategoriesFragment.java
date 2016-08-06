@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
@@ -22,27 +24,26 @@ import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Notificable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoriesFragment extends Fragment implements Notificable {
+public class CategoriesFragment extends Fragment {
 
     private ListView listView;
     private CategoriesAdapter categoryAdapter;
-    private HashMap<Integer, ImageView> images = new HashMap<>();
-
-    @Override
-    public void onResume(){super.onResume();}
-
+    private ProgressBar loadingBar;
+    private TextView messageLabel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
-        //setContentView(R.layout.activity_category);
+        loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+        messageLabel = (TextView) view.findViewById(R.id.messagesLabel);
 
         CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
         ObservableArrayList<Category> categoryList = new ObservableArrayList<>();
@@ -55,12 +56,21 @@ public class CategoriesFragment extends Fragment implements Notificable {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
+                List<Category> categories = (List<Category>) response;
+                if(categories.size() == 0) {
+                    messageLabel.setVisibility(View.VISIBLE);
+                    messageLabel.setText(getString(R.string.categories_no_category));
+                }
                 Logger.getLogger(CategoriesFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
-                Toast.makeText(CategoriesFragment.this.getActivity(), "Errore di autenticazione. Si prega di riautenticarsi", Toast.LENGTH_SHORT).show();
+                loadingBar.setVisibility(View.GONE);
+                messageLabel.setVisibility(View.VISIBLE);
+                messageLabel.setText(getString(R.string.network_error));
+                Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -71,31 +81,12 @@ public class CategoriesFragment extends Fragment implements Notificable {
             }
         });
 
+        messageLabel.setVisibility(View.GONE);
+        loadingBar.setVisibility(View.VISIBLE);
         categoryDAO.getCategories(categoryList, backendStatusManager);
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    @Override
-    public void sendNotify() {
-        categoryAdapter.notifyDataSetChanged();
-    }
 }
-
-
-/*
-    public CategoriesFragment() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
-    }
-
-}
-*/
