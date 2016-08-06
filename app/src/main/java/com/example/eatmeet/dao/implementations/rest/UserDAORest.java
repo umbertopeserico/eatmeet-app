@@ -108,35 +108,6 @@ public class UserDAORest implements UserDAO {
                 } else {
                     backendStatusManager.addError(null, statusCode);
                 }
-
-
-                /*if(responseString==null) {
-                    responseString = throwable.getMessage();
-                }
-
-                try {
-                    JSONObject jsonResponse = new JSONObject(responseString);
-                    JSONObject errors = jsonResponse.getJSONObject("errors");
-
-                    JSONArray nameFields = errors.names();
-
-                    for(int i=0; i< nameFields.length(); i++) {
-                        JSONArray errorList = errors.getJSONArray(nameFields.getString(i));
-                        for(int j = 0; j<errorList.length(); j++) {
-                            Pattern p = Pattern.compile("_(.)");
-                            Matcher m = p.matcher(errorList.getString(j));
-                            StringBuffer sb = new StringBuffer();
-                            while (m.find()) {
-                                m.appendReplacement(sb, m.group(1).toUpperCase());
-                            }
-                            m.appendTail(sb);
-                            String currentError = sb.toString();
-                            user.addError(nameFields.getString(i), currentError);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
             }
 
             @Override

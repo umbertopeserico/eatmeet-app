@@ -1,7 +1,6 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 

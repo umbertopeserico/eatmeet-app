@@ -60,7 +60,6 @@ public class CategoryDAORest implements CategoryDAO {
 
             @Override
             public void onSuccessAction(int statusCode, Header[] headers, File file) {
-                System.out.println(file.getAbsolutePath());
                 backendStatusManager.addSuccess(file, statusCode);
             }
         });
