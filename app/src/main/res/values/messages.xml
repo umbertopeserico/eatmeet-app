@@ -13,4 +13,6 @@
 
     <string name="sign_out_success">Logout effettuato correttamente</string>
     <string name="sign_out_error">Logout non completato</string>
+
+    <string name="categories_no_category">Nessuna categoria trovata</string>
 </resources>

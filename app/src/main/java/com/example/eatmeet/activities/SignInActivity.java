@@ -29,7 +29,6 @@ public class SignInActivity extends AppCompatActivity {
     private EditText passwordField;
     private Button signInButton;
     private Button signUpButton;
-    private Button signOutButton;
     private TextView errorText;
     private ProgressBar loadingBar;
 
@@ -115,7 +114,6 @@ public class SignInActivity extends AppCompatActivity {
                             loadingBar.setVisibility(View.GONE);
                             errorText.setVisibility(View.GONE);
                             Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
-                            //errorText.setText((String) response);
                         }
                     }
                 });
@@ -133,36 +131,6 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
-                BackendStatusManager backendStatusManager = new BackendStatusManager();
-                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
-                    @Override
-                    public void onSuccess(Object response, Integer code) {
-                        EatMeetApp.setCurrentUser(null);
-                        Toast.makeText(SignInActivity.this, "Log out effettuato correttamente", Toast.LENGTH_SHORT).show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(SignInActivity.this, CategoriesTestActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-                        }, 1500);
-                    }
-
-                    @Override
-                    public void onFailure(Object response, Integer code) {
-                        Toast.makeText(SignInActivity.this, "Errore nel logout. Si prega di riprovare", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                userDAO.signOut(backendStatusManager);
-            }
-        });*/
     }
 
     @Override

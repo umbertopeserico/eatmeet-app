@@ -6,6 +6,8 @@
     android:id="@+id/fragment_categories"
     android:nestedScrollingEnabled="false">
 
+    <include layout="@layout/loading_bar" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
