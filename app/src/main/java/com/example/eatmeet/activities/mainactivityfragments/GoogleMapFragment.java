@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback {
+public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,Refreshable {
     final int MY_PERMISSIONS_REQUEST_ACCESS_POSITION = 12;
     MapView mapView;
     HashMap<Marker,Integer> markers = new HashMap<>();
@@ -232,5 +232,10 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    @Override
+    public void refresh() {
+
     }
 }

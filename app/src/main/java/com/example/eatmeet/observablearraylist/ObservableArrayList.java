@@ -23,6 +23,8 @@ public class ObservableArrayList<T> extends ArrayList {
         }
     }
 
+
+
     @Override
     public void add(int index, Object object) {
         super.add(index, object);

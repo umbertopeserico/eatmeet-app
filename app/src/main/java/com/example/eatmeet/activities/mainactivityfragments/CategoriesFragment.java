@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements Refreshable {
 
     private ListView listView;
     private CategoriesAdapter categoryAdapter;
@@ -67,10 +67,12 @@ public class CategoriesFragment extends Fragment {
 
             @Override
             public void onFailure(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
-                messageLabel.setVisibility(View.VISIBLE);
-                messageLabel.setText(getString(R.string.network_error));
-                Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null && isAdded()) {
+                    loadingBar.setVisibility(View.GONE);
+                    messageLabel.setVisibility(View.VISIBLE);
+                    messageLabel.setText(getString(R.string.network_error));
+                    Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -89,4 +91,8 @@ public class CategoriesFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void refresh() {
+
+    }
 }

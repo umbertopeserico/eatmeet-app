@@ -9,7 +9,7 @@
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.eatmeet.activities.FilterActivity"
-    tools:showIn="@layout/fragment_events"
+    tools:showIn="@layout/fragment_oldevents"
     android:layout_gravity="bottom"
     android:weightSum="2"
     android:layout_marginBottom="12dp">

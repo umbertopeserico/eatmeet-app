@@ -25,11 +25,13 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
+import com.example.eatmeet.activities.mainactivityfragments.OldEventsFragment;
+import com.example.eatmeet.activities.mainactivityfragments.Refreshable;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
-import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.entities.User;
 import com.google.android.gms.maps.GoogleMap;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mViewPager.setCurrentItem(position, true);
         if(position==1) {
             long i = mSectionsPagerAdapter.getItemId(position);
-            EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
+            Refreshable newFragment = (Refreshable) getSupportFragmentManager().findFragmentByTag(
                     "android:switcher:" + mViewPager.getId() + ":" + i);
             if(newFragment != null) {
                 newFragment.refresh();

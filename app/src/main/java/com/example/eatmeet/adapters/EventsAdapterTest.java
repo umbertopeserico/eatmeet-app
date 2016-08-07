@@ -38,6 +38,7 @@ public class EventsAdapterTest extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
+
         convertView = inflater.inflate(mListRowLayout, null);
 
         Event event = mItems.get(position);

@@ -63,7 +63,7 @@ public class CategoriesAdapter extends ArrayAdapter {
 				 * We use the "root frame" defined in
 				 * "root_fragment.xml" as the reference to replace fragment
 				 */
-                //Fragment eventsFragment = new EventsFragment();
+                //Fragment eventsFragment = new OldEventsFragment();
                 //FrameLayout layout = (FrameLayout) mainActivity.findViewById(R.id.fragment_categories);
                 //layout.removeAllViewsInLayout();
                 //trans.replace(R.id.fragment_categories, eventsFragment);
