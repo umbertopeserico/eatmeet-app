@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
-import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.adapters.EventsAdapterTest;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -26,6 +25,7 @@ import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
+import com.example.eatmeet.utils.Refreshable;
 
 import org.json.JSONObject;
 
@@ -107,6 +107,7 @@ public class EventsFragment extends Fragment implements Refreshable {
         loadingBarContainer.setVisibility(View.VISIBLE);
         messagesLabel.setVisibility(View.GONE);
         filterStatusCardView.setVisibility(View.GONE);
+        filterStatusLayout.setVisibility(View.VISIBLE);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
     }
 
@@ -143,6 +144,8 @@ public class EventsFragment extends Fragment implements Refreshable {
 
     @Override
     public void refresh() {
-
+        if(isAdded()) {
+            loadData();
+        }
     }
 }

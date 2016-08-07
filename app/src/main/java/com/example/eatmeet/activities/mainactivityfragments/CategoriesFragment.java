@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,9 +20,8 @@ import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
-import com.example.eatmeet.utils.Notificable;
+import com.example.eatmeet.utils.Refreshable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,26 +31,38 @@ import java.util.logging.Logger;
  */
 public class CategoriesFragment extends Fragment implements Refreshable {
 
-    private ListView listView;
+    private View view;
+    private ListView categoriesListView;
     private CategoriesAdapter categoryAdapter;
     private ProgressBar loadingBar;
     private TextView messageLabel;
+    private CategoryDAO categoryDAO;
+    private ObservableArrayList<Category> categoryList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_categories, container, false);
+        view = inflater.inflate(R.layout.fragment_categories, container, false);
+        initViewElements();
+        setActions();
+        loadData();
+
+        return view;
+    }
+
+    private void initViewElements() {
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
         messageLabel = (TextView) view.findViewById(R.id.messagesLabel);
-
-        CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
-        ObservableArrayList<Category> categoryList = new ObservableArrayList<>();
-        BackendStatusManager backendStatusManager = new BackendStatusManager();
-
+        categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
+        categoryList = new ObservableArrayList<>();
         categoryAdapter = new CategoriesAdapter(getContext(), R.layout.list_item_category, categoryList);
+        categoriesListView = (ListView) view.findViewById(R.id.categoriesListView);
+        categoriesListView.setAdapter(categoryAdapter);
+    }
 
-        listView = (ListView) view.findViewById(R.id.listview_categories);
-        listView.setAdapter(categoryAdapter);
+    private void loadData() {
+        categoryList.clear();
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
@@ -86,13 +96,16 @@ public class CategoriesFragment extends Fragment implements Refreshable {
         messageLabel.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
         categoryDAO.getCategories(categoryList, backendStatusManager);
+    }
 
-        // Inflate the layout for this fragment
-        return view;
+    private void setActions() {
+
     }
 
     @Override
     public void refresh() {
-
+        if(isAdded()) {
+            loadData();
+        }
     }
 }

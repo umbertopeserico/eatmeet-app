@@ -22,7 +22,7 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
-import com.example.eatmeet.utils.Notificable;
+import com.example.eatmeet.utils.Refreshable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

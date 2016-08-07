@@ -1,4 +1,4 @@
-package com.example.eatmeet.activities.mainactivityfragments;
+package com.example.eatmeet.utils;
 
 /**
  * Created by umberto on 07/08/16.
