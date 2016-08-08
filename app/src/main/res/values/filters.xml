@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="number_of_people">Numero di persone</string>
+    <string name="price">Prezzo (€)</string>
+    <string name="day_from">Dal giorno</string>
+    <string name="day_to">Al giorno</string>
+    <string name="actual_sale">Sconto attuale (%)</string>
+    <string name="open_categories">Categorie (clicca per scegliere)</string>
+    <string name="open_restaurants">Ristoranti (clicca per scegliere)</string>
+    <string name="no_filters_button">Nessun filtro</string>
+</resources>

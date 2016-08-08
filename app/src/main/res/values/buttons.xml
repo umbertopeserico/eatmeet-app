@@ -2,4 +2,5 @@
 <resources>
     <string name="events_filter_button">Filtra</string>
     <string name="events_order_button">Ordina</string>
+    <string name="closeButton">Chiuso</string>
 </resources>
