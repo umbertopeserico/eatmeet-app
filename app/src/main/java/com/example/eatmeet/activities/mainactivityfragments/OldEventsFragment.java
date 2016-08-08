@@ -375,19 +375,19 @@ public class OldEventsFragment extends Fragment  implements Notificable {
         Visibility visibility = new Visibility();
         visibility.makeInvisible(view.findViewById(R.id.radioGroup));
         visibility.makeVisible(view.findViewById(R.id.listview_events));
-        visibility.makeInvisible(view.findViewById(R.id.listview_filters));
+        visibility.makeInvisible(view.findViewById(R.id.filtersScrollViewLayout));
         visibility.makeVisible(view.findViewById(R.id.order));
         visibility.makeVisible(view.findViewById(R.id.filter));
-        visibility.makeInvisible(view.findViewById(R.id.filter_buttons));
+        visibility.makeInvisible(view.findViewById(R.id.filterButtonsLayout));
     }
     public void enterOrder(){
         Visibility visibility = new Visibility();
         visibility.makeVisible(view.findViewById(R.id.radioGroup));
         visibility.makeInvisible(view.findViewById(R.id.listview_events));
-        visibility.makeInvisible(view.findViewById(R.id.listview_filters));
+        visibility.makeInvisible(view.findViewById(R.id.filtersScrollViewLayout));
         visibility.makeInvisible(view.findViewById(R.id.order));
         visibility.makeInvisible(view.findViewById(R.id.filter));
-        visibility.makeInvisible(view.findViewById(R.id.filter_buttons));
+        visibility.makeInvisible(view.findViewById(R.id.filterButtonsLayout));
     }
     public void undoOrder(){
         exitOrder();
