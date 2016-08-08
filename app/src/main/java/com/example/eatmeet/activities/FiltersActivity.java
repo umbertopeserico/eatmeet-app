@@ -3,9 +3,6 @@ package com.example.eatmeet.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -13,8 +10,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -32,20 +27,13 @@ import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
-import com.example.eatmeet.utils.FiltersManager;
+import com.example.eatmeet.utils.OldFiltersManager;
 import com.example.eatmeet.utils.Visibility;
 
-import org.json.JSONException;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.xml.datatype.DatatypeConfigurationException;
 
 public class FiltersActivity extends AppCompatActivity {
     private View view;
@@ -199,7 +187,7 @@ public class FiltersActivity extends AppCompatActivity {
         }
 
         /*set initial value as the actual filter value*/
-        FiltersManager fm = EatMeetApp.getFiltersManager();
+        OldFiltersManager fm = EatMeetApp.getFiltersManager();
         rangebar_people.setRangePinsByValue(fm.getF_min_people(),fm.getF_max_people());
         rangebar_price.setRangePinsByValue((float) fm.getF_min_price(),(float) fm.getF_max_price());
         rangebar_actual_sale.setRangePinsByValue((float) fm.getF_min_actual_sale(),(float) fm.getF_max_actual_sale());

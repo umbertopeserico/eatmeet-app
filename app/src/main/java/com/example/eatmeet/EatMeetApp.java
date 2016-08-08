@@ -1,9 +1,6 @@
 package com.example.eatmeet;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
@@ -13,9 +10,8 @@ import com.example.eatmeet.dao.factories.DAOFactory;
 import com.example.eatmeet.dao.factories.RestDAOFactory;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
-import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.FiltersManager;
-import com.example.eatmeet.utils.Post;
+import com.example.eatmeet.utils.OldFiltersManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +23,7 @@ import java.beans.PropertyChangeSupport;
  * Created by umberto on 25/06/16.
  */
 public class EatMeetApp extends Application {
-    private static FiltersManager filtersManager;
+    private static OldFiltersManager filtersManager;
     private static final DAOFactory daoFactory = new RestDAOFactory();
     private static User currentUser;
     private static PropertyChangeSupport cs = new PropertyChangeSupport(EatMeetApp.class);
@@ -35,7 +31,7 @@ public class EatMeetApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        filtersManager = new FiltersManager();
+        filtersManager = new OldFiltersManager();
         HttpRestClient.setConfigurations(this);
 
 
@@ -82,10 +78,12 @@ public class EatMeetApp extends Application {
         });
 
         userDAO.validateToken(validateBSM);
+
+        FiltersManager fm = new FiltersManager();
+        System.out.println(fm.buildJson());
     }
 
-
-    public static FiltersManager getFiltersManager() {
+    public static OldFiltersManager getFiltersManager() {
         return filtersManager;
     }
 
