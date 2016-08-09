@@ -58,15 +58,15 @@ public class OldEventsFragment extends Fragment  implements Notificable {
     JSONObject parameters;
     EventDAO eventDao;
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         //refresh();
     }
 
-    public View refresh(){
-        eventList.clear();
+    public View refresh() {
+        /*eventList.clear();
 
-        /*remove feedback of no events if present*/
+        // remove feedback of no events if present
         LinearLayout button_filter = (LinearLayout) view.findViewById(R.id.button_filter);
         android.widget.LinearLayout.LayoutParams button_filter_layout_params = (android.widget.LinearLayout.LayoutParams) button_filter.getLayoutParams();
         button_filter_layout_params.bottomMargin = 12;
@@ -79,7 +79,7 @@ public class OldEventsFragment extends Fragment  implements Notificable {
             e.printStackTrace();
         }
 
-        /*show active filters*/
+        // show active filters
         TextView active_filters_none = (TextView) view.findViewById(R.id.active_filters_none);
         final TextView active_filters_restaurant = (TextView) view.findViewById(R.id.active_filters_restaurant);
         final TextView active_filters_categories = (TextView) view.findViewById(R.id.active_filters_categories);
@@ -242,7 +242,7 @@ public class OldEventsFragment extends Fragment  implements Notificable {
         }
 
         loadingBar.setVisibility(View.VISIBLE);
-        eventDao.getEvents(eventList, backendStatusManager, parameters);
+        eventDao.getEvents(eventList, backendStatusManager, parameters);*/
         return view;
     }
 
@@ -362,13 +362,13 @@ public class OldEventsFragment extends Fragment  implements Notificable {
 
 
     public void setRadio(){
-        if(EatMeetApp.getFiltersManager().getF_order_by()=="order_by_date"){
+        /*if(EatMeetApp.getFiltersManager().getF_order_by()=="order_by_date"){
             ((RadioButton) view.findViewById(R.id.order_by_date)).setChecked(true);
         } else if (EatMeetApp.getFiltersManager().getF_order_by()=="order_by_price"){
             ((RadioButton) view.findViewById(R.id.order_by_price)).setChecked(true);
         /*} else if (EatMeetApp.getFiltersManager().getF_order_by()=="order_by_proximity"){
-            ((RadioButton) view.findViewById(R.id.order_by_proximity)).setChecked(true);*/
-        }
+            ((RadioButton) view.findViewById(R.id.order_by_proximity)).setChecked(true);
+        }*/
     }
     public void exitOrder(){
         setRadio();
@@ -393,9 +393,9 @@ public class OldEventsFragment extends Fragment  implements Notificable {
         exitOrder();
     }
     public void changeOrder(){
-        EatMeetApp.getFiltersManager().setF_order_by(order_by_temp);
+        /*EatMeetApp.getFiltersManager().setF_order_by(order_by_temp);
         exitOrder();
-        refresh();
+        refresh();*/
     }
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?

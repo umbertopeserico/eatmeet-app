@@ -55,6 +55,24 @@ public class FiltersActivity extends AppCompatActivity {
     private DatePicker maxDate;
     private DatePicker minDate;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_filters);
+        assert getSupportActionBar()!=null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        filtersManager = new FiltersManager();
+        categoriesList = new ObservableArrayList<>();
+        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList);
+        restaurantsList = new ObservableArrayList<>();
+        restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList);
+        initViewElements();
+        setActions();
+        retrieveCategories();
+        retrieveRestaurants();
+        setValues();
+    }
+
     private void initViewElements() {
         categoriesListView = (ListView) findViewById(R.id.categoriesListView);
         restaurantsListView = (ListView) findViewById(R.id.restaurantsListView);
@@ -77,7 +95,7 @@ public class FiltersActivity extends AppCompatActivity {
         applyFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFilter();
+                applyFilters();
             }
         });
         resetFiltersButton.setOnClickListener(new View.OnClickListener() {
@@ -188,29 +206,11 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filters);
-        assert getSupportActionBar()!=null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        filtersManager = new FiltersManager();
-        categoriesList = new ObservableArrayList<>();
-        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList);
-        restaurantsList = new ObservableArrayList<>();
-        restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList);
-        initViewElements();
-        setActions();
-        retrieveCategories();
-        retrieveRestaurants();
-        setValues();
-    }
-
-    @Override
     protected void onResume(){
         super.onResume();
     }
 
-    /*open and close card containing restaurant or category choise*/
+    // open and close card containing restaurant or category choise
     private void toggleCard(String action, String target){
         CardView target_card_view = null;
         RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.overlay);
@@ -233,7 +233,7 @@ public class FiltersActivity extends AppCompatActivity {
         }
     }
 
-    //add action for back button
+    // add action for back button
     @Override
     public boolean onSupportNavigateUp(){
         finish();
@@ -241,11 +241,11 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     private void resetFilter(){
-        EatMeetApp.getFiltersManager().removeAllFilters();
-        changeFilter();
+        EatMeetApp.getFiltersManager().resetFilters();
+        applyFilters();
     }
 
-    private void changeFilter(){
+    private void applyFilters(){
         Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("from", "FiltersActivity");
@@ -280,7 +280,6 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     private void retrieveRestaurants(){
-
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
 

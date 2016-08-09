@@ -68,6 +68,10 @@ public class FiltersManager {
     // FINE SEZIONE ORDINAMENTO
 
     // SETTING FILTRI PER CATEGORIA
+    public List<Category> getSelectedCategories() {
+        return selectedCategories;
+    }
+
     public void addCategory(Category category) {
         selectedCategories.add(category);
     }
@@ -90,6 +94,10 @@ public class FiltersManager {
     // FINE SETTING FILTRI PER CATEGORIA
 
     // SETTING FILTRI PER RISTORANTE
+    public List<Restaurant> getSelectedRestaurants() {
+        return selectedRestaurants;
+    }
+
     public void addRestaurant(Restaurant restaurant) {
         selectedRestaurants.add(restaurant);
     }

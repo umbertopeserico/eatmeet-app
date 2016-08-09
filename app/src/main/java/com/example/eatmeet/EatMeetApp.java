@@ -23,7 +23,7 @@ import java.beans.PropertyChangeSupport;
  * Created by umberto on 25/06/16.
  */
 public class EatMeetApp extends Application {
-    private static OldFiltersManager filtersManager;
+    private static FiltersManager filtersManager;
     private static final DAOFactory daoFactory = new RestDAOFactory();
     private static User currentUser;
     private static PropertyChangeSupport cs = new PropertyChangeSupport(EatMeetApp.class);
@@ -31,7 +31,7 @@ public class EatMeetApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        filtersManager = new OldFiltersManager();
+        filtersManager = new FiltersManager();
         HttpRestClient.setConfigurations(this);
 
 
@@ -78,12 +78,9 @@ public class EatMeetApp extends Application {
         });
 
         userDAO.validateToken(validateBSM);
-
-        FiltersManager fm = new FiltersManager();
-        System.out.println(fm.buildJson());
     }
 
-    public static OldFiltersManager getFiltersManager() {
+    public static FiltersManager getFiltersManager() {
         return filtersManager;
     }
 

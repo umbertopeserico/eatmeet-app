@@ -76,13 +76,13 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        Context context = getContext();
+        /*Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
         ArrayList<Integer> f_restaurants = new ArrayList<>();
         f_restaurants.add(markers.get(marker));
         EatMeetApp.getFiltersManager().removeAllFilters();
         EatMeetApp.getFiltersManager().setF_restaurants(f_restaurants);
-        mainActivity.setCurrentFragment(1);
+        mainActivity.setCurrentFragment(1);*/
 
         //String title = marker.getTitle();
         //Toast.makeText(this.getContext(), title + " clicked " + Integer.toString(restaurantId),Toast.LENGTH_SHORT).show();
