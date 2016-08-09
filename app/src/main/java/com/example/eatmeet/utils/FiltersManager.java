@@ -19,6 +19,9 @@ import java.util.Locale;
  */
 public class FiltersManager {
 
+    // VARIABILE DI CONTROLLO PER SAPERE SE IMPOSTARE I FILTRI
+    private boolean enabled;
+
     // VARIABILI PER ORDINAMENTO
     private String orderByField;
     private String orderByDirection;
@@ -38,6 +41,14 @@ public class FiltersManager {
     public FiltersManager() {
         selectedCategories = new ArrayList<>();
         selectedRestaurants = new ArrayList<>();
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     // SEZIONE ORDINAMENTO

@@ -52,6 +52,7 @@ public class CategoriesAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 EatMeetApp.getFiltersManager().resetFilters();
                 EatMeetApp.getFiltersManager().addCategory(category);
+                EatMeetApp.getFiltersManager().setEnabled(true);
                 mainActivity.setCurrentFragment(1);
             }
         });

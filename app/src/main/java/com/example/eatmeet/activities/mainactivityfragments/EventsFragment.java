@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
+import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.adapters.EventsAdapterTest;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -39,7 +40,7 @@ public class EventsFragment extends Fragment implements Refreshable {
     private JSONObject parameters;
     private final ObservableArrayList<Event> eventsList;
     private ListView eventsListView;
-    private EventsAdapterTest eventsAdapter;
+    private EventsAdapter eventsAdapter;
     private ProgressBar loadingBar;
     private LinearLayout loadingBarContainer;
     private TextView messagesLabel;
@@ -55,22 +56,28 @@ public class EventsFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
         initViewElements();
         setActions();
-        /*
-         * Inizializzazione parametri dei filti:
-         * Per ora inizializzati ad un elemento JSON vuoto.
-         */
-        parameters = new JSONObject();
         loadData();
         return view;
     }
 
+    @Override
+    public void refresh() {
+        if(isAdded()) {
+            loadData();
+        }
+    }
+
     // Funzioni di logica interna
     private void loadData() {
+        if(EatMeetApp.getFiltersManager().isEnabled()) {
+            parameters = EatMeetApp.getFiltersManager().buildJson();
+        } else {
+            parameters = new JSONObject();
+        }
         eventsList.clear();
         BackendStatusManager eventsBSM = new BackendStatusManager();
         eventsBSM.setBackendStatusListener(new BackendStatusListener() {
@@ -109,11 +116,12 @@ public class EventsFragment extends Fragment implements Refreshable {
         filterStatusCardView.setVisibility(View.GONE);
         filterStatusLayout.setVisibility(View.VISIBLE);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
+        EatMeetApp.getFiltersManager().setEnabled(false);
     }
 
     private void initViewElements() {
         eventsListView = (ListView) view.findViewById(R.id.eventsListView);
-        eventsAdapter = new EventsAdapterTest(this.getActivity(), R.layout.list_item_event, eventsList);
+        eventsAdapter = new EventsAdapter(this.getActivity(), R.layout.list_item_event, eventsList);
         eventsListView.setAdapter(eventsAdapter);
         loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
         loadingBarContainer = (LinearLayout) view.findViewById(R.id.loadingBarContainer);
@@ -140,12 +148,5 @@ public class EventsFragment extends Fragment implements Refreshable {
 
             }
         });
-    }
-
-    @Override
-    public void refresh() {
-        if(isAdded()) {
-            loadData();
-        }
     }
 }

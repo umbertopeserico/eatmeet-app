@@ -248,7 +248,8 @@ public class FiltersActivity extends AppCompatActivity {
     private void applyFilters(){
         Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("from", "FiltersActivity");
+        intent.putExtra("applyFilters", "1");
+        intent.putExtra("destination", "1");
         startActivity(intent);
     }
 
