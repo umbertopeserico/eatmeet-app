@@ -346,10 +346,10 @@ public class FiltersManager {
             if(isMinPeopleEnabled() || isMaxPeopleEnabled()) {
                 JSONObject filter = new JSONObject();
                 if(isMinPeopleEnabled()) {
-                    filter.put("start", getMinActualSale());
+                    filter.put("start", getMinPeople());
                 }
                 if(isMaxPeopleEnabled()) {
-                    filter.put("end", getMaxActualSale());
+                    filter.put("end", getMaxPeople());
                 }
                 filters.put("participants_range", filter);
             }

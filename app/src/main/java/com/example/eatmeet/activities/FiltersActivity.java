@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -71,6 +72,7 @@ public class FiltersActivity extends AppCompatActivity {
         retrieveCategories();
         retrieveRestaurants();
         setValues();
+        setFiltersListener();
     }
 
     private void initViewElements() {
@@ -88,7 +90,7 @@ public class FiltersActivity extends AppCompatActivity {
         actualSaleRangeBar = (RangeBar) findViewById(R.id.actualSaleRangeBar);
         maxDate = (DatePicker) findViewById(R.id.maxDate);
         minDate = (DatePicker) findViewById(R.id.minDate);
-        filtersManager = new FiltersManager();
+        filtersManager = EatMeetApp.getFiltersManager();
     }
 
     private void setActions() {
@@ -137,6 +139,92 @@ public class FiltersActivity extends AppCompatActivity {
         });
     }
 
+    private void setFiltersListener() {
+        peopleRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                if(leftPinValue.equals(peopleRangeBar.getTickStart())) {
+                    filtersManager.setMinPeople(null);
+                } else {
+                    filtersManager.setMinPeople(Integer.parseInt(leftPinValue));
+                }
+
+                if(rightPinValue.equals(peopleRangeBar.getTickEnd())) {
+                    filtersManager.setMaxPeople(null);
+                } else {
+                    filtersManager.setMaxPeople(Integer.parseInt(rightPinValue));
+                }
+            }
+        });
+        priceRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                if(leftPinValue.equals(priceRangeBar.getTickStart())) {
+                    filtersManager.setMinPrice(null);
+                } else {
+                    filtersManager.setMinPrice(Double.parseDouble(leftPinValue));
+                }
+
+                if(rightPinValue.equals(priceRangeBar.getTickEnd())) {
+                    filtersManager.setMaxPrice(null);
+                } else {
+                    filtersManager.setMaxPrice(Double.parseDouble(rightPinValue));
+                }
+            }
+        });
+        actualSaleRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                if(leftPinValue.equals(actualSaleRangeBar.getTickStart())) {
+                    filtersManager.setMinActualSale(null);
+                } else {
+                    filtersManager.setMinActualSale(Double.parseDouble(leftPinValue));
+                }
+
+                if(rightPinValue.equals(actualSaleRangeBar.getTickEnd())) {
+                    filtersManager.setMaxActualSale(null);
+                } else {
+                    filtersManager.setMaxActualSale(Double.parseDouble(rightPinValue));
+                }
+            }
+        });
+
+        Calendar cal = Calendar.getInstance();
+        if(EatMeetApp.getFiltersManager().getMaxDate()!=null) {
+            System.out.println("MAX DATE NOT NULL");
+            cal.setTime(EatMeetApp.getFiltersManager().getMaxDate());
+        } else {
+            System.out.println("MAX DATE NULL");
+            cal.setTimeInMillis(System.currentTimeMillis());
+        }
+
+        maxDate.init(cal.get(Calendar.YEAR), cal.get(cal.MONTH), cal.get(cal.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, dayOfMonth);
+                System.out.println("MAX DATE LIST"+ cal.getTime().toString());
+                filtersManager.setMaxDate(cal.getTime());
+            }
+        });
+
+        cal = Calendar.getInstance();
+        if(EatMeetApp.getFiltersManager().getMinDate()!=null){
+            cal.setTime(EatMeetApp.getFiltersManager().getMinDate());
+        } else {
+            cal.setTimeInMillis(System.currentTimeMillis());
+        }
+        minDate.init(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, dayOfMonth);
+                System.out.println("MIN DATE LIST"+ cal.getTime().toString());
+                filtersManager.setMinDate(cal.getTime());
+            }
+        });
+    }
+
     private void setValues() {
         if (filtersManager.isMinPeopleEnabled()) {
             peopleRangeBar.setRangePinsByValue(filtersManager.getMinPeople(), Integer.parseInt(peopleRangeBar.getRightPinValue()));
@@ -145,7 +233,7 @@ public class FiltersActivity extends AppCompatActivity {
         }
 
         if (filtersManager.isMaxPeopleEnabled()) {
-            peopleRangeBar.setRangePinsByValue(Integer.parseInt(peopleRangeBar.getLeftPinValue()), filtersManager.getMaxPeople());
+            peopleRangeBar.setRangePinsByValue(Integer.parseInt(peopleRangeBar.getLeftPinValue()), Integer.parseInt(filtersManager.getMaxPeople().toString()));
         } else {
             peopleRangeBar.setRangePinsByIndices(peopleRangeBar.getLeftIndex(), peopleRangeBar.getTickCount()-1);
         }
@@ -163,13 +251,13 @@ public class FiltersActivity extends AppCompatActivity {
         }
 
         if (filtersManager.isMinPriceEnabled()) {
-            priceRangeBar.setRangePinsByValue(filtersManager.getMinPeople(), Integer.parseInt(priceRangeBar.getRightPinValue()));
+            priceRangeBar.setRangePinsByValue(Float.parseFloat(filtersManager.getMinPrice().toString()), Float.parseFloat(priceRangeBar.getRightPinValue()));
         } else {
             priceRangeBar.setRangePinsByIndices(0, priceRangeBar.getRightIndex());
         }
 
         if (filtersManager.isMaxPriceEnabled()) {
-            priceRangeBar.setRangePinsByValue(Integer.parseInt(priceRangeBar.getLeftPinValue()), filtersManager.getMaxPeople());
+            priceRangeBar.setRangePinsByValue(Float.parseFloat(priceRangeBar.getLeftPinValue()), Float.parseFloat(filtersManager.getMaxPrice().toString()));
         } else {
             priceRangeBar.setRangePinsByIndices(priceRangeBar.getLeftIndex(), priceRangeBar.getTickCount()-1);
         }
