@@ -11,7 +11,6 @@ import com.example.eatmeet.dao.factories.RestDAOFactory;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
 import com.example.eatmeet.utils.FiltersManager;
-import com.example.eatmeet.utils.OldFiltersManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

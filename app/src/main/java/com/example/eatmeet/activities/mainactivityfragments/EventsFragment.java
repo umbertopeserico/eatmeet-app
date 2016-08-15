@@ -19,7 +19,6 @@ import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
-import com.example.eatmeet.adapters.EventsAdapterTest;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;

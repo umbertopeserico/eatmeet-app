@@ -7,7 +7,7 @@
     android:padding="@dimen/tabsviewer_padding"
     android:weightSum="2"
     android:id="@+id/fragment_events"
-    tools:context=".activities.mainactivityfragments.OldEventsFragment">
+    tools:context=".activities.mainactivityfragments.EventsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
