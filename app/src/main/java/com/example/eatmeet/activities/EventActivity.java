@@ -9,7 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
@@ -22,6 +26,7 @@ import com.example.eatmeet.entities.Menu;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.utils.Images;
+import com.example.eatmeet.utils.Visibility;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -47,6 +52,12 @@ public class EventActivity extends AppCompatActivity {
 
     private int newEventId;
     private int eventId;
+
+    private ProgressBar loadingBar;
+    private LinearLayout loadingBarContainer;
+    private TextView messagesLabel;
+
+    RelativeLayout contentEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +186,7 @@ public class EventActivity extends AppCompatActivity {
 
                 if (title != null) {
                     title.setText(event.getTitle());
+                    Visibility.makeVisible(title);
                 }
 
                 System.out.println("SCHEDULE LISTENER WORKING");
@@ -191,6 +203,7 @@ public class EventActivity extends AppCompatActivity {
                 scheduleString += hrsMnts;
                 if (scheduleView != null) {
                     scheduleView.setText(scheduleString);
+                    Visibility.makeVisible(scheduleView);
                 }
 
                 System.out.println("restaurant LISTENER WORKING");
@@ -200,23 +213,28 @@ public class EventActivity extends AppCompatActivity {
                     newValue += " "+ event.getRestaurant().getCity().toString();
                     newValue += " ("+ event.getRestaurant().getProvince().toString()+")";
                     address.setText(newValue);
+                    Visibility.makeVisible(address);
                 }
                 if (restaurant != null) {
                     String newValue = event.getRestaurant().getName().toString();
                     restaurant.setText(newValue);
+                    Visibility.makeVisible(restaurant);
                 }
 
                 System.out.println("participants LISTENER WORKING");
                 if (participants != null) {
                     participants.setText("Partecipanti: " + event.getParticipantsCount().toString());
+                    Visibility.makeVisible(participants);
                 }
 
                 if (actual_price != null) {
                     actual_price.setText("Prezzo: " + event.getActualPrice().toString() + "€");
+                    Visibility.makeVisible(actual_price);
                 }
 
                 if (menu != null) {
                     menu.setText(event.getMenu().getTextMenu().toString());
+                    Visibility.makeVisible(menu);
                 }
 
                 if(eventImage != null){
@@ -247,10 +265,19 @@ public class EventActivity extends AppCompatActivity {
                             eventImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
                     }
+                    Visibility.makeVisible(eventImage);
                 }
+                Visibility.makeInvisible(loadingBar);
+                Visibility.makeInvisible(loadingBarContainer);
+                Visibility.makeVisible(contentEvent);
             }
             @Override
             public void onFailure(Object response, Integer code) {
+                Visibility.makeInvisible(loadingBar);
+                Visibility.makeVisible(loadingBarContainer);
+                Visibility.makeVisible(messagesLabel);
+                messagesLabel.setText(getString(R.string.network_error));
+                Toast.makeText(EventActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
@@ -268,6 +295,27 @@ public class EventActivity extends AppCompatActivity {
         participants = (TextView) findViewById(R.id.participants_count);
         actual_price = (TextView) findViewById(R.id.price);
         menu = (TextView) findViewById(R.id.menu);
+
+        loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
+        loadingBarContainer = (LinearLayout) findViewById(R.id.loadingBarContainer);
+        messagesLabel = (TextView) findViewById(R.id.messagesLabel);
+
+        contentEvent = (RelativeLayout) findViewById(R.id.content_event);
+
+        Visibility.makeInvisible(eventImage);
+        Visibility.makeInvisible(title);
+        Visibility.makeInvisible(scheduleView);
+        Visibility.makeInvisible(address);
+        Visibility.makeInvisible(restaurant);
+        Visibility.makeInvisible(participants);
+        Visibility.makeInvisible(actual_price);
+        Visibility.makeInvisible(menu);
+
+        Visibility.makeInvisible(contentEvent);
+
+        Visibility.makeVisible(loadingBar);
+        Visibility.makeVisible(loadingBarContainer);
+        Visibility.makeInvisible(messagesLabel);
     }
 
     /*add action for back button*/
