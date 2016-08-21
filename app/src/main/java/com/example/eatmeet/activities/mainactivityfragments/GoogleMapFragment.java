@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,Refreshable {
     final int MY_PERMISSIONS_REQUEST_ACCESS_POSITION = 12;
     MapView mapView;
-    HashMap<Marker,Integer> markers = new HashMap<>();
+    HashMap<Marker,Restaurant> markers = new HashMap<>();
     GoogleMap map;
     View view;
     private List<Restaurant> restaurantList;
@@ -76,13 +76,11 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        /*Context context = getContext();
+        Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
-        ArrayList<Integer> f_restaurants = new ArrayList<>();
-        f_restaurants.add(markers.get(marker));
-        EatMeetApp.getFiltersManager().removeAllFilters();
-        EatMeetApp.getFiltersManager().setF_restaurants(f_restaurants);
-        mainActivity.setCurrentFragment(1);*/
+        EatMeetApp.getFiltersManager().resetFilters();
+        EatMeetApp.getFiltersManager().addRestaurant(markers.get(marker));
+        mainActivity.setCurrentFragment(1);
 
         //String title = marker.getTitle();
         //Toast.makeText(this.getContext(), title + " clicked " + Integer.toString(restaurantId),Toast.LENGTH_SHORT).show();
@@ -177,7 +175,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
                         .alpha(markerAlpha)
                         .position(pos);
                 Marker marker = map.addMarker(markerOptions);
-                markers.put(marker, r.getId());
+                markers.put(marker, r);
                 if(restaurantList.size()==1) {
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(((Restaurant) restaurantList.get(0)).getLat(), ((Restaurant) restaurantList.get(0)).getLgt()), 12.0f));
                 }
