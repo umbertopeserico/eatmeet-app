@@ -29,14 +29,16 @@ import java.util.List;
 public class FilterCategoriesAdapter extends ArrayAdapter {
 
     protected List<Category> mItems;
+    protected List<Category> mSelectedCategories;
     private Context mContext;
     private int mListRowLayout;
 
-    public FilterCategoriesAdapter(Context context, int resource, List<Category> objects) {
+    public FilterCategoriesAdapter(Context context, int resource, List<Category> objects, List<Category> selectedCategories) {
         super(context, resource, objects);
         mItems = objects;
         mContext = context;
         mListRowLayout = resource;
+        mSelectedCategories = selectedCategories;
     }
 
     @Override
@@ -53,17 +55,21 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
         checkBox.setId(category.getId());
         if(EatMeetApp.getFiltersManager().getSelectedCategories().contains(category)){
             checkBox.setChecked(true);
+            if(!mSelectedCategories.contains(category)) {
+                mSelectedCategories.add(category);
+            }
         }
 
         checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    EatMeetApp.getFiltersManager().addCategory(category);
+                    if(!mSelectedCategories.contains(category)) {
+                        mSelectedCategories.add(category);
+                    }
                 } else {
-                    EatMeetApp.getFiltersManager().removeCategory(category);
+                    mSelectedCategories.remove(category);
                 }
-                System.out.println(EatMeetApp.getFiltersManager().getSelectedCategories());
             }
         });
 

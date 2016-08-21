@@ -7,7 +7,6 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,10 +24,13 @@ import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
+import com.example.eatmeet.utils.DatePickerUtils;
 import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Visibility;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +39,7 @@ public class FiltersActivity extends AppCompatActivity {
     private FiltersManager filtersManager;
 
     private ObservableArrayList<Category> categoriesList;
+    private ArrayList<Category> selectedCategoriesList;
     private ArrayAdapter categoriesArrayAdapter;
     private ObservableArrayList<Restaurant> restaurantsList;
     private ArrayAdapter restaurantsArrayAdapter;
@@ -64,15 +67,16 @@ public class FiltersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         filtersManager = new FiltersManager();
         categoriesList = new ObservableArrayList<>();
-        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList);
+        selectedCategoriesList = new ArrayList<>(filtersManager.getSelectedCategories());
+        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList, selectedCategoriesList);
         restaurantsList = new ObservableArrayList<>();
         restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList);
         initViewElements();
         setActions();
         retrieveCategories();
         retrieveRestaurants();
-        setValues();
-        setFiltersListener();
+        setCurrentValues();
+        //setFiltersListener();
     }
 
     private void initViewElements() {
@@ -225,7 +229,7 @@ public class FiltersActivity extends AppCompatActivity {
         });
     }
 
-    private void setValues() {
+    private void setCurrentValues() {
         if (filtersManager.isMinPeopleEnabled()) {
             peopleRangeBar.setRangePinsByValue(filtersManager.getMinPeople(), Integer.parseInt(peopleRangeBar.getRightPinValue()));
         } else {
@@ -333,7 +337,69 @@ public class FiltersActivity extends AppCompatActivity {
         applyFilters();
     }
 
+    private void setNewValuesToFiltersManager() {
+        // Participants
+        if(peopleRangeBar.getLeftPinValue().equals(peopleRangeBar.getTickStart())) {
+            filtersManager.setMinPeople(null);
+        } else {
+            filtersManager.setMinPeople(Integer.parseInt(peopleRangeBar.getLeftPinValue()));
+        }
+
+        if(peopleRangeBar.getRightPinValue().equals(peopleRangeBar.getTickEnd())) {
+            filtersManager.setMaxPeople(null);
+        } else {
+            filtersManager.setMaxPeople(Integer.parseInt(peopleRangeBar.getRightPinValue()));
+        }
+
+        // Price range
+        if(priceRangeBar.getLeftPinValue().equals(priceRangeBar.getTickStart())) {
+            filtersManager.setMinPrice(null);
+        } else {
+            filtersManager.setMinPrice(Double.parseDouble(priceRangeBar.getLeftPinValue()));
+        }
+
+        if(priceRangeBar.getRightPinValue().equals(priceRangeBar.getTickEnd())) {
+            filtersManager.setMaxPrice(null);
+        } else {
+            filtersManager.setMaxPrice(Double.parseDouble(priceRangeBar.getRightPinValue()));
+        }
+
+        // Sale range
+        if(actualSaleRangeBar.getLeftPinValue().equals(actualSaleRangeBar.getTickStart())) {
+            filtersManager.setMinActualSale(null);
+        } else {
+            filtersManager.setMinActualSale(Double.parseDouble(actualSaleRangeBar.getLeftPinValue()));
+        }
+
+        if(actualSaleRangeBar.getRightPinValue().equals(actualSaleRangeBar.getTickEnd())) {
+            filtersManager.setMaxActualSale(null);
+        } else {
+            filtersManager.setMaxActualSale(Double.parseDouble(actualSaleRangeBar.getRightPinValue()));
+        }
+
+        // Min date
+        filtersManager.setMinDate(DatePickerUtils.getDateFromDatePicker(minDate));
+
+        // Max date
+        filtersManager.setMaxDate(DatePickerUtils.getDateFromDatePicker(maxDate));
+
+        // Set categories
+        if(selectedCategoriesList.size() > 0) {
+            filtersManager.removeCategories();
+            System.out.println(filtersManager.getSelectedCategories().size());
+            for(Category c : selectedCategoriesList) {
+                System.out.println(c.getName());
+                filtersManager.addCategory(c);
+            }
+            selectedCategoriesList.clear();
+        } else {
+            filtersManager.removeCategories();
+        }
+    }
+
     private void applyFilters(){
+        setNewValuesToFiltersManager();
+
         Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("applyFilters", "1");
