@@ -23,14 +23,16 @@ import java.util.List;
 public class FilterRestaurantsAdapter extends ArrayAdapter {
 
     protected List<Restaurant> mItems;
+    protected List<Restaurant> mSelectedRestaurants;
     private Context mContext;
     private int mListRowLayout;
 
-    public FilterRestaurantsAdapter(Context context, int resource, List<Restaurant> objects) {
+    public FilterRestaurantsAdapter(Context context, int resource, List<Restaurant> objects, List<Restaurant> selectedRestaurants) {
         super(context, resource, objects);
         mItems = objects;
         mContext = context;
         mListRowLayout = resource;
+        mSelectedRestaurants = selectedRestaurants;
     }
 
     @Override
@@ -47,17 +49,21 @@ public class FilterRestaurantsAdapter extends ArrayAdapter {
         checkBox.setId(restaurant.getId());
         if(EatMeetApp.getFiltersManager().getSelectedRestaurants().contains(restaurant)){
             checkBox.setChecked(true);
+            if(!mSelectedRestaurants.contains(restaurant)) {
+                mSelectedRestaurants.add(restaurant);
+            }
         }
 
         checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    EatMeetApp.getFiltersManager().addRestaurant(restaurant);
+                    if(!mSelectedRestaurants.contains(restaurant)) {
+                        mSelectedRestaurants.add(restaurant);
+                    }
                 } else {
-                    EatMeetApp.getFiltersManager().removeRestaurant(restaurant);
+                    mSelectedRestaurants.remove(restaurant);
                 }
-                System.out.println(EatMeetApp.getFiltersManager().getSelectedRestaurants());
             }
         });
 

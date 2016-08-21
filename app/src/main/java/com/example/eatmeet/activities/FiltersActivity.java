@@ -7,7 +7,6 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,10 +24,13 @@ import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
+import com.example.eatmeet.utils.DatePickerUtils;
 import com.example.eatmeet.utils.FiltersManager;
 import com.example.eatmeet.utils.Visibility;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +39,8 @@ public class FiltersActivity extends AppCompatActivity {
     private FiltersManager filtersManager;
 
     private ObservableArrayList<Category> categoriesList;
+    private ArrayList<Category> selectedCategoriesList;
+    private ArrayList<Restaurant> selectedRestaurantsList;
     private ArrayAdapter categoriesArrayAdapter;
     private ObservableArrayList<Restaurant> restaurantsList;
     private ArrayAdapter restaurantsArrayAdapter;
@@ -63,16 +67,21 @@ public class FiltersActivity extends AppCompatActivity {
         assert getSupportActionBar()!=null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         filtersManager = new FiltersManager();
+
         categoriesList = new ObservableArrayList<>();
-        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList);
+        selectedCategoriesList = new ArrayList<>(filtersManager.getSelectedCategories());
+        categoriesArrayAdapter = new FilterCategoriesAdapter(this, R.layout.list_item_filter_category, categoriesList, selectedCategoriesList);
+
         restaurantsList = new ObservableArrayList<>();
-        restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList);
+        selectedRestaurantsList = new ArrayList<>(filtersManager.getSelectedRestaurants());
+        restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList, selectedRestaurantsList);
+
         initViewElements();
         setActions();
         retrieveCategories();
         retrieveRestaurants();
-        setValues();
-        setFiltersListener();
+        setCurrentValues();
+        //setFiltersListener();
     }
 
     private void initViewElements() {
@@ -139,93 +148,7 @@ public class FiltersActivity extends AppCompatActivity {
         });
     }
 
-    private void setFiltersListener() {
-        peopleRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
-            @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                if(leftPinValue.equals(peopleRangeBar.getTickStart())) {
-                    filtersManager.setMinPeople(null);
-                } else {
-                    filtersManager.setMinPeople(Integer.parseInt(leftPinValue));
-                }
-
-                if(rightPinValue.equals(peopleRangeBar.getTickEnd())) {
-                    filtersManager.setMaxPeople(null);
-                } else {
-                    filtersManager.setMaxPeople(Integer.parseInt(rightPinValue));
-                }
-            }
-        });
-        priceRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
-            @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                if(leftPinValue.equals(priceRangeBar.getTickStart())) {
-                    filtersManager.setMinPrice(null);
-                } else {
-                    filtersManager.setMinPrice(Double.parseDouble(leftPinValue));
-                }
-
-                if(rightPinValue.equals(priceRangeBar.getTickEnd())) {
-                    filtersManager.setMaxPrice(null);
-                } else {
-                    filtersManager.setMaxPrice(Double.parseDouble(rightPinValue));
-                }
-            }
-        });
-        actualSaleRangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
-            @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                if(leftPinValue.equals(actualSaleRangeBar.getTickStart())) {
-                    filtersManager.setMinActualSale(null);
-                } else {
-                    filtersManager.setMinActualSale(Double.parseDouble(leftPinValue));
-                }
-
-                if(rightPinValue.equals(actualSaleRangeBar.getTickEnd())) {
-                    filtersManager.setMaxActualSale(null);
-                } else {
-                    filtersManager.setMaxActualSale(Double.parseDouble(rightPinValue));
-                }
-            }
-        });
-
-        Calendar cal = Calendar.getInstance();
-        if(EatMeetApp.getFiltersManager().getMaxDate()!=null) {
-            System.out.println("MAX DATE NOT NULL");
-            cal.setTime(EatMeetApp.getFiltersManager().getMaxDate());
-        } else {
-            System.out.println("MAX DATE NULL");
-            cal.setTimeInMillis(System.currentTimeMillis());
-        }
-
-        maxDate.init(cal.get(Calendar.YEAR), cal.get(cal.MONTH), cal.get(cal.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(year, month, dayOfMonth);
-                System.out.println("MAX DATE LIST"+ cal.getTime().toString());
-                filtersManager.setMaxDate(cal.getTime());
-            }
-        });
-
-        cal = Calendar.getInstance();
-        if(EatMeetApp.getFiltersManager().getMinDate()!=null){
-            cal.setTime(EatMeetApp.getFiltersManager().getMinDate());
-        } else {
-            cal.setTimeInMillis(System.currentTimeMillis());
-        }
-        minDate.init(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(year, month, dayOfMonth);
-                System.out.println("MIN DATE LIST"+ cal.getTime().toString());
-                filtersManager.setMinDate(cal.getTime());
-            }
-        });
-    }
-
-    private void setValues() {
+    private void setCurrentValues() {
         if (filtersManager.isMinPeopleEnabled()) {
             peopleRangeBar.setRangePinsByValue(filtersManager.getMinPeople(), Integer.parseInt(peopleRangeBar.getRightPinValue()));
         } else {
@@ -328,12 +251,86 @@ public class FiltersActivity extends AppCompatActivity {
         return true;
     }
 
+    private void setNewValuesToFiltersManager() {
+        // Participants
+        if(Float.parseFloat(peopleRangeBar.getLeftPinValue())==(peopleRangeBar.getTickStart())) {
+            filtersManager.setMinPeople(null);
+        } else {
+            filtersManager.setMinPeople(Integer.parseInt(peopleRangeBar.getLeftPinValue()));
+        }
+
+        if(Float.parseFloat(peopleRangeBar.getRightPinValue())==(peopleRangeBar.getTickEnd())) {
+            filtersManager.setMaxPeople(null);
+        } else {
+            filtersManager.setMaxPeople(Integer.parseInt(peopleRangeBar.getRightPinValue()));
+        }
+
+        // Price range
+        if(Float.parseFloat(priceRangeBar.getLeftPinValue())==(priceRangeBar.getTickStart())) {
+            filtersManager.setMinPrice(null);
+        } else {
+            filtersManager.setMinPrice(Double.parseDouble(priceRangeBar.getLeftPinValue()));
+        }
+
+        if(Float.parseFloat(priceRangeBar.getRightPinValue())==(priceRangeBar.getTickEnd())) {
+            filtersManager.setMaxPrice(null);
+        } else {
+            filtersManager.setMaxPrice(Double.parseDouble(priceRangeBar.getRightPinValue()));
+        }
+
+        // Sale range
+        if(Float.parseFloat(actualSaleRangeBar.getLeftPinValue())==(actualSaleRangeBar.getTickStart())) {
+            filtersManager.setMinActualSale(null);
+        } else {
+            filtersManager.setMinActualSale(Double.parseDouble(actualSaleRangeBar.getLeftPinValue()));
+        }
+
+        if(Float.parseFloat(actualSaleRangeBar.getRightPinValue())==(actualSaleRangeBar.getTickEnd())) {
+            filtersManager.setMaxActualSale(null);
+        } else {
+            filtersManager.setMaxActualSale(Double.parseDouble(actualSaleRangeBar.getRightPinValue()));
+        }
+
+        // Min date
+        filtersManager.setMinDate(DatePickerUtils.getDateFromDatePicker(minDate));
+
+        // Max date
+        filtersManager.setMaxDate(DatePickerUtils.getDateFromDatePicker(maxDate));
+
+        // Set categories
+        if(selectedCategoriesList.size() > 0) {
+            filtersManager.removeCategories();
+            for(Category c : selectedCategoriesList) {
+                filtersManager.addCategory(c);
+            }
+            selectedCategoriesList.clear();
+        } else {
+            filtersManager.removeCategories();
+        }
+
+        // Set restaurants
+        if(selectedRestaurantsList.size() > 0) {
+            filtersManager.removeRestaurants();
+            for(Restaurant r : selectedRestaurantsList) {
+                filtersManager.addRestaurant(r);
+            }
+            selectedRestaurantsList.clear();
+        } else {
+            filtersManager.removeRestaurants();
+        }
+    }
+
     private void resetFilter(){
         EatMeetApp.getFiltersManager().resetFilters();
-        applyFilters();
+        goToMainActivity();
     }
 
     private void applyFilters(){
+        setNewValuesToFiltersManager();
+        goToMainActivity();
+    }
+
+    private void goToMainActivity() {
         Intent intent = new Intent(FiltersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("applyFilters", "1");
@@ -372,7 +369,6 @@ public class FiltersActivity extends AppCompatActivity {
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
 
-        restaurantsArrayAdapter = new FilterRestaurantsAdapter(this, R.layout.list_item_filter_restaurant, restaurantsList);
         restaurantsListView.setAdapter(restaurantsArrayAdapter);
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
