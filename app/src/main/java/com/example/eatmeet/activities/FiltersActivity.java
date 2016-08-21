@@ -225,7 +225,6 @@ public class FiltersActivity extends AppCompatActivity {
     private void toggleCard(String action, String target){
         CardView target_card_view = null;
         RelativeLayout grey_background = (RelativeLayout) findViewById(R.id.overlay);
-        Visibility visibility = new Visibility();
         switch (target) {
             case "categories":
                 target_card_view = (CardView) findViewById(R.id.categoriesCardView);
@@ -235,12 +234,12 @@ public class FiltersActivity extends AppCompatActivity {
         }
         switch (action) {
             case "open":
-                visibility.makeVisible(target_card_view);
-                visibility.makeVisible(grey_background);
+                Visibility.makeVisible(target_card_view);
+                Visibility.makeVisible(grey_background);
                 break;
             case "close":
-                visibility.makeInvisible(target_card_view);
-                visibility.makeInvisible(grey_background);
+                Visibility.makeInvisible(target_card_view);
+                Visibility.makeInvisible(grey_background);
         }
     }
 

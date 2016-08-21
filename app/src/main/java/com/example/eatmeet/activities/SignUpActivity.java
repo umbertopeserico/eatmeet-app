@@ -18,6 +18,7 @@ import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
 import com.example.eatmeet.entities.errors.ErrorsMap;
+import com.example.eatmeet.utils.Visibility;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void doSignUp() {
         user.cleanErrors();
         SignUpActivity.this.cleanErrors();
-        loadingBar.setVisibility(View.VISIBLE);
+        Visibility.makeVisible(loadingBar);
         user.setName(name.getText().toString());
         user.setSurname(surname.getText().toString());
         user.setEmail(email.getText().toString());
@@ -71,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                 signInBM.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
-                        loadingBar.setVisibility(View.GONE);
+                        Visibility.makeInvisible(loadingBar);
                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -79,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
-                        loadingBar.setVisibility(View.GONE);
+                        Visibility.makeInvisible(loadingBar);
                         Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -88,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 if(response!=null) {
                     ErrorsMap errorsMap = (ErrorsMap) response;
                     if(errorsMap.get("name")!=null) {
@@ -100,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ret = "";
                             }
                             nameErrors.setText(e+ret);
-                            nameErrors.setVisibility(View.VISIBLE);
+                            Visibility.makeVisible(nameErrors);
                         }
                     }
 
@@ -113,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ret = "";
                             }
                             surnameErrors.setText(e+ret);
-                            surnameErrors.setVisibility(View.VISIBLE);
+                            Visibility.makeVisible(surnameErrors);
                         }
                     }
 
@@ -126,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ret = "";
                             }
                             emailErrors.setText(e+ret);
-                            emailErrors.setVisibility(View.VISIBLE);
+                            Visibility.makeVisible(emailErrors);
                         }
                     }
 
@@ -139,7 +140,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ret = "";
                             }
                             passwordErrors.setText(e+ret);
-                            passwordErrors.setVisibility(View.VISIBLE);
+                            Visibility.makeVisible(passwordErrors);
                         }
                     }
 
@@ -152,7 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 ret = "";
                             }
                             passwordConfirmationErrors.setText(e+ret);
-                            passwordConfirmationErrors.setVisibility(View.VISIBLE);
+                            Visibility.makeVisible(passwordConfirmationErrors);
                         }
                     }
                     Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
@@ -191,16 +192,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void cleanErrors() {
-        nameErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(nameErrors);
         nameErrors.setText("");
         surnameErrors.setText("");
-        surnameErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(surnameErrors);
         emailErrors.setText("");
-        emailErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(emailErrors);
         passwordErrors.setText("");
-        passwordErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(passwordErrors);
         passwordConfirmationErrors.setText("");
-        passwordConfirmationErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(passwordConfirmationErrors);
     }
 
     @Override

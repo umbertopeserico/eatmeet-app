@@ -18,6 +18,7 @@ import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
+import com.example.eatmeet.utils.Visibility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,8 +53,8 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingBar.setVisibility(View.VISIBLE);
-                errorText.setVisibility(View.GONE);
+                Visibility.makeVisible(loadingBar);
+                Visibility.makeInvisible(errorText);
                 errorText.setText("");
 
                 final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
@@ -69,7 +70,7 @@ public class SignInActivity extends AppCompatActivity {
                         userBSM.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
-                                loadingBar.setVisibility(View.GONE);
+                                Visibility.makeInvisible(loadingBar);
                                 User user = (User) response;
                                 EatMeetApp.setCurrentUser(user);
                                 Log.w("CURRENT USER: ", ""+ response.toString());
@@ -81,7 +82,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Object response, Integer code) {
-                                loadingBar.setVisibility(View.GONE);
+                                Visibility.makeInvisible(loadingBar);
                                 EatMeetApp.setCurrentUser(null);
                                 Log.e("CURRENT USER: ", "Retrieve current user failed: "+code);
                             }
@@ -93,8 +94,8 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Object response, Integer code) {
-                        loadingBar.setVisibility(View.GONE);
-                        errorText.setVisibility(View.VISIBLE);
+                        Visibility.makeInvisible(loadingBar);
+                        Visibility.makeVisible(errorText);
                         if(code == 401) {
                             try {
                                 String errorString = "";
@@ -111,8 +112,8 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.e("JSON PARSE: ", "Signin response not decoded:\n" + e.getMessage());
                             }
                         } else {
-                            loadingBar.setVisibility(View.GONE);
-                            errorText.setVisibility(View.GONE);
+                            Visibility.makeInvisible(loadingBar);
+                            Visibility.makeInvisible(errorText);
                             Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
                         }
                     }

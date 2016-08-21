@@ -21,6 +21,7 @@ import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
+import com.example.eatmeet.utils.Visibility;
 
 import java.util.List;
 
@@ -56,19 +57,19 @@ public class FutureEventsFragment extends Fragment {
         eventsBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 if(eventsList.size() == 0) {
                     messagesLabel.setText(R.string.my_events_no_future_events);
-                    messagesLabel.setVisibility(View.VISIBLE);
+                    Visibility.makeVisible(messagesLabel);
                 } else {
-                    messagesLabel.setVisibility(View.GONE);
+                    Visibility.makeInvisible(messagesLabel);
                 }
                 Log.i("USER FUTURE EVENTS: ", ""+ ((List<Event>) response).size());
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 Log.e("USER FUTURE EVENTS: ", "Errore");
             }
         });
@@ -79,7 +80,7 @@ public class FutureEventsFragment extends Fragment {
             }
         });
 
-        loadingBar.setVisibility(View.VISIBLE);
+        Visibility.makeVisible(loadingBar);
         userDAO.getFutureEvents(eventsList,eventsBSM);
 
         return view;

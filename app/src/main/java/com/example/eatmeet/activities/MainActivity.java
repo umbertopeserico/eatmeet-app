@@ -33,6 +33,7 @@ import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.entities.User;
+import com.example.eatmeet.utils.Visibility;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -211,15 +212,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void doLogout() {
-        overlay.setVisibility(View.VISIBLE);
-        loadingBar.setVisibility(View.VISIBLE);
+        Visibility.makeVisible(overlay);
+        Visibility.makeVisible(loadingBar);
         UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                overlay.setVisibility(View.GONE);
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(overlay);
+                Visibility.makeInvisible(loadingBar);
                 EatMeetApp.setCurrentUser(null);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
@@ -231,8 +232,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Object response, Integer code) {
-                overlay.setVisibility(View.GONE);
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(overlay);
+                Visibility.makeInvisible(loadingBar);
                 Toast.makeText(MainActivity.this, R.string.sign_out_error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -298,11 +299,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(currentUser!=null) {
             fullNameTextSideBar.setText(currentUser.getFullName());
             emailText.setText(currentUser.getEmail());
-            emailText.setVisibility(View.VISIBLE);
+            Visibility.makeVisible(emailText);
         } else {
             fullNameTextSideBar.setText("Ospite");
             emailText.setText("");
-            emailText.setVisibility(View.GONE);
+            Visibility.makeInvisible(emailText);
         }
     }
 

@@ -20,6 +20,7 @@ import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
 import com.example.eatmeet.entities.errors.ErrorsMap;
+import com.example.eatmeet.utils.Visibility;
 
 import java.util.List;
 
@@ -72,21 +73,21 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
         surnameField.setText(EatMeetApp.getCurrentUser().getSurname());
         emailField.setText(EatMeetApp.getCurrentUser().getEmail());
 
-        nameErrors.setVisibility(View.GONE);
-        surnameErrors.setVisibility(View.GONE);
-        emailErrors.setVisibility(View.GONE);
-        oldPasswordErrors.setVisibility(View.GONE);
-        passwordErrors.setVisibility(View.GONE);
-        passwordConfirmationErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(nameErrors);
+        Visibility.makeInvisible(surnameErrors);
+        Visibility.makeInvisible(emailErrors);
+        Visibility.makeInvisible(oldPasswordErrors);
+        Visibility.makeInvisible(passwordErrors);
+        Visibility.makeInvisible(passwordConfirmationErrors);
     }
 
     private void saveSettings() {
-        nameErrors.setVisibility(View.GONE);
-        surnameErrors.setVisibility(View.GONE);
-        emailErrors.setVisibility(View.GONE);
-        oldPasswordErrors.setVisibility(View.GONE);
-        passwordErrors.setVisibility(View.GONE);
-        passwordConfirmationErrors.setVisibility(View.GONE);
+        Visibility.makeInvisible(nameErrors);
+        Visibility.makeInvisible(surnameErrors);
+        Visibility.makeInvisible(emailErrors);
+        Visibility.makeInvisible(oldPasswordErrors);
+        Visibility.makeInvisible(passwordErrors);
+        Visibility.makeInvisible(passwordConfirmationErrors);
 
         User user = new User();
         user.setName(nameField.getText().toString());
@@ -101,7 +102,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
         userBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 EatMeetApp.setCurrentUser((User) response);
                 Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_success, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(EditAccountSettingsActivity.this, AccountSettingsActivity.class);
@@ -110,7 +111,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 ErrorsMap errorsMap = (ErrorsMap) response;
 
                 if(errorsMap.get("name")!=null) {
@@ -122,7 +123,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         nameErrors.setText(e+ret);
-                        nameErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(nameErrors);
                     }
                 }
 
@@ -135,7 +136,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         surnameErrors.setText(e+ret);
-                        surnameErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(surnameErrors);
                     }
                 }
 
@@ -148,7 +149,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         emailErrors.setText(e+ret);
-                        emailErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(emailErrors);
                     }
                 }
 
@@ -161,7 +162,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         oldPasswordErrors.setText(e+ret);
-                        oldPasswordErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(oldPasswordErrors);
                     }
                 }
 
@@ -174,7 +175,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         passwordErrors.setText(e+ret);
-                        passwordErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(passwordErrors);
                     }
                 }
 
@@ -187,7 +188,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                             ret = "";
                         }
                         passwordConfirmationErrors.setText(e+ret);
-                        passwordConfirmationErrors.setVisibility(View.VISIBLE);
+                        Visibility.makeVisible(passwordConfirmationErrors);
                     }
                 }
 
@@ -214,7 +215,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveButton:
-                loadingBar.setVisibility(View.VISIBLE);
+                Visibility.makeVisible(loadingBar);
                 saveSettings();
                 break;
             case R.id.backButton:
