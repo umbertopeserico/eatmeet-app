@@ -7,9 +7,9 @@ import android.view.View;
  */
 public class Visibility {
 
-    public Visibility(){}
+    private Visibility(){}
 
-    public boolean isVisible(View view){
+    public static boolean isVisible(View view){
         if(view.getVisibility()==View.VISIBLE){
             return true;
         } else {
@@ -17,15 +17,15 @@ public class Visibility {
         }
     }
 
-    public void makeInvisible(View view){
+    public static void makeInvisible(View view){
         view.setVisibility(View.GONE);
     }
 
-    public void makeVisible(View view){
+    public static void makeVisible(View view){
         view.setVisibility(View.VISIBLE);
     }
 
-    public void toggleView(View view){
+    public static void toggleView(View view){
         if(view.getVisibility()==View.GONE)
             view.setVisibility(View.VISIBLE);
         else if(view.getVisibility()==View.VISIBLE)

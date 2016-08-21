@@ -26,6 +26,7 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Refreshable;
+import com.example.eatmeet.utils.Visibility;
 
 import org.json.JSONObject;
 
@@ -82,19 +83,19 @@ public class EventsFragment extends Fragment implements Refreshable {
         eventsBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
-                loadingBarContainer.setVisibility(View.GONE);
-                filterStatusLayout.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
+                Visibility.makeInvisible(loadingBarContainer);
+                Visibility.makeInvisible(filterStatusLayout);
                 // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
                 if (getActivity() != null && isAdded()) {
-                    loadingBar.setVisibility(View.GONE);
-                    loadingBarContainer.setVisibility(View.VISIBLE);
-                    messagesLabel.setVisibility(View.VISIBLE);
-                    filterStatusCardView.setVisibility(View.GONE);
+                    Visibility.makeInvisible(loadingBar);
+                    Visibility.makeVisible(loadingBarContainer);
+                    Visibility.makeVisible(messagesLabel);
+                    Visibility.makeInvisible(filterStatusCardView);
                     if(response==null) {
                         messagesLabel.setText(getString(R.string.network_error));
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
@@ -109,11 +110,11 @@ public class EventsFragment extends Fragment implements Refreshable {
             }
         });
 
-        loadingBar.setVisibility(View.VISIBLE);
-        loadingBarContainer.setVisibility(View.VISIBLE);
-        messagesLabel.setVisibility(View.GONE);
-        filterStatusCardView.setVisibility(View.GONE);
-        filterStatusLayout.setVisibility(View.VISIBLE);
+        Visibility.makeVisible(loadingBar);
+        Visibility.makeVisible(loadingBarContainer);
+        Visibility.makeInvisible(messagesLabel);
+        Visibility.makeInvisible(filterStatusCardView);
+        Visibility.makeVisible(filterStatusLayout);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
         EatMeetApp.getFiltersManager().setEnabled(false);
     }

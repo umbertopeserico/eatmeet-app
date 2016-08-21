@@ -21,6 +21,7 @@ import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Refreshable;
+import com.example.eatmeet.utils.Visibility;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -66,10 +67,10 @@ public class CategoriesFragment extends Fragment implements Refreshable {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
                 List<Category> categories = (List<Category>) response;
                 if(categories.size() == 0) {
-                    messageLabel.setVisibility(View.VISIBLE);
+                    Visibility.makeVisible(messageLabel);
                     messageLabel.setText(getString(R.string.categories_no_category));
                 }
                 Logger.getLogger(CategoriesFragment.this.getClass().getName()).log(Level.INFO, "Connection succeded");
@@ -78,8 +79,8 @@ public class CategoriesFragment extends Fragment implements Refreshable {
             @Override
             public void onFailure(Object response, Integer code) {
                 if(getActivity()!=null && isAdded()) {
-                    loadingBar.setVisibility(View.GONE);
-                    messageLabel.setVisibility(View.VISIBLE);
+                    Visibility.makeInvisible(loadingBar);
+                    Visibility.makeVisible(messageLabel);
                     messageLabel.setText(getString(R.string.network_error));
                     Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 }
@@ -93,8 +94,8 @@ public class CategoriesFragment extends Fragment implements Refreshable {
             }
         });
 
-        messageLabel.setVisibility(View.GONE);
-        loadingBar.setVisibility(View.VISIBLE);
+        Visibility.makeInvisible(messageLabel);
+        Visibility.makeVisible(loadingBar);
         categoryDAO.getCategories(categoryList, backendStatusManager);
     }
 
