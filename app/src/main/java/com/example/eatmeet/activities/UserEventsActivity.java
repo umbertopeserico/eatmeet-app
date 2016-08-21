@@ -11,8 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import com.example.eatmeet.R;
-import com.example.eatmeet.activities.myeventsactivityfragments.FutureEventsFragment;
-import com.example.eatmeet.activities.myeventsactivityfragments.PastEventsFragment;
+import com.example.eatmeet.activities.usereventsactivityfragments.FutureEventsFragment;
+import com.example.eatmeet.activities.usereventsactivityfragments.PastEventsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

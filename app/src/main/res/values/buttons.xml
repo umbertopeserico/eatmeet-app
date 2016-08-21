@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="events_filter_button">Filtra</string>
+    <string name="events_order_button">Ordina</string>
+    <string name="closeButton">Chiuso</string>
+</resources>

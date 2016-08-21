@@ -1,168 +1,66 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_events"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/tabsviewer_padding"
-    android:weightSum="2"
-    tools:context=".activities.mainactivityfragments.EventsFragment">
+    tools:context="com.example.eatmeet.activities.mainactivityfragments.EventsFragment"
+    android:background="#eee">
 
     <LinearLayout
-        android:id="@+id/wrapping_events"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:weightSum="15">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/filtersButtonLayout">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filterButton"
+            android:layout_weight="0.5"
+            android:text="@string/events_filter_button" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/events_order_button"
+            android:id="@+id/orderButton"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterStatusLayout"
+        android:layout_margin="10dp">
 
         <include layout="@layout/loading_bar" />
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_filters_summary"
+        <android.support.v7.widget.CardView
+            android:id="@+id/filterStatusCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            card_view:cardCornerRadius="4dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/active_filters_none"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_margin="10dp"
-                android:text="Filtri attivi: nessuno." />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="10">
-
-                <TextView
-                    android:id="@+id/active_filters_restaurant"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_categories"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/active_filters_restaurant"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_min_date"
-                    android:layout_below="@id/active_filters_categories"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_max_date"
-                    android:layout_below="@id/active_filters_min_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_min_actual_sale"
-                    android:layout_below="@id/active_filters_max_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_max_actual_sale"
-                    android:layout_below="@id/active_filters_min_actual_sale"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_min_people"
-                    android:layout_below="@id/active_filters_max_actual_sale"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_max_people"
-                    android:layout_below="@id/active_filters_min_people"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_min_price"
-                    android:layout_below="@id/active_filters_max_people"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/active_filters_max_price"
-                    android:layout_below="@id/active_filters_min_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" />
-            </LinearLayout>
+                android:text="Prova"
+                android:padding="8dp" />
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_events_summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:visibility="gone"
-            card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:text="Non ci sono eventi per questo filtro. Prova con un'altra ricerca" />
-        </android.support.v7.widget.CardView>
-
-        <ListView
-            android:id="@+id/listview_events"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="8"/>
-
-        <include layout="@layout/content_filter" />
-
-        <include layout="@layout/button_filter" />
     </LinearLayout>
 
-    <!--<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bottone"
-        android:id="@+id/mioBottone"
-        android:onClick="sendMessage" />-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/eventsListView"
+        android:layout_above="@id/filtersButtonLayout"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/filterStatusLayout"
+        android:background="#fff" />
 
-</FrameLayout>
+</RelativeLayout>

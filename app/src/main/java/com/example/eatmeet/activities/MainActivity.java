@@ -25,11 +25,12 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
+import com.example.eatmeet.utils.Refreshable;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.activities.mainactivityfragments.CategoriesFragment;
-import com.example.eatmeet.activities.mainactivityfragments.EventsFragment;
 import com.example.eatmeet.activities.mainactivityfragments.GoogleMapFragment;
 import com.example.eatmeet.entities.User;
 import com.google.android.gms.maps.GoogleMap;
@@ -74,14 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCurrentFragment(int position){
         mViewPager.setCurrentItem(position, true);
-        if(position==1) {
-            long i = mSectionsPagerAdapter.getItemId(position);
-            EventsFragment newFragment = (EventsFragment) getSupportFragmentManager().findFragmentByTag(
-                    "android:switcher:" + mViewPager.getId() + ":" + i);
-            if(newFragment != null) {
-                newFragment.refresh();
-            }
-        }
     }
 
     @Override
@@ -90,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         // Codice per fixare il freeze della mappa sul primo cambio tab
-        MapView mapView = new MapView(this);
+        final MapView mapView = new MapView(this);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -112,6 +105,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getItem(position);
+                refreshable.refresh();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -300,10 +310,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        if(intent != null && intent.getExtras() != null && intent.getExtras().get("from") != null) {
-            String from = (String) intent.getExtras().get("from");
-            if (from.equals("FiltersActivity")) {
-                setCurrentFragment(1);
+        if(intent != null && intent.getExtras() != null) {
+            String applyFilters;
+            applyFilters = (String) intent.getExtras().get("applyFilters");
+            if (applyFilters!= null) {
+                if (applyFilters.equals("1")) {
+                    EatMeetApp.getFiltersManager().setEnabled(true);
+                }
+            }
+
+            String destination;
+            destination = (String) intent.getExtras().get("destination");
+            System.out.println("DESTINATION: "+destination);
+            if (destination!= null) {
+                setCurrentFragment(Integer.parseInt(destination));
             }
         }
         setMenuLayout();

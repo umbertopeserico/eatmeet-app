@@ -1,4 +1,4 @@
-package com.example.eatmeet.activities.myeventsactivityfragments;
+package com.example.eatmeet.activities.usereventsactivityfragments;
 
 
 import android.os.Bundle;

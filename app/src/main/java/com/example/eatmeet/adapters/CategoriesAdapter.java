@@ -43,42 +43,20 @@ public class CategoriesAdapter extends ArrayAdapter {
                 (Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mListRowLayout, null);
 
-        Category category = mItems.get(position);
-
+        final Category category = mItems.get(position);
         final TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItem);
         final ImageView categoryImage = (ImageView) convertView.findViewById(R.id.categoryIcon);
         final MainActivity mainActivity = (MainActivity) mContext;
-        final ArrayList<Integer> categories = new ArrayList<>();
-        categories.add(category.getId());
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Logger.getLogger("Logging action from category to events").log(Level.WARNING, "Entro nel cambio di fragment");
-                //set filters
-                EatMeetApp.getFiltersManager().removeAllFilters();
-                EatMeetApp.getFiltersManager().setF_categories(categories);
-                //go to event fragment v1
-                //FragmentTransaction trans = mainActivity.getSupportFragmentManager().beginTransaction();
-				/*
-				 * We use the "root frame" defined in
-				 * "root_fragment.xml" as the reference to replace fragment
-				 */
-                //Fragment eventsFragment = new EventsFragment();
-                //FrameLayout layout = (FrameLayout) mainActivity.findViewById(R.id.fragment_categories);
-                //layout.removeAllViewsInLayout();
-                //trans.replace(R.id.fragment_categories, eventsFragment);
-				/*
-				 * The following lines allow us to add the fragment
-				 * to the stack and return to it later, by pressing back
-				 */
-                //trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                //trans.addToBackStack(null);
-
-                //trans.commit();
-                //go to event fragment v2
+                EatMeetApp.getFiltersManager().resetFilters();
+                EatMeetApp.getFiltersManager().addCategory(category);
+                EatMeetApp.getFiltersManager().setEnabled(true);
                 mainActivity.setCurrentFragment(1);
             }
         });
+
         CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
 
         String tmpFileName = category.getImage().substring(category.getImage().lastIndexOf("/")+1);
@@ -109,11 +87,8 @@ public class CategoriesAdapter extends ArrayAdapter {
             }
         }
 
-        TextView text = (TextView) convertView.findViewById(R.id.textViewListItem);
-        text.setText(category.getName());
-
+        listItem.setText(category.getName());
         TextView count = (TextView) convertView.findViewById(R.id.countViewListItem);
-
         count.setText(category.getEventsCount().toString());
 
         return convertView;

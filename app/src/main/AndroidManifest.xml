@@ -23,10 +23,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.FilterActivity"
-            android:label="@string/title_activity_filter"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,14 +49,6 @@
             android:label="@string/title_activity_confirm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activitiestest.CategoriesTestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activitiestest.EventsTestActivity"
-            android:label="@string/title_activity_events_test"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.FiltersActivity"
             android:label="@string/title_activity_filters" />
         <activity
@@ -81,7 +69,7 @@
         <activity
             android:name=".activities.AccountSettingsActivity"
             android:label="@string/title_activity_account_settings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

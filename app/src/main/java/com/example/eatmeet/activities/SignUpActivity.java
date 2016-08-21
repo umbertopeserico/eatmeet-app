@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
-import com.example.eatmeet.activitiestest.CategoriesTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
@@ -37,6 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signUpButton;
     private ProgressBar loadingBar;
 
+    private User user = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,125 @@ public class SignUpActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Inizializzo parametri della vista
+        initViewElements();
+        setActions();
+
+    }
+
+    private void doSignUp() {
+        user.cleanErrors();
+        SignUpActivity.this.cleanErrors();
+        loadingBar.setVisibility(View.VISIBLE);
+        user.setName(name.getText().toString());
+        user.setSurname(surname.getText().toString());
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
+        user.setPasswordConfirmation(passwordConfirmation.getText().toString());
+        final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+
+        BackendStatusManager backendStatusManager = new BackendStatusManager();
+        backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
+            @Override
+            public void onSuccess(Object response, Integer code) {
+                BackendStatusManager signInBM = new BackendStatusManager();
+                signInBM.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        loadingBar.setVisibility(View.GONE);
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        loadingBar.setVisibility(View.GONE);
+                        Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                userDAO.signIn(user, signInBM);
+            }
+
+            @Override
+            public void onFailure(Object response, Integer code) {
+                loadingBar.setVisibility(View.GONE);
+                if(response!=null) {
+                    ErrorsMap errorsMap = (ErrorsMap) response;
+                    if(errorsMap.get("name")!=null) {
+                        List<String> errors = errorsMap.get("name");
+                        for(String e : errors) {
+                            int index = errors.lastIndexOf(e);
+                            String ret = "\n";
+                            if(index == errors.size()-1) {
+                                ret = "";
+                            }
+                            nameErrors.setText(e+ret);
+                            nameErrors.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    if(errorsMap.get("surname")!=null) {
+                        List<String> errors = errorsMap.get("surname");
+                        for(String e : errors) {
+                            int index = errors.lastIndexOf(e);
+                            String ret = "\n";
+                            if(index == errors.size()-1) {
+                                ret = "";
+                            }
+                            surnameErrors.setText(e+ret);
+                            surnameErrors.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    if(errorsMap.get("email")!=null) {
+                        List<String> errors = errorsMap.get("email");
+                        for(String e : errors) {
+                            int index = errors.lastIndexOf(e);
+                            String ret = "\n";
+                            if(index == errors.size()-1) {
+                                ret = "";
+                            }
+                            emailErrors.setText(e+ret);
+                            emailErrors.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    if(errorsMap.get("password")!=null) {
+                        List<String> errors = errorsMap.get("password");
+                        for(String e : errors) {
+                            int index = errors.lastIndexOf(e);
+                            String ret = "\n";
+                            if(index == errors.size()-1) {
+                                ret = "";
+                            }
+                            passwordErrors.setText(e+ret);
+                            passwordErrors.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    if(errorsMap.get("password_confirmation")!=null) {
+                        List<String> errors = errorsMap.get("password_confirmation");
+                        for(String e : errors) {
+                            int index = errors.lastIndexOf(e);
+                            String ret = "\n";
+                            if(index == errors.size()-1) {
+                                ret = "";
+                            }
+                            passwordConfirmationErrors.setText(e+ret);
+                            passwordConfirmationErrors.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignUpActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        userDAO.signUp(user, backendStatusManager);
+    }
+
+    private void initViewElements() {
         name = (EditText) findViewById(R.id.nameField);
         surname = (EditText) findViewById(R.id.surnameField);
         email = (EditText) findViewById(R.id.emailField);
@@ -60,122 +179,13 @@ public class SignUpActivity extends AppCompatActivity {
         passwordConfirmationErrors = (TextView) findViewById(R.id.passwordConfirmationErrors);
         signUpButton = (Button) findViewById(R.id.signUpButton);
         loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
+    }
 
-        final User user = new User();
-
+    private void setActions() {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.cleanErrors();
-                SignUpActivity.this.cleanErrors();
-                loadingBar.setVisibility(View.VISIBLE);
-                user.setName(name.getText().toString());
-                user.setSurname(surname.getText().toString());
-                user.setEmail(email.getText().toString());
-                user.setPassword(password.getText().toString());
-                user.setPasswordConfirmation(passwordConfirmation.getText().toString());
-                final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
-
-                BackendStatusManager backendStatusManager = new BackendStatusManager();
-                backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
-                    @Override
-                    public void onSuccess(Object response, Integer code) {
-                        BackendStatusManager signInBM = new BackendStatusManager();
-                        signInBM.setBackendStatusListener(new BackendStatusListener() {
-                            @Override
-                            public void onSuccess(Object response, Integer code) {
-                                loadingBar.setVisibility(View.GONE);
-                                Intent intent = new Intent(SignUpActivity.this, CategoriesTestActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void onFailure(Object response, Integer code) {
-                                loadingBar.setVisibility(View.GONE);
-                                Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        userDAO.signIn(user, signInBM);
-                    }
-
-                    @Override
-                    public void onFailure(Object response, Integer code) {
-                        loadingBar.setVisibility(View.GONE);
-                        if(response!=null) {
-                            ErrorsMap errorsMap = (ErrorsMap) response;
-                            if(errorsMap.get("name")!=null) {
-                                List<String> errors = errorsMap.get("name");
-                                for(String e : errors) {
-                                    int index = errors.lastIndexOf(e);
-                                    String ret = "\n";
-                                    if(index == errors.size()-1) {
-                                        ret = "";
-                                    }
-                                    nameErrors.setText(e+ret);
-                                    nameErrors.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                            if(errorsMap.get("surname")!=null) {
-                                List<String> errors = errorsMap.get("surname");
-                                for(String e : errors) {
-                                    int index = errors.lastIndexOf(e);
-                                    String ret = "\n";
-                                    if(index == errors.size()-1) {
-                                        ret = "";
-                                    }
-                                    surnameErrors.setText(e+ret);
-                                    surnameErrors.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                            if(errorsMap.get("email")!=null) {
-                                List<String> errors = errorsMap.get("email");
-                                for(String e : errors) {
-                                    int index = errors.lastIndexOf(e);
-                                    String ret = "\n";
-                                    if(index == errors.size()-1) {
-                                        ret = "";
-                                    }
-                                    emailErrors.setText(e+ret);
-                                    emailErrors.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                            if(errorsMap.get("password")!=null) {
-                                List<String> errors = errorsMap.get("password");
-                                for(String e : errors) {
-                                    int index = errors.lastIndexOf(e);
-                                    String ret = "\n";
-                                    if(index == errors.size()-1) {
-                                        ret = "";
-                                    }
-                                    passwordErrors.setText(e+ret);
-                                    passwordErrors.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                            if(errorsMap.get("password_confirmation")!=null) {
-                                List<String> errors = errorsMap.get("password_confirmation");
-                                for(String e : errors) {
-                                    int index = errors.lastIndexOf(e);
-                                    String ret = "\n";
-                                    if(index == errors.size()-1) {
-                                        ret = "";
-                                    }
-                                    passwordConfirmationErrors.setText(e+ret);
-                                    passwordConfirmationErrors.setVisibility(View.VISIBLE);
-                                }
-                            }
-                            Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUpActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                userDAO.signUp(user, backendStatusManager);
+                doSignUp();
             }
         });
     }

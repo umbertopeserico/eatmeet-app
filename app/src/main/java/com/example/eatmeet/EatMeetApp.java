@@ -1,9 +1,6 @@
 package com.example.eatmeet;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
@@ -13,9 +10,7 @@ import com.example.eatmeet.dao.factories.DAOFactory;
 import com.example.eatmeet.dao.factories.RestDAOFactory;
 import com.example.eatmeet.dao.interfaces.UserDAO;
 import com.example.eatmeet.entities.User;
-import com.example.eatmeet.utils.Configs;
 import com.example.eatmeet.utils.FiltersManager;
-import com.example.eatmeet.utils.Post;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +78,6 @@ public class EatMeetApp extends Application {
 
         userDAO.validateToken(validateBSM);
     }
-
 
     public static FiltersManager getFiltersManager() {
         return filtersManager;

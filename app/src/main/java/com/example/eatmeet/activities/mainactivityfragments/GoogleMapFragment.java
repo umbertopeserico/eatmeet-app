@@ -22,7 +22,7 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.entities.Restaurant;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
-import com.example.eatmeet.utils.Notificable;
+import com.example.eatmeet.utils.Refreshable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback {
+public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,Refreshable {
     final int MY_PERMISSIONS_REQUEST_ACCESS_POSITION = 12;
     MapView mapView;
     HashMap<Marker,Integer> markers = new HashMap<>();
@@ -76,13 +76,13 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        Context context = getContext();
+        /*Context context = getContext();
         MainActivity mainActivity = (MainActivity) context;
         ArrayList<Integer> f_restaurants = new ArrayList<>();
         f_restaurants.add(markers.get(marker));
         EatMeetApp.getFiltersManager().removeAllFilters();
         EatMeetApp.getFiltersManager().setF_restaurants(f_restaurants);
-        mainActivity.setCurrentFragment(1);
+        mainActivity.setCurrentFragment(1);*/
 
         //String title = marker.getTitle();
         //Toast.makeText(this.getContext(), title + " clicked " + Integer.toString(restaurantId),Toast.LENGTH_SHORT).show();
@@ -232,5 +232,10 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    @Override
+    public void refresh() {
+
     }
 }
