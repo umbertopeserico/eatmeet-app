@@ -171,7 +171,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
                 LatLng pos = new LatLng(r.getLat(), r.getLgt());
                 MarkerOptions markerOptions = new MarkerOptions()
                         .title(r.getName())
-                        .snippet("\n" + r.getEvents().size() + " eventi.\n\n" + r.getDescription())
+                        .snippet("\n" + r.getFutureEventsCount() + " eventi.\n\n" + r.getDescription())
                         .icon(BitmapDescriptorFactory.defaultMarker(markerColor))
                         .alpha(markerAlpha)
                         .position(pos);
