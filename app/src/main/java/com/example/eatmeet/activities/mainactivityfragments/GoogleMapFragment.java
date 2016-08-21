@@ -80,6 +80,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         MainActivity mainActivity = (MainActivity) context;
         EatMeetApp.getFiltersManager().resetFilters();
         EatMeetApp.getFiltersManager().addRestaurant(markers.get(marker));
+        EatMeetApp.getFiltersManager().setEnabled(true);
         mainActivity.setCurrentFragment(1);
 
         //String title = marker.getTitle();
