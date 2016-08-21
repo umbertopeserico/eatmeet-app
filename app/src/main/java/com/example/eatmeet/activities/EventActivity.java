@@ -2,6 +2,7 @@ package com.example.eatmeet.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import com.example.eatmeet.utils.Images;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -44,7 +46,7 @@ public class EventActivity extends AppCompatActivity {
 
         //EventDAO eventDAO = new EventDAOImpl(null);
         //final Event myNewEvent = eventDAO.getEventById(eventId);
-        EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+        final EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
@@ -105,12 +107,41 @@ public class EventActivity extends AppCompatActivity {
                     menu.setText(event.getMenu().getTextMenu().toString());
                 }
 
-                final ImageView image = (ImageView) findViewById(R.id.eventImage);
+                final ImageView eventImage = (ImageView) findViewById(R.id.eventImage);
+                String tmpFileName = event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
+
+                final File file = new File(getCacheDir(), tmpFileName);
+                if(!file.exists()) {
+                    System.out.println("Cache non esiste");
+                    BackendStatusManager imageStatusManager = new BackendStatusManager();
+                    imageStatusManager.setBackendStatusListener(new BackendStatusListener() {
+                        @Override
+                        public void onSuccess(Object response, Integer code) {
+                            System.out.println("Immagine scaricata");
+                            eventImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        }
+
+                        @Override
+                        public void onFailure(Object response, Integer code) {
+                            System.out.println("Immagine NON scaricata");
+                        }
+                    });
+                    eventDAO.getImage(event.getPhotos().get(0).getImage(), imageStatusManager, getCacheDir());
+                }
+                else
+                {
+                    System.out.println("Cache esiste");
+                    if(!file.isDirectory()) {
+                        eventImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    }
+                }
+                /*
                 new Images(){
                     @Override public void onPostExecute(Bitmap result){
-                        image.setImageBitmap(result);
+                        eventImage.setImageBitmap(result);
                     }
                 }.execute((String) event.getUrlImage());
+                */
             }
             @Override
             public void onFailure(Object response, Integer code) {
