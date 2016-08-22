@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,8 +90,9 @@ public class EventsFragment extends Fragment implements Refreshable {
                 Visibility.makeInvisible(filterStatusLayout);
                 
                 if(eventsList.size()==0) {
+                    Log.i("EVENTS LOAD", "NO EVENTS FOUND");
                     Visibility.makeVisible(filterStatusLayout);
-                    Visibility.makeVisible(loadingBar);
+                    Visibility.makeVisible(loadingBarContainer);
                     Visibility.makeVisible(messagesLabel);
                     messagesLabel.setText(R.string.events_no_event);
                 }
