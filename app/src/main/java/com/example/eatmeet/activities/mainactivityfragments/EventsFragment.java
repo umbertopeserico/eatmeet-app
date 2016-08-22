@@ -85,6 +85,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                 loadingBar.setVisibility(View.GONE);
                 loadingBarContainer.setVisibility(View.GONE);
                 filterStatusLayout.setVisibility(View.GONE);
+                //eventsListView.setVisibility(View.GONE);
                 // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
                 if(eventsList.size()==0) {
                     filterStatusLayout.setVisibility(View.VISIBLE);
@@ -92,6 +93,15 @@ public class EventsFragment extends Fragment implements Refreshable {
                     messagesLabel.setVisibility(View.VISIBLE);
                     messagesLabel.setText(R.string.events_no_event);
                 }
+
+                System.out.println(EatMeetApp.getFiltersManager().isEnabled());
+                if(EatMeetApp.getFiltersManager().isEnabled()) {
+                    filterStatusLayout.setVisibility(View.VISIBLE);
+                    //loadingBarContainer.setVisibility(View.VISIBLE);
+                    filterStatusCardView.setVisibility(View.VISIBLE);
+                }
+
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
 
             @Override
@@ -106,6 +116,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                     }
                 }
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
         });
         eventsList.setOnAddListener(new OnAddListener() {
@@ -121,7 +132,6 @@ public class EventsFragment extends Fragment implements Refreshable {
         filterStatusCardView.setVisibility(View.GONE);
         filterStatusLayout.setVisibility(View.VISIBLE);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
-        EatMeetApp.getFiltersManager().setEnabled(false);
     }
 
     private void initViewElements() {
