@@ -26,6 +26,7 @@ import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.observablearraylist.ObservableArrayList;
 import com.example.eatmeet.observablearraylist.OnAddListener;
 import com.example.eatmeet.utils.Refreshable;
+import com.example.eatmeet.utils.Visibility;
 
 import org.json.JSONObject;
 
@@ -83,20 +84,20 @@ public class EventsFragment extends Fragment implements Refreshable {
         eventsBSM.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
-                loadingBar.setVisibility(View.GONE);
-                loadingBarContainer.setVisibility(View.GONE);
-                filterStatusLayout.setVisibility(View.GONE);
+                Visibility.makeInvisible(loadingBar);
+                Visibility.makeInvisible(loadingBarContainer);
+                Visibility.makeInvisible(filterStatusLayout);
                 
                 if(eventsList.size()==0) {
-                    filterStatusLayout.setVisibility(View.VISIBLE);
-                    loadingBarContainer.setVisibility(View.VISIBLE);
-                    messagesLabel.setVisibility(View.VISIBLE);
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(loadingBar);
+                    Visibility.makeVisible(messagesLabel);
                     messagesLabel.setText(R.string.events_no_event);
                 }
 
                 if(EatMeetApp.getFiltersManager().isEnabled()) {
-                    filterStatusLayout.setVisibility(View.VISIBLE);
-                    filterStatusCardView.setVisibility(View.VISIBLE);
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(filterStatusCardView);
                     filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
                 }
 
@@ -106,10 +107,10 @@ public class EventsFragment extends Fragment implements Refreshable {
             @Override
             public void onFailure(Object response, Integer code) {
                 if (getActivity() != null && isAdded()) {
-                    loadingBar.setVisibility(View.GONE);
-                    loadingBarContainer.setVisibility(View.VISIBLE);
-                    messagesLabel.setVisibility(View.VISIBLE);
-                    filterStatusCardView.setVisibility(View.GONE);
+                    Visibility.makeInvisible(loadingBar);
+                    Visibility.makeVisible(loadingBarContainer);
+                    Visibility.makeVisible(messagesLabel);
+                    Visibility.makeInvisible(filterStatusCardView);
                     if(response==null) {
                         messagesLabel.setText(getString(R.string.network_error));
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
@@ -125,11 +126,11 @@ public class EventsFragment extends Fragment implements Refreshable {
             }
         });
 
-        loadingBar.setVisibility(View.VISIBLE);
-        loadingBarContainer.setVisibility(View.VISIBLE);
-        messagesLabel.setVisibility(View.GONE);
-        filterStatusCardView.setVisibility(View.GONE);
-        filterStatusLayout.setVisibility(View.VISIBLE);
+        Visibility.makeVisible(loadingBar);
+        Visibility.makeVisible(loadingBarContainer);
+        Visibility.makeInvisible(messagesLabel);
+        Visibility.makeInvisible(filterStatusCardView);
+        Visibility.makeVisible(filterStatusLayout);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
     }
 
