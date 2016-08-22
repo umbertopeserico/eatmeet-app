@@ -1,6 +1,5 @@
 package com.example.eatmeet.utils;
 
-import com.example.eatmeet.R;
 import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Restaurant;
 
