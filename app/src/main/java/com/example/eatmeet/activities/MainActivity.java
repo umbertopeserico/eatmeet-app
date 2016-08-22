@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCurrentFragment(int position){
         mViewPager.setCurrentItem(position, true);
-        Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getCurrentFragment();
+        /*Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getCurrentFragment();
         if(refreshable!=null)
-            refreshable.refresh();
+            refreshable.refresh();*/
     }
 
     @Override
@@ -112,6 +112,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getCurrentFragment();
+                if(refreshable!=null)
+                    refreshable.refresh();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
