@@ -12,4 +12,5 @@
     <string name="open_categories">Categorie (clicca per scegliere)</string>
     <string name="open_restaurants">Ristoranti (clicca per scegliere)</string>
     <string name="no_filters_button">Nessun filtro</string>
+    <string name="no_order_button">Nessun ordine</string>
 </resources>

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
+import com.example.eatmeet.activities.OrderActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -163,7 +164,9 @@ public class EventsFragment extends Fragment implements Refreshable {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(EventsFragment.this.getActivity(), OrderActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
