@@ -86,6 +86,12 @@ public class EventsFragment extends Fragment implements Refreshable {
                 loadingBarContainer.setVisibility(View.GONE);
                 filterStatusLayout.setVisibility(View.GONE);
                 // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
+                if(eventsList.size()==0) {
+                    filterStatusLayout.setVisibility(View.VISIBLE);
+                    loadingBarContainer.setVisibility(View.VISIBLE);
+                    messagesLabel.setVisibility(View.VISIBLE);
+                    messagesLabel.setText(R.string.events_no_event);
+                }
             }
 
             @Override
