@@ -369,4 +369,42 @@ public class FiltersManager {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        String text = "";
+        if(isEnabled()) {
+            text+= "Filtri abilitati: ";
+
+            if (isCategoryEnabled()) {
+                text+= "Categorie ";
+            }
+
+            if (isRestaurantEnabled()) {
+                text+= "Ristoranti ";
+            }
+
+            if (isMinDateEnabled() || isMaxDateEnabled()) {
+                text+= "Data ";
+            }
+
+            if (isMinPriceEnabled() || isMaxPriceEnabled()) {
+                text+= "Prezzo ";
+            }
+
+            if (isMinActualSaleEnabled() || isMaxActualSaleEnabled()) {
+                text+= "Sconto ";
+            }
+
+            if (isMinPeopleEnabled() || isMaxPeopleEnabled()) {
+                text+= "Partecipanti ";
+            }
+
+            if (isOrderSet()) {
+
+            }
+        }
+
+        return text;
+    }
 }

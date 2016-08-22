@@ -1,9 +1,11 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCurrentFragment(int position){
         mViewPager.setCurrentItem(position, true);
+        /*Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getCurrentFragment();
+        if(refreshable!=null)
+            refreshable.refresh();*/
     }
 
     @Override
@@ -106,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -114,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onPageSelected(int position) {
-                Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getItem(position);
-                refreshable.refresh();
+                Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getCurrentFragment();
+                if(refreshable!=null)
+                    refreshable.refresh();
             }
 
             @Override
@@ -246,23 +254,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private Fragment mCurrentFragment;
 
-        private List<Fragment> fragments = new ArrayList<>();
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            fragments.add(new CategoriesFragment());
-            fragments.add(new EventsFragment());
-            fragments.add(new GoogleMapFragment());
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            switch (position) {
+                case 0:
+                    return new CategoriesFragment();
+                case 1:
+                    return new EventsFragment();
+                case 2:
+                    return new GoogleMapFragment();
+                default:
+                    return new CategoriesFragment();
+            }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
 
@@ -277,6 +290,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return getString(R.string.map_tab_title);
             }
             return null;
+        }
+
+        public Fragment getCurrentFragment() {
+            return mCurrentFragment;
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            if (getCurrentFragment() != object) {
+                mCurrentFragment = ((Fragment) object);
+            }
+            super.setPrimaryItem(container, position, object);
         }
     }
 
@@ -316,6 +341,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             applyFilters = (String) intent.getExtras().get("applyFilters");
             if (applyFilters!= null) {
                 if (applyFilters.equals("1")) {
+                    EatMeetApp.getFiltersManager().setEnabled(true);
+                }
+            }
+
+            String applyOrder;
+            applyOrder = (String) intent.getExtras().get("applyOrder");
+            if (applyOrder!= null) {
+                if (applyOrder.equals("1")) {
                     EatMeetApp.getFiltersManager().setEnabled(true);
                 }
             }

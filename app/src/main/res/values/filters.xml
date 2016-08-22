@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="filters_enabled">Filtri abilitati</string>
+    <string name="categories">Categorie</string>
+    <string name="restaurants">Ristoranti</string>
+    <string name="date">Data</string>
     <string name="number_of_people">Numero di persone</string>
     <string name="price">Prezzo (€)</string>
     <string name="day_from">Dal giorno</string>
@@ -8,4 +12,5 @@
     <string name="open_categories">Categorie (clicca per scegliere)</string>
     <string name="open_restaurants">Ristoranti (clicca per scegliere)</string>
     <string name="no_filters_button">Nessun filtro</string>
+    <string name="no_order_button">Nessun ordine</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
+import com.example.eatmeet.activities.OrderActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -46,6 +48,7 @@ public class EventsFragment extends Fragment implements Refreshable {
     private TextView messagesLabel;
     private LinearLayout filterStatusLayout;
     private CardView filterStatusCardView;
+    private TextView filtersEnabledText;
 
     private Button filterButton;
     private Button orderButton;
@@ -86,7 +89,22 @@ public class EventsFragment extends Fragment implements Refreshable {
                 Visibility.makeInvisible(loadingBar);
                 Visibility.makeInvisible(loadingBarContainer);
                 Visibility.makeInvisible(filterStatusLayout);
-                // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
+                
+                if(eventsList.size()==0) {
+                    Log.i("EVENTS LOAD", "NO EVENTS FOUND");
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(loadingBarContainer);
+                    Visibility.makeVisible(messagesLabel);
+                    messagesLabel.setText(R.string.events_no_event);
+                }
+
+                if(EatMeetApp.getFiltersManager().isEnabled()) {
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(filterStatusCardView);
+                    filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
+                }
+
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
 
             @Override
@@ -101,6 +119,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                     }
                 }
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
         });
         eventsList.setOnAddListener(new OnAddListener() {
@@ -116,7 +135,6 @@ public class EventsFragment extends Fragment implements Refreshable {
         Visibility.makeInvisible(filterStatusCardView);
         Visibility.makeVisible(filterStatusLayout);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
-        EatMeetApp.getFiltersManager().setEnabled(false);
     }
 
     private void initViewElements() {
@@ -130,6 +148,7 @@ public class EventsFragment extends Fragment implements Refreshable {
         filterStatusCardView = (CardView) view.findViewById(R.id.filterStatusCardView);
         filterButton = (Button) view.findViewById(R.id.filterButton);
         orderButton = (Button) view.findViewById(R.id.orderButton);
+        filtersEnabledText = (TextView) view.findViewById(R.id.filtersEnabledText);
     }
 
     private void setActions() {
@@ -145,7 +164,9 @@ public class EventsFragment extends Fragment implements Refreshable {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(EventsFragment.this.getActivity(), OrderActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
