@@ -238,7 +238,7 @@ public class EventActivity extends AppCompatActivity {
                 }
 
                 if(eventImage != null){
-                    String tmpFileName = event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
+                    String tmpFileName = "event-activity" + event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
 
                     final File file = new File(getCacheDir(), tmpFileName);
                     if(!file.exists()) {
