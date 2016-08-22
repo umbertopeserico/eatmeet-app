@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
 
     public void setCurrentFragment(int position){
+        Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getItem(position);
+        refreshable.refresh();
         mViewPager.setCurrentItem(position, true);
     }
 
@@ -106,23 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Refreshable refreshable = (Refreshable) mSectionsPagerAdapter.getItem(position);
-                refreshable.refresh();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -245,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> fragments = new ArrayList<>();
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -257,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         public Fragment getItem(int position) {
+            Log.i("FRAGMENT TOSTRING", fragments.get(position).toString());
             return fragments.get(position);
         }
 
