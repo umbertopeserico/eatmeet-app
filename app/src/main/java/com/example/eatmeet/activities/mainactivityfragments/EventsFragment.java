@@ -45,6 +45,7 @@ public class EventsFragment extends Fragment implements Refreshable {
     private TextView messagesLabel;
     private LinearLayout filterStatusLayout;
     private CardView filterStatusCardView;
+    private TextView filtersEnabledText;
 
     private Button filterButton;
     private Button orderButton;
@@ -85,8 +86,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                 loadingBar.setVisibility(View.GONE);
                 loadingBarContainer.setVisibility(View.GONE);
                 filterStatusLayout.setVisibility(View.GONE);
-                //eventsListView.setVisibility(View.GONE);
-                // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
+                
                 if(eventsList.size()==0) {
                     filterStatusLayout.setVisibility(View.VISIBLE);
                     loadingBarContainer.setVisibility(View.VISIBLE);
@@ -94,11 +94,10 @@ public class EventsFragment extends Fragment implements Refreshable {
                     messagesLabel.setText(R.string.events_no_event);
                 }
 
-                System.out.println(EatMeetApp.getFiltersManager().isEnabled());
                 if(EatMeetApp.getFiltersManager().isEnabled()) {
                     filterStatusLayout.setVisibility(View.VISIBLE);
-                    //loadingBarContainer.setVisibility(View.VISIBLE);
                     filterStatusCardView.setVisibility(View.VISIBLE);
+                    filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
                 }
 
                 EatMeetApp.getFiltersManager().setEnabled(false);
@@ -145,6 +144,7 @@ public class EventsFragment extends Fragment implements Refreshable {
         filterStatusCardView = (CardView) view.findViewById(R.id.filterStatusCardView);
         filterButton = (Button) view.findViewById(R.id.filterButton);
         orderButton = (Button) view.findViewById(R.id.orderButton);
+        filtersEnabledText = (TextView) view.findViewById(R.id.filtersEnabledText);
     }
 
     private void setActions() {
