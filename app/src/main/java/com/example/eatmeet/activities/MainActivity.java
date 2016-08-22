@@ -145,24 +145,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-        Intent intent = getIntent();
-        if(intent != null && intent.getExtras() != null) {
-            String applyFilters;
-            applyFilters = (String) intent.getExtras().get("applyFilters");
-            if (applyFilters!= null) {
-                if (applyFilters.equals("1")) {
-                    EatMeetApp.getFiltersManager().setEnabled(true);
-                }
-            }
-
-            String destination;
-            destination = (String) intent.getExtras().get("destination");
-            System.out.println("DESTINATION: "+destination);
-            if (destination!= null) {
-                setCurrentFragment(Integer.parseInt(destination));
-            }
-        }
     }
 
     @Override
@@ -334,6 +316,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras() != null) {
+            String applyFilters;
+            applyFilters = (String) intent.getExtras().get("applyFilters");
+            if (applyFilters!= null) {
+                if (applyFilters.equals("1")) {
+                    EatMeetApp.getFiltersManager().setEnabled(true);
+                }
+            }
+
+            String destination;
+            destination = (String) intent.getExtras().get("destination");
+            System.out.println("DESTINATION: "+destination);
+            if (destination!= null) {
+                setCurrentFragment(Integer.parseInt(destination));
+            }
+        }
         setMenuLayout();
     }
 }
