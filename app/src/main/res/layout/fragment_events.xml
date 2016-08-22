@@ -29,13 +29,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/filterStatusLayout"
         android:layout_margin="10dp">
-
-        <include layout="@layout/loading_bar" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/filterStatusCardView"
@@ -45,10 +43,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Prova"
+                android:id="@+id/filtersEnabledText"
                 android:padding="8dp" />
         </android.support.v7.widget.CardView>
 
+        <include layout="@layout/loading_bar" />
 
     </LinearLayout>
 

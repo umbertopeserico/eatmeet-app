@@ -15,4 +15,5 @@
     <string name="sign_out_error">Logout non completato</string>
 
     <string name="categories_no_category">Nessuna categoria trovata</string>
+    <string name="events_no_event">Nessun evento trovato</string>
 </resources>

@@ -46,6 +46,7 @@ public class EventsFragment extends Fragment implements Refreshable {
     private TextView messagesLabel;
     private LinearLayout filterStatusLayout;
     private CardView filterStatusCardView;
+    private TextView filtersEnabledText;
 
     private Button filterButton;
     private Button orderButton;
@@ -86,7 +87,21 @@ public class EventsFragment extends Fragment implements Refreshable {
                 Visibility.makeInvisible(loadingBar);
                 Visibility.makeInvisible(loadingBarContainer);
                 Visibility.makeInvisible(filterStatusLayout);
-                // Gestire il caso in cui siano settati filtri: mostrare la cardview se si
+                
+                if(eventsList.size()==0) {
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(loadingBar);
+                    Visibility.makeVisible(messagesLabel);
+                    messagesLabel.setText(R.string.events_no_event);
+                }
+
+                if(EatMeetApp.getFiltersManager().isEnabled()) {
+                    Visibility.makeVisible(filterStatusLayout);
+                    Visibility.makeVisible(filterStatusCardView);
+                    filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
+                }
+
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
 
             @Override
@@ -101,6 +116,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                     }
                 }
+                EatMeetApp.getFiltersManager().setEnabled(false);
             }
         });
         eventsList.setOnAddListener(new OnAddListener() {
@@ -116,7 +132,6 @@ public class EventsFragment extends Fragment implements Refreshable {
         Visibility.makeInvisible(filterStatusCardView);
         Visibility.makeVisible(filterStatusLayout);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
-        EatMeetApp.getFiltersManager().setEnabled(false);
     }
 
     private void initViewElements() {
@@ -130,6 +145,7 @@ public class EventsFragment extends Fragment implements Refreshable {
         filterStatusCardView = (CardView) view.findViewById(R.id.filterStatusCardView);
         filterButton = (Button) view.findViewById(R.id.filterButton);
         orderButton = (Button) view.findViewById(R.id.orderButton);
+        filtersEnabledText = (TextView) view.findViewById(R.id.filtersEnabledText);
     }
 
     private void setActions() {
