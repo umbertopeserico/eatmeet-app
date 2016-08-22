@@ -326,6 +326,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
 
+            String applyOrder;
+            applyOrder = (String) intent.getExtras().get("applyOrder");
+            if (applyOrder!= null) {
+                if (applyOrder.equals("1")) {
+                    EatMeetApp.getFiltersManager().setEnabled(true);
+                }
+            }
+
             String destination;
             destination = (String) intent.getExtras().get("destination");
             System.out.println("DESTINATION: "+destination);
