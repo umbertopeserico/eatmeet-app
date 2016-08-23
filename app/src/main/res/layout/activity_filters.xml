@@ -104,61 +104,71 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp"
                 android:layout_margin="10dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:weightSum="2"
-                        android:orientation="vertical"
-                        android:layout_margin="5dp">
+                        android:weightSum="2">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/day_from"
-                            android:layout_gravity="center_horizontal"/>
+                            android:layout_weight="1"
+                            android:weightSum="2"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
 
-                        <DatePicker
-                            android:id="@+id/minDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:datePickerMode="spinner"
-                            android:spinnersShown="true"
-                            android:calendarViewShown="false"
-                            android:layout_weight="1">
-                        </DatePicker>
-                    </LinearLayout>
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/day_from"
+                                android:layout_gravity="center_horizontal"
+                                android:id="@+id/open_date_from"/>
+                            <!--<TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/day_from"
+                                android:layout_gravity="center_horizontal"/>-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:weightSum="2"
-                        android:orientation="vertical"
-                        android:layout_margin="5dp">
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/day_to"
-                            android:layout_gravity="center_horizontal"/>
+                            android:layout_weight="1"
+                            android:weightSum="2"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
 
-                        <DatePicker
-                            android:id="@+id/maxDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:datePickerMode="spinner"
-                            android:spinnersShown="true"
-                            android:calendarViewShown="false"
-                            android:layout_weight="1">
-                        </DatePicker>
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/day_to"
+                                android:layout_gravity="center_horizontal"
+                                android:id="@+id/open_date_to"/>
+                            <!--<TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/day_to"
+                                android:layout_gravity="center_horizontal"/>-->
+                        </LinearLayout>
                     </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/activate_date_filter"
+                            android:id="@+id/activate_date_filter"/>
+                    </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -293,6 +303,64 @@
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dateFromCardView"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/dateFromCardViewCloseButton"
+            android:text="@string/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="end|top" />
+        <DatePicker
+            android:id="@+id/minDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"
+            android:calendarViewShown="false"
+            android:layout_weight="1">
+        </DatePicker>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dateToCardView"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/dateToCardViewCloseButton"
+            android:text="@string/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="end|top" />
+        <DatePicker
+            android:id="@+id/maxDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"
+            android:calendarViewShown="false"
+            android:layout_weight="1">
+        </DatePicker>
+    </android.support.v7.widget.CardView>
+
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"

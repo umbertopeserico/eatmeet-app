@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -30,6 +31,8 @@ import com.example.eatmeet.utils.Visibility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +62,14 @@ public class FiltersActivity extends AppCompatActivity {
     private RangeBar actualSaleRangeBar;
     private DatePicker maxDate;
     private DatePicker minDate;
+
+    private Button openDateFrom;
+    private Button openDateTo;
+    private CheckBox activateDateFilter;
+    private CardView dateFromCardView;
+    private Button dateFromCardViewCloseButton;
+    private CardView dateToCardView;
+    private Button dateToCardViewCloseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +111,28 @@ public class FiltersActivity extends AppCompatActivity {
         maxDate = (DatePicker) findViewById(R.id.maxDate);
         minDate = (DatePicker) findViewById(R.id.minDate);
         filtersManager = EatMeetApp.getFiltersManager();
+        openDateFrom = (Button) findViewById(R.id.open_date_from);
+        openDateTo = (Button) findViewById(R.id.open_date_to);
+        activateDateFilter = (CheckBox) findViewById(R.id.activate_date_filter);
+        dateFromCardView = (CardView) findViewById(R.id.dateFromCardView);
+        dateFromCardViewCloseButton = (Button) findViewById(R.id.dateFromCardViewCloseButton);
+        dateToCardView = (CardView) findViewById(R.id.dateToCardView);
+        dateToCardViewCloseButton = (Button) findViewById(R.id.dateToCardViewCloseButton);
     }
 
     private void setActions() {
+        openDateFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCard("open","date_from");
+            }
+        });
+        openDateTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCard("open","date_to");
+            }
+        });
         applyFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,11 +169,25 @@ public class FiltersActivity extends AppCompatActivity {
                 toggleCard("close","restaurants");
             }
         });
+        dateFromCardViewCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCard("close","date_from");
+            }
+        });
+        dateToCardViewCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCard("close","date_to");
+            }
+        });
         overlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleCard("close","restaurants");
                 toggleCard("close","categories");
+                toggleCard("close","date_from");
+                toggleCard("close","date_to");
             }
         });
     }
@@ -185,21 +229,49 @@ public class FiltersActivity extends AppCompatActivity {
             priceRangeBar.setRangePinsByIndices(priceRangeBar.getLeftIndex(), priceRangeBar.getTickCount()-1);
         }
 
+        int yearMin; int monthMin; int dayMin; String minDateString; Calendar cal = Calendar.getInstance();
         if (filtersManager.isMinDateEnabled()) {
-            Calendar cal = Calendar.getInstance();
             cal.setTime(filtersManager.getMinDate());
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            minDate.updateDate(year, month, day);
+        }
+        yearMin = cal.get(Calendar.YEAR);
+        monthMin = cal.get(Calendar.MONTH);
+        dayMin = cal.get(Calendar.DAY_OF_MONTH);
+        minDateString = dayMin + "/" + (monthMin + 1) + "/" + yearMin;
+        openDateFrom.setText("DAL GIORNO: " + minDateString);
+        //minDate.updateDate(yearMin, monthMin, dayMin);
+        minDate.init(yearMin,monthMin,dayMin, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String minDateString = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                openDateFrom.setText("DAL GIORNO: " + minDateString);
+            }
+        });
+
+        int yearMax; int monthMax; int dayMax; String maxDateString; cal = Calendar.getInstance();
+        if (filtersManager.isMaxDateEnabled()) {
+            cal.setTime(filtersManager.getMaxDate());
+        }
+        yearMax = cal.get(Calendar.YEAR);
+        monthMax = cal.get(Calendar.MONTH);
+        dayMax = cal.get(Calendar.DAY_OF_MONTH);
+        maxDateString = dayMax + "/" + (monthMax + 1) + "/" + yearMax;
+        openDateTo.setText("AL GIORNO: " + maxDateString);
+        //maxDate.updateDate(yearMax, monthMax, dayMax);
+        maxDate.init(yearMax,monthMax,dayMax, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String maxDateString = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                openDateTo.setText("AL GIORNO: " + maxDateString);
+            }
+        });
+
+        if(filtersManager.isMinDateEnabled() && filtersManager.isMaxDateEnabled()){
+            activateDateFilter.setChecked(true);
         } else {
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            minDate.updateDate(year, month, day);
+            activateDateFilter.setChecked(false);
         }
 
+        /*
         if (filtersManager.isMaxDateEnabled()) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(filtersManager.getMaxDate());
@@ -207,13 +279,18 @@ public class FiltersActivity extends AppCompatActivity {
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
             maxDate.updateDate(year, month, day);
+            String maxDateString = day + "/" + (month + 1) + "/" + year;
+            openDateTo.setText(openDateTo.getText() + ": " + maxDateString);
         } else {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
             maxDate.updateDate(year, month, day);
+            String maxDateString = day + "/" + (month + 1) + "/" + year;
+            openDateTo.setText(openDateTo.getText() + ": " + maxDateString);
         }
+        */
     }
 
     @Override
@@ -231,6 +308,13 @@ public class FiltersActivity extends AppCompatActivity {
                 break;
             case "restaurants":
                 target_card_view = (CardView) findViewById(R.id.restaurantsCardView);
+                break;
+            case "date_from":
+                target_card_view = (CardView) findViewById(R.id.dateFromCardView);
+                break;
+            case "date_to":
+                target_card_view = (CardView) findViewById(R.id.dateToCardView);
+                break;
         }
         switch (action) {
             case "open":
@@ -290,11 +374,16 @@ public class FiltersActivity extends AppCompatActivity {
             filtersManager.setMaxActualSale(Double.parseDouble(actualSaleRangeBar.getRightPinValue()));
         }
 
-        // Min date
-        filtersManager.setMinDate(DatePickerUtils.getDateFromDatePicker(minDate));
+        if(activateDateFilter.isChecked()) {
+            // Min date
+            filtersManager.setMinDate(DatePickerUtils.getDateFromDatePicker(minDate));
 
-        // Max date
-        filtersManager.setMaxDate(DatePickerUtils.getDateFromDatePicker(maxDate));
+            // Max date
+            filtersManager.setMaxDate(DatePickerUtils.getDateFromDatePicker(maxDate));
+        } else {
+            filtersManager.removeMaxDate();
+            filtersManager.removeMinDate();
+        }
 
         // Set categories
         if(selectedCategoriesList.size() > 0) {

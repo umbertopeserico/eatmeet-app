@@ -37,6 +37,8 @@
     <string name="filter_min_people">Persone minime</string>
     <string name="filter_max_people">Persone massime</string>
 
+    <string name="activate_date_filter">Attiva filtro data</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_event">Evento</string>

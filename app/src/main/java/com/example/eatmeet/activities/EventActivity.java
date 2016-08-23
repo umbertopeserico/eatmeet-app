@@ -194,7 +194,7 @@ public class EventActivity extends AppCompatActivity {
                 String scheduleString="il ";
                 Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
                 calendar.setTime(scheduleDate);   // assigns calendar to given date
-                scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
+                scheduleString+=(calendar.get(Calendar.MONTH) + 1) + "/";
                 scheduleString+=calendar.get(Calendar.MONTH) + "/";
                 scheduleString+=calendar.get(Calendar.YEAR) + " alle ";
                 int hrs = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
