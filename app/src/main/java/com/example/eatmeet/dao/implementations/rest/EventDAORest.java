@@ -76,7 +76,7 @@ public class EventDAORest implements EventDAO {
 
     @Override
     public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
-        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
+        String tmpFileName = "event-activity" + url.substring(url.lastIndexOf("/") + 1);
         File file = new File(cacheDir, tmpFileName);
         HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
             @Override

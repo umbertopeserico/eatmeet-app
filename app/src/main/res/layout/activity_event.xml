@@ -21,6 +21,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+        <include layout="@layout/loading_bar"/>
+    </RelativeLayout>
+
     <include layout="@layout/content_event" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -14,7 +14,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.eatmeet.activities.EventActivity"
-    tools:showIn="@layout/activity_event">
+    tools:showIn="@layout/activity_event"
+    android:id="@+id/content_event">
 
     <ImageView
         android:minWidth="750dp"
