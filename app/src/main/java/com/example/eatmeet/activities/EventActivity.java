@@ -238,7 +238,7 @@ public class EventActivity extends AppCompatActivity {
                 }
 
                 if(eventImage != null){
-                    String tmpFileName = "event-activity" + event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
+                    String tmpFileName = "event-activity_" + event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
 
                     final File file = new File(getCacheDir(), tmpFileName);
                     if(!file.exists()) {
@@ -256,7 +256,7 @@ public class EventActivity extends AppCompatActivity {
                                 System.out.println("Immagine NON scaricata");
                             }
                         });
-                        eventDAO.getImage(event.getPhotos().get(0).getImage(), imageStatusManager, getCacheDir());
+                        eventDAO.getImage(event.getPhotos().get(0).getImage(), tmpFileName, imageStatusManager, getCacheDir());
                     }
                     else
                     {

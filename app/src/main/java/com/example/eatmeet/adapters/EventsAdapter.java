@@ -68,7 +68,7 @@ public class EventsAdapter extends ArrayAdapter {
 
         EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
         
-        String tmpFileName = event.getPhotos().get(0).getImageMedium().substring(event.getPhotos().get(0).getImageMedium().lastIndexOf("/")+1);
+        String tmpFileName = "events-list_" + event.getPhotos().get(0).getImageMedium().substring(event.getPhotos().get(0).getImageMedium().lastIndexOf("/")+1);
 
         final File file = new File(this.getContext().getCacheDir(), tmpFileName);
         if(!file.exists()) {
@@ -86,7 +86,7 @@ public class EventsAdapter extends ArrayAdapter {
                     System.out.println("Immagine NON scaricata");
                 }
             });
-            eventDAO.getImage(event.getPhotos().get(0).getImageMedium(), imageStatusManager, this.getContext().getCacheDir());
+            eventDAO.getImage(event.getPhotos().get(0).getImageMedium(), tmpFileName, imageStatusManager, this.getContext().getCacheDir());
         }
         else
         {
