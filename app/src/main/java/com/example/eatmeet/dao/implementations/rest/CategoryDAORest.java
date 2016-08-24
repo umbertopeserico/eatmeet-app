@@ -64,16 +64,4 @@ public class CategoryDAORest implements CategoryDAO {
         });
     }
 
-    @Override
-    public List<Category> getCategories() {
-        ArrayList<Category> categories = new ArrayList<>();
-        BackendStatusManager backendStatusManager = new BackendStatusManager();
-        try {
-            this.getCategories(categories, backendStatusManager);
-        } catch (Exception e) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, e.getMessage());
-        }
-        return categories;
-    }
-
 }

@@ -2,7 +2,6 @@ package com.example.eatmeet.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +17,8 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.activities.EventActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
-import com.example.eatmeet.dao.interfaces.CategoryDAO;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.utils.Images;
 
 import java.io.File;
 import java.util.Calendar;

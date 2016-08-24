@@ -14,8 +14,6 @@ public class EventParticipation extends AbstractEntity {
     private Event event;
     private Integer seats;
 
-    private PropertyChangeSupport cs = new PropertyChangeSupport(this);
-
     public Integer getUserId() {
         return userId;
     }
@@ -23,7 +21,7 @@ public class EventParticipation extends AbstractEntity {
     public void setUserId(Integer userId) {
         Integer oldValue = this.userId;
         this.userId = userId;
-        this.cs.firePropertyChange("userId",oldValue, this.userId);
+        this.getCs().firePropertyChange("userId",oldValue, this.userId);
     }
 
     public Integer getEventId() {
@@ -33,7 +31,7 @@ public class EventParticipation extends AbstractEntity {
     public void setEventId(Integer eventId) {
         Integer oldValue = this.eventId;
         this.eventId = eventId;
-        this.cs.firePropertyChange("eventId",oldValue, this.eventId);
+        this.getCs().firePropertyChange("eventId",oldValue, this.eventId);
     }
 
     public User getUser() {
@@ -43,7 +41,7 @@ public class EventParticipation extends AbstractEntity {
     public void setUser(User user) {
         User oldValue = this.user;
         this.user = user;
-        this.cs.firePropertyChange("user",oldValue, this.user);
+        this.getCs().firePropertyChange("user",oldValue, this.user);
     }
 
     public Event getEvent() {
@@ -53,7 +51,7 @@ public class EventParticipation extends AbstractEntity {
     public void setEvent(Event event) {
         Event oldValue = this.event;
         this.event = event;
-        this.cs.firePropertyChange("event",oldValue, this.event);
+        this.getCs().firePropertyChange("event",oldValue, this.event);
     }
 
     public Integer getSeats() {
@@ -63,16 +61,7 @@ public class EventParticipation extends AbstractEntity {
     public void setSeats(Integer seats) {
         Integer oldValue = this.seats;
         this.seats = seats;
-        this.cs.firePropertyChange("seats", oldValue, this.seats);
+        this.getCs().firePropertyChange("seats", oldValue, this.seats);
     }
 
-    @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-        cs.addPropertyChangeListener(listener);
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-        cs.removePropertyChangeListener(listener);
-    }
 }

@@ -134,13 +134,4 @@ public class EventDAORest implements EventDAO {
         });
     }
 
-    @Override
-    public List<Event> getEvents(JSONObject parameters) {
-        return null;
-    }
-
-    @Override
-    public Event getEventById(int id) {
-        return null;
-    }
 }

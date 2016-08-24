@@ -14,7 +14,14 @@ import java.util.List;
  */
 public interface EventDAO {
 
-    public void getImage(String url, String filePath, final BackendStatusManager backendStatusManager, File cacheDir);
+    /**
+     * This function gets the image for the event
+     * @param url remote url for image
+     * @param filePath file path on the client filesystem
+     * @param backendStatusManager the backend status manager
+     * @param cacheDir the dir where to save he file
+     */
+    void getImage(String url, String filePath, final BackendStatusManager backendStatusManager, File cacheDir);
 
     /**
      * This method is used to get the events from the implemented backend.
@@ -36,8 +43,4 @@ public interface EventDAO {
 
     void removeParticipation(Event event, BackendStatusManager backendStatusManager);
 
-    @Deprecated
-    List<Event> getEvents(JSONObject parameters);
-    @Deprecated
-    Event getEventById(int id);
 }

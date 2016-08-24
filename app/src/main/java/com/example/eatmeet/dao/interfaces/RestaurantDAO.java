@@ -14,8 +14,4 @@ public interface RestaurantDAO {
 
     void getRestaurants(final List<Restaurant> restaurants, final BackendStatusManager backendStatusManager);
 
-    @Deprecated
-    List<Restaurant> getRestaurants();
-    @Deprecated
-    Event getClosestEvent(Restaurant restaurant);
 }

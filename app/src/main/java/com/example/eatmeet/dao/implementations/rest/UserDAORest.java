@@ -32,10 +32,6 @@ import cz.msebera.android.httpclient.Header;
  * Created by umberto on 28/07/16.
  */
 public class UserDAORest implements UserDAO {
-    @Override
-    public void getUsers(List<User> users, BackendStatusManager backendStatusManager) {
-
-    }
 
     @Override
     public void signIn(User user, final BackendStatusManager backendStatusManager) {
@@ -239,8 +235,4 @@ public class UserDAORest implements UserDAO {
         });
     }
 
-    @Override
-    public List<User> getUsers() {
-        return null;
-    }
 }

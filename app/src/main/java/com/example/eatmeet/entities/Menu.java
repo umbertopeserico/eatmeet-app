@@ -10,87 +10,70 @@ import java.util.Date;
 public class Menu extends AbstractEntity implements Serializable {
 
     private String title;
-    private double maxPrice;
-    private double minPrice;
+    private Double maxPrice;
+    private Double minPrice;
     private String textMenu;
     private String htmlMenu;
-    private int restaurantId;
+    private Integer restaurantId;
 
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
+        String oldValue = this.title;
         this.title = title;
+        this.getCs().firePropertyChange("title", oldValue, this.title);
     }
 
-    public double getMaxPrice() {
+    public Double getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(double max_price) {
+    public void setMaxPrice(Double max_price) {
+        Double oldValue = this.maxPrice;
         this.maxPrice = max_price;
+        this.getCs().firePropertyChange("maxPrice", oldValue, this.maxPrice);
     }
 
-    public double getMinPrice() {
+    public Double getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(double min_price) {
-        this.minPrice = min_price;
+    public void setMinPrice(Double minPrice) {
+        Double oldValue = this.minPrice;
+        this.minPrice = minPrice;
+        this.getCs().firePropertyChange("minPrice", oldValue, this.minPrice);
     }
 
     public String getTextMenu() {
         return textMenu;
     }
 
-    public void setTextMenu(String text_menu) {
-        this.textMenu = text_menu;
+    public void setTextMenu(String textMenu) {
+        String oldValue = this.textMenu;
+        this.textMenu = textMenu;
+        this.getCs().firePropertyChange("textMenu", oldValue, this.textMenu);
     }
 
     public String getHtmlMenu() {
         return htmlMenu;
     }
 
-    public void setHtmlMenu(String html_menu) {
-        this.htmlMenu = html_menu;
+    public void setHtmlMenu(String htmlMenu) {
+        String oldValue = this.htmlMenu;
+        this.htmlMenu = htmlMenu;
+        this.getCs().firePropertyChange("htmlMenu", oldValue, this.htmlMenu);
     }
 
-    public int getRestaurantId() {
+    public Integer getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(int restaurant_id) {
-        this.restaurantId = restaurant_id;
-    }
-
-    @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Menu menu = (Menu) o;
-
-        if (getId() != menu.getId()) return false;
-        return getTitle().equals(menu.getTitle());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getTitle().hashCode();
-        return result;
+    public void setRestaurantId(Integer restaurantId) {
+        Integer oldValue = this.restaurantId;
+        this.restaurantId = restaurantId;
+        this.getCs().firePropertyChange("restaurantId", oldValue, this.restaurantId);
     }
 
     @Override

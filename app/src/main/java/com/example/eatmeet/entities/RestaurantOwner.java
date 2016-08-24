@@ -47,35 +47,6 @@ public class RestaurantOwner extends AbstractEntity implements Serializable {
     }
 
     @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RestaurantOwner that = (RestaurantOwner) o;
-
-        if (getId() != that.getId()) return false;
-        return getEmail().equals(that.getEmail());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getEmail().hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return this.getFullName();
     }

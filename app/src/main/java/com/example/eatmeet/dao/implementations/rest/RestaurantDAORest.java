@@ -44,13 +44,4 @@ public class RestaurantDAORest implements RestaurantDAO {
         });
     }
 
-    @Override
-    public List<Restaurant> getRestaurants() {
-        return null;
-    }
-
-    @Override
-    public Event getClosestEvent(Restaurant restaurant) {
-        return null;
-    }
 }
