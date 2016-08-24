@@ -370,6 +370,39 @@ public class FiltersManager {
         }
     }
 
+    public Boolean isAnyFilterSet() {
+        boolean check = false;
+        if (isCategoryEnabled()) {
+            check = true;
+        }
+
+        if (isRestaurantEnabled()) {
+            check = true;
+        }
+
+        if (isMinDateEnabled() || isMaxDateEnabled()) {
+            check = true;
+        }
+
+        if (isMinPriceEnabled() || isMaxPriceEnabled()) {
+            check = true;
+        }
+
+        if (isMinActualSaleEnabled() || isMaxActualSaleEnabled()) {
+            check = true;
+        }
+
+        if (isMinPeopleEnabled() || isMaxPeopleEnabled()) {
+            check = true;
+        }
+
+        if (isOrderSet()) {
+            check = true;
+        }
+
+        return check;
+    }
+
     @Override
     public String toString() {
         String text = "";
@@ -401,7 +434,14 @@ public class FiltersManager {
             }
 
             if (isOrderSet()) {
-
+                text += "\nOrdinati per: ";
+                if(orderByField.equals("schedule")) {
+                    text+="Data";
+                } else if(orderByField.equals("actual_price")) {
+                    text+="Prezzo più basso";
+                } else if (orderByField.equals("actual_sale")) {
+                    text+="Sconto più alto";
+                }
             }
         }
 
