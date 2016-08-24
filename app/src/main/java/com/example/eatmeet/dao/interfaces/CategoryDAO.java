@@ -13,7 +13,7 @@ import java.util.List;
 public interface CategoryDAO {
 
     void getCategories(final List<Category> categories, final BackendStatusManager backendStatusManager);
-    void getImage(String url, BackendStatusManager backendStatusManager, File cacheDir);
+    void getImage(String url, String tmpFileName, BackendStatusManager backendStatusManager, File cacheDir);
 
     @Deprecated
     List<Category> getCategories();

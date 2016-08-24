@@ -194,7 +194,7 @@ public class EventActivity extends AppCompatActivity {
                 String scheduleString="il ";
                 Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
                 calendar.setTime(scheduleDate);   // assigns calendar to given date
-                scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
+                scheduleString+=(calendar.get(Calendar.MONTH) + 1) + "/";
                 scheduleString+=calendar.get(Calendar.MONTH) + "/";
                 scheduleString+=calendar.get(Calendar.YEAR) + " alle ";
                 int hrs = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
@@ -238,7 +238,7 @@ public class EventActivity extends AppCompatActivity {
                 }
 
                 if(eventImage != null){
-                    String tmpFileName = "event-activity" + event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
+                    String tmpFileName = "event-activity_" + event.getPhotos().get(0).getImage().substring(event.getPhotos().get(0).getImage().lastIndexOf("/")+1);
 
                     final File file = new File(getCacheDir(), tmpFileName);
                     if(!file.exists()) {
@@ -256,7 +256,7 @@ public class EventActivity extends AppCompatActivity {
                                 System.out.println("Immagine NON scaricata");
                             }
                         });
-                        eventDAO.getImage(event.getPhotos().get(0).getImage(), imageStatusManager, getCacheDir());
+                        eventDAO.getImage(event.getPhotos().get(0).getImage(), tmpFileName, imageStatusManager, getCacheDir());
                     }
                     else
                     {

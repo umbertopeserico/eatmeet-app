@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface EventDAO {
 
-    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir);
+    public void getImage(String url, String filePath, final BackendStatusManager backendStatusManager, File cacheDir);
 
     /**
      * This method is used to get the events from the implemented backend.

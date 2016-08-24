@@ -49,8 +49,7 @@ public class CategoryDAORest implements CategoryDAO {
     }
 
     @Override
-    public void getImage(String url, final BackendStatusManager backendStatusManager, File cacheDir) {
-        String tmpFileName = url.substring(url.lastIndexOf("/") + 1);
+    public void getImage(String url, String tmpFileName, final BackendStatusManager backendStatusManager, File cacheDir) {
         File file = new File(cacheDir, tmpFileName);
         HttpRestClient.get(url, null, new TokenFileHttpResponseHandler(file) {
             @Override

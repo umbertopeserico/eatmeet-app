@@ -59,7 +59,7 @@ public class CategoriesAdapter extends ArrayAdapter {
 
         CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
 
-        String tmpFileName = category.getImage().substring(category.getImage().lastIndexOf("/")+1);
+        String tmpFileName = "categories-list_"+ category.getImage().substring(category.getImage().lastIndexOf("/")+1);
 
         final File file = new File(this.getContext().getCacheDir(), tmpFileName);
         if(!file.exists()) {
@@ -77,7 +77,7 @@ public class CategoriesAdapter extends ArrayAdapter {
                     System.out.println("Immagine NON scaricata");
                 }
             });
-            categoryDAO.getImage(category.getImage(), imageStatusManager, this.getContext().getCacheDir());
+            categoryDAO.getImage(category.getImage(), tmpFileName, imageStatusManager, this.getContext().getCacheDir());
         }
         else
         {
