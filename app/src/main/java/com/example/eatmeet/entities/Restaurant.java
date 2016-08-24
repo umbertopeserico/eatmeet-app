@@ -152,14 +152,4 @@ public class Restaurant extends AbstractEntity implements Serializable {
     public String toString() {
         return this.getName();
     }
-
-    @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
 }

@@ -1,7 +1,5 @@
 package com.example.eatmeet.entities;
 
-import com.example.eatmeet.observablearraylist.ObservableArrayList;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -17,13 +15,7 @@ public abstract class AbstractEntity {
     private Integer id;
     private Date createdAt;
     private Date updatedAt;
-    private PropertyChangeListener listener;
-
-    private final PropertyChangeSupport idChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport createdAtChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport updatedAtChangeSupport = new PropertyChangeSupport(this);
-    private final PropertyChangeSupport errorsChangeSupport = new PropertyChangeSupport(this);
-
+    private final PropertyChangeSupport cs = new PropertyChangeSupport(this);
     private HashMap<String, List<String>> errors = new HashMap<>();
 
     public Integer getId() {
@@ -33,7 +25,7 @@ public abstract class AbstractEntity {
     public void setId(Integer id) {
         Integer oldValue = this.id;
         this.id = id;
-        this.idChangeSupport.firePropertyChange("id",oldValue, id);
+        this.cs.firePropertyChange("id",oldValue, id);
     }
 
     public Date getCreatedAt() {
@@ -43,7 +35,7 @@ public abstract class AbstractEntity {
     public void setCreatedAt(Date createdAt) {
         Date oldValue = this.createdAt;
         this.createdAt = createdAt;
-        this.idChangeSupport.firePropertyChange("createdAt",oldValue, createdAt);
+        this.cs.firePropertyChange("createdAt",oldValue, createdAt);
     }
 
     public Date getUpdatedAt() {
@@ -53,7 +45,11 @@ public abstract class AbstractEntity {
     public void setUpdatedAt(Date updatedAt) {
         Date oldValue = this.updatedAt;
         this.updatedAt = updatedAt;
-        this.idChangeSupport.firePropertyChange("updatedAt",oldValue, updatedAt);
+        this.cs.firePropertyChange("updatedAt",oldValue, updatedAt);
+    }
+
+    public PropertyChangeSupport getCs() {
+        return cs;
     }
 
     public HashMap<String, List<String>> getErrors() {
@@ -69,7 +65,7 @@ public abstract class AbstractEntity {
         } else {
             errorsOfField.add(error);
         }
-        this.errorsChangeSupport.firePropertyChange("addError", error+"Ol", error);
+        this.cs.firePropertyChange("addError", error+"Ol", error);
     }
 
     public void cleanErrors() {
@@ -77,35 +73,12 @@ public abstract class AbstractEntity {
     }
 
     public final void addPropertyChangeListener(PropertyChangeListener listener) {
-        this.idChangeSupport.addPropertyChangeListener(listener);
-        this.createdAtChangeSupport.addPropertyChangeListener(listener);
-        this.updatedAtChangeSupport.addPropertyChangeListener(listener);
-        this.listener = listener;
-        this.errorsChangeSupport.addPropertyChangeListener(listener);
-        this.setPropertyChangeListener(listener);
+        this.cs.addPropertyChangeListener(listener);
     }
 
     public final void removePropertyChangeListener(PropertyChangeListener listener) {
-        this.idChangeSupport.removePropertyChangeListener(listener);
-        this.createdAtChangeSupport.removePropertyChangeListener(listener);
-        this.updatedAtChangeSupport.removePropertyChangeListener(listener);
-        this.errorsChangeSupport.removePropertyChangeListener(listener);
-        this.unsetPropertyChangeListener(listener);
+        this.cs.removePropertyChangeListener(listener);
     }
-
-    public PropertyChangeListener getListener() {
-        return listener;
-    }
-
-    /**
-     * Method to add a listener to other properties. This method is called by addPropertyChangeListener(PropertyChangeListener listener)
-     */
-    protected abstract void setPropertyChangeListener(PropertyChangeListener listener);
-
-    /**
-     * Method to remove a listener to other properties. This method is called by removePropertyChangeListener(PropertyChangeListener listener)
-     */
-    protected abstract void unsetPropertyChangeListener(PropertyChangeListener listener);
 
     @Override
     public boolean equals(Object o) {

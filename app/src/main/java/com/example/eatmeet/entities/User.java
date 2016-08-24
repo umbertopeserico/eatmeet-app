@@ -20,18 +20,6 @@ public class User extends AbstractEntity implements Serializable{
     private String uid;
     private List<EventParticipation> eventParticipations;
 
-    private PropertyChangeSupport cs = new PropertyChangeSupport(this);
-
-    @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-        this.cs.addPropertyChangeListener(listener);
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-        this.cs.addPropertyChangeListener(listener);
-    }
-
     public String getName() {
         return name;
     }
@@ -39,7 +27,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setName(String name) {
         String oldValue = this.name;
         this.name = name;
-        this.cs.firePropertyChange("name", oldValue, this.name);
+        this.getCs().firePropertyChange("name", oldValue, this.name);
     }
 
     public String getSurname() {
@@ -49,7 +37,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setSurname(String surname) {
         String oldValue = this.surname;
         this.surname = surname;
-        this.cs.firePropertyChange("surname", oldValue, this.surname);
+        this.getCs().firePropertyChange("surname", oldValue, this.surname);
     }
 
     public String getFullName() {
@@ -59,7 +47,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setFullName(String full_name) {
         String oldValue = this.fullName;
         this.fullName = full_name;
-        this.cs.firePropertyChange("fullName", oldValue, this.fullName);
+        this.getCs().firePropertyChange("fullName", oldValue, this.fullName);
     }
 
     public String getEmail() {
@@ -69,7 +57,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setEmail(String email) {
         String oldValue = this.email;
         this.email = email;
-        this.cs.firePropertyChange("email", oldValue, this.email);
+        this.getCs().firePropertyChange("email", oldValue, this.email);
     }
 
     public String getPassword() {
@@ -79,7 +67,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setPassword(String password) {
         String oldValue = this.password;
         this.password = password;
-        this.cs.firePropertyChange("password", oldValue, this.password);
+        this.getCs().firePropertyChange("password", oldValue, this.password);
     }
 
     public String getPasswordConfirmation() {
@@ -89,7 +77,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setPasswordConfirmation(String passwordConfirmation) {
         String oldValue = this.passwordConfirmation;
         this.passwordConfirmation = passwordConfirmation;
-        this.cs.firePropertyChange("passwordConfirmation", oldValue, this.passwordConfirmation);
+        this.getCs().firePropertyChange("passwordConfirmation", oldValue, this.passwordConfirmation);
     }
 
     public String getCurrentPassword() {
@@ -99,7 +87,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setCurrentPassword(String currentPassword) {
         String oldValue = this.currentPassword;
         this.currentPassword = currentPassword;
-        this.cs.firePropertyChange("oldPassword", oldValue, this.currentPassword);
+        this.getCs().firePropertyChange("oldPassword", oldValue, this.currentPassword);
     }
 
     public String getProvider() {
@@ -109,7 +97,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setProvider(String provider) {
         String oldValue = this.provider;
         this.provider = provider;
-        this.cs.firePropertyChange("provider", oldValue, this.provider);
+        this.getCs().firePropertyChange("provider", oldValue, this.provider);
     }
 
     public String getUid() {
@@ -119,7 +107,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setUid(String uid) {
         String oldValue = this.uid;
         this.uid = uid;
-        this.cs.firePropertyChange("provider", oldValue, this.uid);
+        this.getCs().firePropertyChange("provider", oldValue, this.uid);
     }
 
     public List<EventParticipation> getEventParticipations() {
@@ -129,26 +117,7 @@ public class User extends AbstractEntity implements Serializable{
     public void setEventParticipations(List<EventParticipation> eventParticipations) {
         List<EventParticipation> oldValue = eventParticipations;
         this.eventParticipations = eventParticipations;
-        this.cs.firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (getId() != user.getId()) return false;
-        return getEmail().equals(user.getEmail());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getEmail().hashCode();
-        result = 31 * result + getId();
-        return result;
+        this.getCs().firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
     }
 
     @Override

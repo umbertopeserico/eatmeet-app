@@ -20,16 +20,6 @@ public class Zone extends AbstractEntity implements Serializable {
     }
 
     @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

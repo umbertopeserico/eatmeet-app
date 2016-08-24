@@ -1,27 +1,13 @@
 package com.example.eatmeet.entities;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 /**
  * Created by umberto on 27/07/16.
  */
 public class Photo extends AbstractEntity {
 
     private String image;
-    private String image_medium;
-    private String image_thumb;
-    private PropertyChangeSupport cs = new PropertyChangeSupport(this);
-
-    @Override
-    protected void setPropertyChangeListener(PropertyChangeListener listener) {
-        this.cs.addPropertyChangeListener(listener);
-    }
-
-    @Override
-    protected void unsetPropertyChangeListener(PropertyChangeListener listener) {
-        this.cs.removePropertyChangeListener(listener);
-    }
+    private String imageMedium;
+    private String imageThumb;
 
     public String getImage() {
         return image;
@@ -30,26 +16,26 @@ public class Photo extends AbstractEntity {
     public void setImage(String image) {
         String oldValue = this.image;
         this.image = image;
-        this.cs.firePropertyChange("image",oldValue, this.image);
+        this.getCs().firePropertyChange("image",oldValue, this.image);
     }
 
     public String getImageMedium() {
-        return image_medium;
+        return imageMedium;
     }
 
     public void setImageMedium(String imageMedium) {
-        String oldValue = this.image_medium;
-        this.image_medium = imageMedium;
-        this.cs.firePropertyChange("image_medium", oldValue, this.image_medium);
+        String oldValue = this.imageMedium;
+        this.imageMedium = imageMedium;
+        this.getCs().firePropertyChange("imageMedium", oldValue, this.imageMedium);
     }
 
     public String getImageThumb() {
-        return image_thumb;
+        return imageThumb;
     }
 
     public void setImageThumb(String imageThumb) {
-        String oldValue = this.image_thumb;
-        this.image_thumb = imageThumb;
-        this.cs.firePropertyChange("image_thumb", oldValue, this.image_thumb);
+        String oldValue = this.imageThumb;
+        this.imageThumb = imageThumb;
+        this.getCs().firePropertyChange("imageThumb", oldValue, this.imageThumb);
     }
 }
