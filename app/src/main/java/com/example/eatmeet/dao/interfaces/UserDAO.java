@@ -11,8 +11,6 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    void getUsers(final List<User> users, final BackendStatusManager backendStatusManager);
-
     void signIn(User user, BackendStatusManager backendStatusManager);
 
     void signOut(BackendStatusManager backendStatusManager);
@@ -29,6 +27,4 @@ public interface UserDAO {
 
     void updateProfile(User user, BackendStatusManager backendStatusManager);
 
-    @Deprecated
-    List<User> getUsers();
 }

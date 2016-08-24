@@ -10,8 +10,4 @@ import java.util.List;
  */
 public interface RestaurantOwnerDAO {
 
-    void getRestaurantOwners(List<RestaurantOwner> restaurantOwners, BackendStatusManager backendStatusManager);
-
-    @Deprecated
-    List<RestaurantOwner> getRestaurantOwners();
 }

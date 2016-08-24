@@ -1,7 +1,6 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,16 +19,9 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
-import com.example.eatmeet.entities.Category;
 import com.example.eatmeet.entities.Event;
-import com.example.eatmeet.entities.Menu;
-import com.example.eatmeet.entities.Restaurant;
-import com.example.eatmeet.observablearraylist.ObservableArrayList;
-import com.example.eatmeet.utils.Images;
 import com.example.eatmeet.utils.Visibility;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
