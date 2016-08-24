@@ -98,7 +98,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                     messagesLabel.setText(R.string.events_no_event);
                 }
 
-                if(EatMeetApp.getFiltersManager().isEnabled()) {
+                if(EatMeetApp.getFiltersManager().isEnabled() && EatMeetApp.getFiltersManager().isAnyFilterSet()) {
                     Visibility.makeVisible(filterStatusLayout);
                     Visibility.makeVisible(filterStatusCardView);
                     filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
