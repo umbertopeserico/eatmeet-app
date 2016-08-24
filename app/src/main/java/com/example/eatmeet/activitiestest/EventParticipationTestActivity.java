@@ -128,7 +128,7 @@ public class EventParticipationTestActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
                         BackendStatusManager eventParticipationBSM = new BackendStatusManager();
-                        eventBSM.setBackendStatusListener(new BackendStatusListener() {
+                        eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
                                 CharSequence message = "Prenotazione effettuata correttamente";

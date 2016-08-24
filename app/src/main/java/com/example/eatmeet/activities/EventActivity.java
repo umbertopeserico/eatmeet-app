@@ -1,7 +1,11 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appyvet.rangebar.RangeBar;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
@@ -67,6 +73,25 @@ public class EventActivity extends AppCompatActivity {
         initViewElements();
         setActions();
         loadData();
+
+        /*
+        final SeekBar pricesBar = (SeekBar) findViewById(R.id.pricesBar);
+        pricesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        */
 
         /*
         myNewEvent.addPropertyChangeListener(new PropertyChangeListener() {
@@ -222,6 +247,24 @@ public class EventActivity extends AppCompatActivity {
                 if (actual_price != null) {
                     actual_price.setText("Prezzo: " + event.getActualPrice().toString() + "€");
                     Visibility.makeVisible(actual_price);
+
+                    final RangeBar pricesBar = (RangeBar) findViewById(R.id.pricesBar);
+                    float maxPrice = event.getMaxPrice().floatValue();
+                    float minPrice = event.getMinPrice().floatValue();
+                    final TextView minPeoplePrice = (TextView) findViewById(R.id.minPeoplePrice);
+                    minPeoplePrice.setText(Float.toString(minPrice) + " " + Float.toString(event.getMinPeople()));
+                    final TextView maxPeoplePrice = (TextView) findViewById(R.id.maxPeoplePrice);
+                    maxPeoplePrice.setText(Float.toString(maxPrice) + " " + Float.toString(event.getMaxPeople()));
+                    float actualPrice = event.getActualPrice().floatValue();
+                    pricesBar.setTickInterval((maxPrice-minPrice)/6);
+                    pricesBar.setTickStart(minPrice);
+                    pricesBar.setTickEnd(maxPrice);
+                    pricesBar.setRangePinsByValue(minPrice, actualPrice);//funziona!
+                    pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+                        @Override
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                        }
+                    });
                 }
 
                 if (menu != null) {
