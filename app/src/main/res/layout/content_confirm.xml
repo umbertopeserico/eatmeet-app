@@ -17,27 +17,51 @@
         tools:context="com.example.eatmeet.activities.EventActivity"
         tools:showIn="@layout/activity_confirm">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/askNumberWrapper"
+            android:weightSum="3"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Prenoto per "
+                android:id="@+id/askNumber"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <Spinner
+                android:id="@+id/spinnerPeople"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"></Spinner>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=" persone"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="In quanti siete?"
-            android:id="@+id/askNumber"
-            android:layout_centerHorizontal="true" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/peopleNumber"
-            android:layout_below="@+id/askNumber"
-            android:inputType="number"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="X € a persona"
+            android:layout_marginBottom="50dp"
+            android:text="Attendi il caricamento..."
             android:id="@+id/dynamicPrice"
-            android:layout_below="@+id/peopleNumber"
+            android:layout_below="@+id/askNumberWrapper"
             android:layout_centerHorizontal="true" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +70,27 @@
             android:layout_below="@+id/dynamicPrice"
             android:textColor="#fff"
             android:background="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:text="Non hai prenotato"
+            android:id="@+id/bookedFeedback"
+            android:visibility="gone"
+            android:layout_below="@+id/bookButton"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimaryDark"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Torna alla home"
+            android:id="@+id/homeButton"
+            android:layout_below="@+id/bookedFeedback"
+            android:visibility="gone"
+            android:textColor="#fff"
+            android:background="@color/colorPrimaryDark"/>
 
     </RelativeLayout>
 </ScrollView>
