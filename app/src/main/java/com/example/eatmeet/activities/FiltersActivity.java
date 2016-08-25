@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.appyvet.rangebar.RangeBar;
 import com.example.eatmeet.EatMeetApp;
@@ -427,6 +428,8 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     private void retrieveCategories(){
+        Visibility.makeVisible(findViewById(R.id.loadingBarC));
+        Visibility.makeVisible(findViewById(R.id.loadingBarContainerC));
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         CategoryDAO categoryDAO = EatMeetApp.getDaoFactory().getCategoryDAO();
 
@@ -434,11 +437,17 @@ public class FiltersActivity extends AppCompatActivity {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                Visibility.makeInvisible(findViewById(R.id.loadingBarC));
+                Visibility.makeInvisible(findViewById(R.id.loadingBarContainerC));
                 Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
+                Visibility.makeVisible(findViewById(R.id.loadingBarContainerC));
+                Visibility.makeVisible(findViewById(R.id.messagesLabelC));
+                (findViewById(R.id.loadingBarC)).setVisibility(View.INVISIBLE);
+                ((TextView) findViewById(R.id.messagesLabelC)).setText(R.string.network_error);
                 Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
@@ -454,6 +463,8 @@ public class FiltersActivity extends AppCompatActivity {
     }
 
     private void retrieveRestaurants(){
+        Visibility.makeVisible(findViewById(R.id.loadingBarR));
+        Visibility.makeVisible(findViewById(R.id.loadingBarContainerR));
         BackendStatusManager backendStatusManager = new BackendStatusManager();
         RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
 
@@ -461,11 +472,17 @@ public class FiltersActivity extends AppCompatActivity {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                Visibility.makeInvisible(findViewById(R.id.loadingBarR));
+                Visibility.makeInvisible(findViewById(R.id.loadingBarContainerR));
                 Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
             }
 
             @Override
             public void onFailure(Object response, Integer code) {
+                Visibility.makeVisible(findViewById(R.id.loadingBarContainerR));
+                Visibility.makeVisible(findViewById(R.id.messagesLabelR));
+                (findViewById(R.id.loadingBarR)).setVisibility(View.INVISIBLE);
+                ((TextView) findViewById(R.id.messagesLabelR)).setText(R.string.network_error);
                 Logger.getLogger(FiltersActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
