@@ -371,7 +371,13 @@ public class EventActivity extends AppCompatActivity {
     /*add action for back button*/
     @Override
     public boolean onSupportNavigateUp(){
+        /*
         finish();
+        */
+        Intent intent = new Intent(EventActivity.this, MainActivity.class);
+        intent.putExtra("destination", "1");
+        startActivity(intent);
+
         return true;
     }
 }
