@@ -249,13 +249,21 @@ public class EventActivity extends AppCompatActivity {
                     Visibility.makeVisible(actual_price);
 
                     final RangeBar pricesBar = (RangeBar) findViewById(R.id.pricesBar);
+                    pricesBar.setEnabled(false);
+                    pricesBar.setClickable(false);
                     float maxPrice = event.getMaxPrice().floatValue();
                     float minPrice = event.getMinPrice().floatValue();
                     final TextView minPeoplePrice = (TextView) findViewById(R.id.minPeoplePrice);
-                    minPeoplePrice.setText(Float.toString(minPrice) + " " + Float.toString(event.getMinPeople()));
+                    minPeoplePrice.setText("MIN: " + Float.toString(minPrice) + "€ " + event.getMinPeople() + " persone");
                     final TextView maxPeoplePrice = (TextView) findViewById(R.id.maxPeoplePrice);
-                    maxPeoplePrice.setText(Float.toString(maxPrice) + " " + Float.toString(event.getMaxPeople()));
+                    maxPeoplePrice.setText("MAX: " + Float.toString(maxPrice) + "€ " + event.getMaxPeople() + " persone");
                     float actualPrice = event.getActualPrice().floatValue();
+                    final int actualPeople = event.getParticipantsCount();
+                    final TextView priceRepresentationSummary = (TextView) findViewById(R.id.priceRepresentationSummary);
+                    final TextView priceRepresentationChangingSummary = (TextView) findViewById(R.id.priceRepresentationChangingSummary);
+                    priceRepresentationSummary.setText("Attualmente: " + actualPrice + "€ per " + actualPeople + " persone" );
+                    priceRepresentationChangingSummary.setText("Prezzo per " + actualPeople + " persone: circa " + actualPrice + "€" );
+                    Visibility.makeInvisible(priceRepresentationChangingSummary);
                     pricesBar.setTickInterval((maxPrice-minPrice)/6);
                     pricesBar.setTickStart(minPrice);
                     pricesBar.setTickEnd(maxPrice);
@@ -263,6 +271,13 @@ public class EventActivity extends AppCompatActivity {
                     pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
                         @Override
                         public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            long newActualPeople = Math.round(Math.random()*100);//TODO: ask server for new people count instead of random
+                            String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
+                            if(newActualPeople > actualPeople) {
+                                estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";
+                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_SHORT).show();
+                            }
+                            priceRepresentationChangingSummary.setText(estimate);
                         }
                     });
                 }
