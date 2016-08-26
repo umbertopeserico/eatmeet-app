@@ -52,6 +52,7 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
+                intent.putExtra("destination", "1");
                 startActivity(intent);
             }
         });
