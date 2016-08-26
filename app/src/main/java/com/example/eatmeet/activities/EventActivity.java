@@ -261,10 +261,11 @@ public class EventActivity extends AppCompatActivity {
                     Visibility.makeInvisible(priceRepresentationChangingSummary);
                     //pricesBar.setTickInterval((maxPrice-minPrice)/6);
                     //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPeopleMinPrice()));
-                    pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPricesArray().size()));
+                    //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPricesArray().size()));
+                    pricesBar.setTickInterval(0.01f);
                     pricesBar.setTickStart(minPrice);
                     pricesBar.setTickEnd(maxPrice);
-                    pricesBar.setRangePinsByValue(minPrice, Math.round(actualPrice));//funziona!
+                    pricesBar.setRangePinsByValue(minPrice, actualPrice);
                     pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
                         @Override
                         public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
