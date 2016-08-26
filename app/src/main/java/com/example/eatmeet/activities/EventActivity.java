@@ -1,11 +1,7 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -254,9 +249,9 @@ public class EventActivity extends AppCompatActivity {
                     float maxPrice = event.getMaxPrice().floatValue();
                     float minPrice = event.getMinPrice().floatValue();
                     final TextView minPeoplePrice = (TextView) findViewById(R.id.minPeoplePrice);
-                    minPeoplePrice.setText("MIN: " + Float.toString(minPrice) + "€ " + event.getMinPeople() + " persone");
+                    minPeoplePrice.setText("MIN: " + Float.toString(minPrice) + "€ " + event.getPeopleMinPrice() + "+ persone");// + event.getMinPeople() + "- persone");
                     final TextView maxPeoplePrice = (TextView) findViewById(R.id.maxPeoplePrice);
-                    maxPeoplePrice.setText("MAX: " + Float.toString(maxPrice) + "€ " + event.getMaxPeople() + " persone");
+                    maxPeoplePrice.setText("MAX: " + Float.toString(maxPrice) + "€ ");
                     float actualPrice = event.getActualPrice().floatValue();
                     final int actualPeople = event.getParticipantsCount();
                     final TextView priceRepresentationSummary = (TextView) findViewById(R.id.priceRepresentationSummary);
@@ -264,14 +259,17 @@ public class EventActivity extends AppCompatActivity {
                     priceRepresentationSummary.setText("Attualmente: " + actualPrice + "€ per " + actualPeople + " persone" );
                     priceRepresentationChangingSummary.setText("Prezzo per " + actualPeople + " persone: circa " + actualPrice + "€" );
                     Visibility.makeInvisible(priceRepresentationChangingSummary);
-                    pricesBar.setTickInterval((maxPrice-minPrice)/6);
+                    //pricesBar.setTickInterval((maxPrice-minPrice)/6);
+                    //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPeopleMinPrice()));
+                    //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPricesArray().size()));
+                    pricesBar.setTickInterval(0.01f);
                     pricesBar.setTickStart(minPrice);
                     pricesBar.setTickEnd(maxPrice);
-                    pricesBar.setRangePinsByValue(minPrice, actualPrice);//funziona!
+                    pricesBar.setRangePinsByValue(minPrice, actualPrice);
                     pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
                         @Override
                         public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                            long newActualPeople = Math.round(Math.random()*100);//TODO: ask server for new people count instead of random
+                            long newActualPeople = Math.round(Math.random()*100);
                             String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
                             if(newActualPeople > actualPeople) {
                                 estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";

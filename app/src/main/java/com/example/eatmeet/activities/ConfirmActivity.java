@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activitiestest.EventParticipationTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
@@ -32,6 +34,10 @@ import java.util.logging.Logger;
 
 public class ConfirmActivity extends AppCompatActivity {
 
+    private Event currentEvent;
+    private int eventId = 1;
+    private int bookedPeople;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +48,11 @@ public class ConfirmActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        int eventId = 1;
         if(extras!=null) {
             eventId = extras.getInt("id");
+            if(extras.getString("bookedPeople")!=null){
+                bookedPeople = extras.getInt("bookedPeople");
+            }
         }
 
         Button homeButton = (Button) findViewById(R.id.homeButton);
@@ -57,30 +65,6 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
 
-        final Button bookButton = (Button) findViewById(R.id.bookButton);
-        bookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
-                Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
-                //TODO: fai la prenotazione
-                Context context = getApplicationContext();
-                CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
-                bookedFeedback.setText(text);
-                Visibility.makeVisible(bookedFeedback);
-                Visibility.makeVisible(findViewById(R.id.homeButton));
-                toast.show();
-
-                bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
-                bookButton.setEnabled(false);
-                findViewById(R.id.spinnerPeople).setEnabled(false);
-            }
-        });
-
         final EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
         Visibility.makeVisible(findViewById(R.id.loadingBar));
         Visibility.makeVisible(findViewById(R.id.loadingBarContainer));
@@ -89,12 +73,13 @@ public class ConfirmActivity extends AppCompatActivity {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                currentEvent = (Event) response;
                 Visibility.makeInvisible(findViewById(R.id.loadingBar));
                 Visibility.makeInvisible(findViewById(R.id.loadingBarContainer));
                 Visibility.makeVisible(findViewById(R.id.content_confirm));
                 final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);// Array of choices
                 List<Integer> numberPeopleList = new ArrayList<>();
-                for(int i = 1; i <= ((Event) response).getMaxPeople() - ((Event) response).getParticipantsCount(); i++){
+                for(int i = 1; i <= (currentEvent.getMaxPeople() - currentEvent.getParticipantsCount()); i++){
                     numberPeopleList.add(i);
                 }
                 ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, numberPeopleList);
@@ -125,11 +110,69 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
         eventDAO.getEvent(eventId,backendStatusManager);
+
+    final Button bookButton = (Button) findViewById(R.id.bookButton);
+        if (EatMeetApp.getCurrentUser() != null){
+            bookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
+                    Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+
+                    EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+                    BackendStatusManager eventParticipationBSM = new BackendStatusManager();
+                    eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
+                        @Override
+                        public void onSuccess(Object response, Integer code) {
+                            CharSequence message = "Prenotazione effettuata correttamente";
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Object response, Integer code) {
+                            CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    eventDAO.addParticipation(currentEvent, bookedPeople, eventParticipationBSM);
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
+                    bookedFeedback.setText(text);
+                    Visibility.makeVisible(bookedFeedback);
+                    Visibility.makeVisible(findViewById(R.id.homeButton));
+                    toast.show();
+
+                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
+                    bookButton.setEnabled(false);
+                    findViewById(R.id.spinnerPeople).setEnabled(false);
+                }
+            });
+        } else {
+            bookButton.setText("ACCEDI PER PRENOTARE");
+            bookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
+                    Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                    Intent intent = new Intent(ConfirmActivity.this, SignInActivity.class);
+                    intent.putExtra("from", "ConfirmActivity");
+                    intent.putExtra("eventId", eventId);
+                    intent.putExtra("bookedPeople", bookedPeople);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void changePeopleNumber(int peopleNumber){
-        DecimalFormat df = new DecimalFormat("#.##");
-        String estimate = df.format(Math.random()*10) + "€ a persona se prenoti per " + peopleNumber + " persone.";//TODO
+        Integer newPosition = (currentEvent.getParticipantsCount()-1)+peopleNumber;
+        Double newPrice = currentEvent.getPricesArray().get(newPosition);
+        String estimate = newPrice + "€ a persona se prenoti per " + peopleNumber + " persone.";
         TextView dynamicPrice = (TextView) findViewById(R.id.dynamicPrice);
         dynamicPrice.setText(estimate);
         Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_SHORT).show();
@@ -137,7 +180,12 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
+        /*
         finish();
+        */
+        Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);
+        intent.putExtra("id", eventId);
+        startActivity(intent);
         return true;
     }
 }
