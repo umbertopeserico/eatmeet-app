@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
             if(extras.getString("from").equals("ConfirmActivity")){
                 from = extras.getString("from");
                 System.out.println("from confirm activity");
-                eventId = extras.getInt("eventId");
+                eventId = extras.getInt("id");
                 bookedPeople = extras.getInt("bookedPeople");
                 String loginToBook = "Dopo la registrazione potrai completare la prenotazione all'evento";
                 Toast.makeText(SignUpActivity.this, loginToBook, Toast.LENGTH_LONG).show();

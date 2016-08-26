@@ -118,39 +118,42 @@ public class ConfirmActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
-                    Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                    findViewById(R.id.spinnerPeople).setEnabled(false);
+                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
+                    bookButton.setEnabled(false);
 
                     EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
                     BackendStatusManager eventParticipationBSM = new BackendStatusManager();
                     eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
                         @Override
                         public void onSuccess(Object response, Integer code) {
+
+                            Context context = getApplicationContext();
+                            Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                            CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
+                            bookedFeedback.setText(text);
+                            Visibility.makeVisible(bookedFeedback);
+                            Visibility.makeVisible(findViewById(R.id.homeButton));
+                            toast.show();
+
                             CharSequence message = "Prenotazione effettuata correttamente";
                             Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onFailure(Object response, Integer code) {
+                            findViewById(R.id.spinnerPeople).setEnabled(true);
+                            bookButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                            bookButton.setEnabled(true);
                             CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
                             Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                     });
                     eventDAO.addParticipation(currentEvent, bookedPeople, eventParticipationBSM);
-
-                    Context context = getApplicationContext();
-                    CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
-                    bookedFeedback.setText(text);
-                    Visibility.makeVisible(bookedFeedback);
-                    Visibility.makeVisible(findViewById(R.id.homeButton));
-                    toast.show();
-
-                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
-                    bookButton.setEnabled(false);
-                    findViewById(R.id.spinnerPeople).setEnabled(false);
                 }
             });
         } else {
