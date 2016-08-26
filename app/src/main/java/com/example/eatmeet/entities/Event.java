@@ -12,7 +12,7 @@ public class Event extends AbstractEntity implements Serializable{
     private Date schedule;
     private Integer maxPeople;
     private Integer minPeople;
-    private Integer minPricePeople;
+    private Integer peopleMinPrice;
     private Double maxPrice;
     private Double actualPrice;
     private Double minPrice;
@@ -106,14 +106,14 @@ public class Event extends AbstractEntity implements Serializable{
         this.getCs().firePropertyChange("minPeople",oldValue, min_people);
     }
 
-    public Integer getMinPricePeople() {
-        return minPricePeople;
+    public Integer getPeopleMinPrice() {
+        return peopleMinPrice;
     }
 
-    public void setMinPricePeople(Integer min_price_people) {
-        Integer oldValue = this.minPricePeople;
-        this.minPricePeople = min_price_people;
-        this.getCs().firePropertyChange("minPricePeople",oldValue, min_price_people);
+    public void setPeopleMinPrice(Integer min_price_people) {
+        Integer oldValue = this.peopleMinPrice;
+        this.peopleMinPrice = min_price_people;
+        this.getCs().firePropertyChange("peopleMinPrice",oldValue, min_price_people);
     }
 
     public Double getMaxPrice() {
