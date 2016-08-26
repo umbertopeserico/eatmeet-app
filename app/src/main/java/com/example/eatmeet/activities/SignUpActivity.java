@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String loginToBook = "Dopo la registrazione potrai completare la prenotazione all'evento";
                 Toast.makeText(SignUpActivity.this, loginToBook, Toast.LENGTH_LONG).show();
                 ((TextView) findViewById(R.id.loginToBookMessage)).setText(loginToBook);
-                ((TextView) findViewById(R.id.loginToBookMessage)).setTextColor(Color.parseColor("#ff0000"));
+                ((TextView) findViewById(R.id.loginToBookMessage)).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 Visibility.makeVisible(findViewById(R.id.loginToBookMessage));
             }
         }

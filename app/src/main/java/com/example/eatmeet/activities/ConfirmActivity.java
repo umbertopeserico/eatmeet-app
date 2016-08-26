@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activitiestest.EventParticipationTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
@@ -32,6 +34,7 @@ import java.util.logging.Logger;
 
 public class ConfirmActivity extends AppCompatActivity {
 
+    private Event currentEvent;
     private int eventId = 1;
     private int bookedPeople;
 
@@ -70,12 +73,13 @@ public class ConfirmActivity extends AppCompatActivity {
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                currentEvent = (Event) response;
                 Visibility.makeInvisible(findViewById(R.id.loadingBar));
                 Visibility.makeInvisible(findViewById(R.id.loadingBarContainer));
                 Visibility.makeVisible(findViewById(R.id.content_confirm));
                 final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);// Array of choices
                 List<Integer> numberPeopleList = new ArrayList<>();
-                for(int i = 1; i <= ((Event) response).getMaxPeople() - ((Event) response).getParticipantsCount(); i++){
+                for(int i = 1; i <= (currentEvent.getMaxPeople() - currentEvent.getParticipantsCount()); i++){
                     numberPeopleList.add(i);
                 }
                 ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, numberPeopleList);
@@ -114,7 +118,23 @@ public class ConfirmActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
                     Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
-                    //TODO: fai la prenotazione
+
+                    EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+                    BackendStatusManager eventParticipationBSM = new BackendStatusManager();
+                    eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
+                        @Override
+                        public void onSuccess(Object response, Integer code) {
+                            CharSequence message = "Prenotazione effettuata correttamente";
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Object response, Integer code) {
+                            CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    eventDAO.addParticipation(currentEvent, bookedPeople, eventParticipationBSM);
 
                     Context context = getApplicationContext();
                     CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
@@ -127,7 +147,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     Visibility.makeVisible(findViewById(R.id.homeButton));
                     toast.show();
 
-                    bookButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
                     bookButton.setEnabled(false);
                     findViewById(R.id.spinnerPeople).setEnabled(false);
                 }
@@ -159,7 +179,12 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
+        /*
         finish();
+        */
+        Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);
+        intent.putExtra("id", eventId);
+        startActivity(intent);
         return true;
     }
 }
