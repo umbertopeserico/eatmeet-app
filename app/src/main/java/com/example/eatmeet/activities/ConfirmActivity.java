@@ -82,10 +82,16 @@ public class ConfirmActivity extends AppCompatActivity {
         });
 
         final EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+        Visibility.makeVisible(findViewById(R.id.loadingBar));
+        Visibility.makeVisible(findViewById(R.id.loadingBarContainer));
+        Visibility.makeInvisible(findViewById(R.id.content_confirm));
         final BackendStatusManager backendStatusManager = new BackendStatusManager();
         backendStatusManager.setBackendStatusListener(new BackendStatusListener() {
             @Override
             public void onSuccess(Object response, Integer code) {
+                Visibility.makeInvisible(findViewById(R.id.loadingBar));
+                Visibility.makeInvisible(findViewById(R.id.loadingBarContainer));
+                Visibility.makeVisible(findViewById(R.id.content_confirm));
                 final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);// Array of choices
                 List<Integer> numberPeopleList = new ArrayList<>();
                 for(int i = 1; i <= ((Event) response).getMaxPeople() - ((Event) response).getParticipantsCount(); i++){
@@ -108,6 +114,14 @@ public class ConfirmActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Object response, Integer code) {
+                Visibility.makeInvisible(findViewById(R.id.loadingBar));
+                Visibility.makeVisible(findViewById(R.id.loadingBarContainer));
+                Visibility.makeVisible(findViewById(R.id.messagesLabel));
+                Visibility.makeInvisible(findViewById(R.id.content_confirm));
+                if(response==null) {
+                    ((TextView) findViewById(R.id.messagesLabel)).setText(getString(R.string.network_error));
+                    Toast.makeText(ConfirmActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         eventDAO.getEvent(eventId,backendStatusManager);
