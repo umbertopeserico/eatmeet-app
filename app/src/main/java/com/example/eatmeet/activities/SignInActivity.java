@@ -33,6 +33,9 @@ public class SignInActivity extends AppCompatActivity {
     private TextView errorText;
     private ProgressBar loadingBar;
 
+    private int eventId;
+    private int bookedPeople;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,19 @@ public class SignInActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            if(extras.getString("from").equals("ConfirmActivity")){
+                System.out.println("from confirm activity");
+                eventId = extras.getInt("eventId");
+                bookedPeople = extras.getInt("bookedPeople");
+                String loginToBook = "Dopo il login potrai completare la prenotazione all'evento";
+                Toast.makeText(SignInActivity.this, loginToBook, Toast.LENGTH_SHORT).show();
+                ((TextView) findViewById(R.id.loginToBookMessage)).setText(loginToBook);
+                Visibility.makeVisible(findViewById(R.id.loginToBookMessage));
+            }
+        }
 
         // Inizializzo le variabili di istanza con i riferimenti della vists
         emailField = (EditText) findViewById(R.id.emailField);

@@ -32,6 +32,8 @@ import java.util.logging.Logger;
 
 public class ConfirmActivity extends AppCompatActivity {
 
+    private int eventId = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,6 @@ public class ConfirmActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        int eventId = 1;
         if(extras!=null) {
             eventId = extras.getInt("id");
         }
@@ -54,30 +55,6 @@ public class ConfirmActivity extends AppCompatActivity {
                 Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
                 intent.putExtra("destination", "1");
                 startActivity(intent);
-            }
-        });
-
-        final Button bookButton = (Button) findViewById(R.id.bookButton);
-        bookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
-                Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
-                //TODO: fai la prenotazione
-                Context context = getApplicationContext();
-                CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
-                bookedFeedback.setText(text);
-                Visibility.makeVisible(bookedFeedback);
-                Visibility.makeVisible(findViewById(R.id.homeButton));
-                toast.show();
-
-                bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
-                bookButton.setEnabled(false);
-                findViewById(R.id.spinnerPeople).setEnabled(false);
             }
         });
 
@@ -125,6 +102,47 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
         eventDAO.getEvent(eventId,backendStatusManager);
+
+    final Button bookButton = (Button) findViewById(R.id.bookButton);
+        if (EatMeetApp.getCurrentUser() != null){
+            bookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
+                    Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                    //TODO: fai la prenotazione
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
+                    bookedFeedback.setText(text);
+                    Visibility.makeVisible(bookedFeedback);
+                    Visibility.makeVisible(findViewById(R.id.homeButton));
+                    toast.show();
+
+                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
+                    bookButton.setEnabled(false);
+                    findViewById(R.id.spinnerPeople).setEnabled(false);
+                }
+            });
+        } else {
+            bookButton.setText("ACCEDI PER PRENOTARE");
+            bookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
+                    Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                    Intent intent = new Intent(ConfirmActivity.this, SignInActivity.class);
+                    intent.putExtra("from", "ConfirmActivity");
+                    intent.putExtra("eventId", eventId);
+                    intent.putExtra("bookedPeople", bookedPeople);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void changePeopleNumber(int peopleNumber){
