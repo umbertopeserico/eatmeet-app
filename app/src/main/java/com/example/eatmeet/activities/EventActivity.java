@@ -92,6 +92,16 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        unbookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventActivity.this, ConfirmActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("id", newEventId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadData(){
