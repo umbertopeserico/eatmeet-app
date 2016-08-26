@@ -3,23 +3,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/sidebar_my_events"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/sidebar_my_events" />
+        <!--android:icon="@drawable/ic_menu_camera"-->
 
         <item
             android:id="@+id/sidebar_account_settings"
-            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/sidebar_account_settings" />
+        <!--android:icon="@drawable/ic_menu_gallery"-->
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/sidebar_signout"
-            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/sidebar_signout" />
+        <!--android:icon="@drawable/ic_menu_slideshow"-->
         <item
             android:id="@+id/sidebar_privacy_policy"
-            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/sidebar_privacy_policy" />
+        <!--android:icon="@drawable/ic_menu_slideshow"-->
     </group>
 </menu>
