@@ -1,7 +1,11 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appyvet.rangebar.RangeBar;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
@@ -67,6 +73,25 @@ public class EventActivity extends AppCompatActivity {
         initViewElements();
         setActions();
         loadData();
+
+        /*
+        final SeekBar pricesBar = (SeekBar) findViewById(R.id.pricesBar);
+        pricesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        */
 
         /*
         myNewEvent.addPropertyChangeListener(new PropertyChangeListener() {
@@ -222,6 +247,39 @@ public class EventActivity extends AppCompatActivity {
                 if (actual_price != null) {
                     actual_price.setText("Prezzo: " + event.getActualPrice().toString() + "€");
                     Visibility.makeVisible(actual_price);
+
+                    final RangeBar pricesBar = (RangeBar) findViewById(R.id.pricesBar);
+                    pricesBar.setEnabled(false);
+                    pricesBar.setClickable(false);
+                    float maxPrice = event.getMaxPrice().floatValue();
+                    float minPrice = event.getMinPrice().floatValue();
+                    final TextView minPeoplePrice = (TextView) findViewById(R.id.minPeoplePrice);
+                    minPeoplePrice.setText("MIN: " + Float.toString(minPrice) + "€ " + event.getMinPeople() + " persone");
+                    final TextView maxPeoplePrice = (TextView) findViewById(R.id.maxPeoplePrice);
+                    maxPeoplePrice.setText("MAX: " + Float.toString(maxPrice) + "€ " + event.getMaxPeople() + " persone");
+                    float actualPrice = event.getActualPrice().floatValue();
+                    final int actualPeople = event.getParticipantsCount();
+                    final TextView priceRepresentationSummary = (TextView) findViewById(R.id.priceRepresentationSummary);
+                    final TextView priceRepresentationChangingSummary = (TextView) findViewById(R.id.priceRepresentationChangingSummary);
+                    priceRepresentationSummary.setText("Attualmente: " + actualPrice + "€ per " + actualPeople + " persone" );
+                    priceRepresentationChangingSummary.setText("Prezzo per " + actualPeople + " persone: circa " + actualPrice + "€" );
+                    Visibility.makeInvisible(priceRepresentationChangingSummary);
+                    pricesBar.setTickInterval((maxPrice-minPrice)/6);
+                    pricesBar.setTickStart(minPrice);
+                    pricesBar.setTickEnd(maxPrice);
+                    pricesBar.setRangePinsByValue(minPrice, actualPrice);//funziona!
+                    pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+                        @Override
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            long newActualPeople = Math.round(Math.random()*100);//TODO: ask server for new people count instead of random
+                            String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
+                            if(newActualPeople > actualPeople) {
+                                estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";
+                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_SHORT).show();
+                            }
+                            priceRepresentationChangingSummary.setText(estimate);
+                        }
+                    });
                 }
 
                 if (menu != null) {

@@ -86,6 +86,118 @@
         android:layout_alignLeft="@+id/restaurant"
         android:layout_centerHorizontal="true" />
 
+    <!--
+    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dsb_min="2"
+        app:dsb_max="15"
+        android:id="@+id/pricesBar"
+        android:layout_below="@+id/price"
+        dsb_indicatorPopupEnabled="true"
+        />-->
+    <LinearLayout
+        android:id="@+id/priceRepresentation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_below="@+id/price">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_below="@+id/pricesBar"
+            android:layout_width="200dp"
+            android:background="@drawable/oval"
+            android:text="minPeoplePrice"
+            android:layout_height="100dp"
+            android:id="@+id/minPeoplePrice"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/pricesBarWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="3">
+            <com.appyvet.rangebar.RangeBar
+                android:focusable="false"
+                android:clickable="false"
+                android:saveEnabled="false"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/pricesBar"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                custom:rangeBar="false"
+                custom:connectingLineColor="@color/colorPrimary"
+                custom:selectorColor="@color/colorPrimaryDark"
+                custom:rangeBarColor="@color/colorPrimaryDark"
+                custom:pinColor="@color/colorPrimary"
+                custom:selectorSize="10dp"
+                custom:tickStart="0"
+                custom:tickEnd="200"
+                custom:temporaryPins="false"
+                custom:tickInterval="5"
+                custom:tickColor="@color/colorPrimaryDark"
+                custom:tickHeight="2dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                custom:pinMaxFont="15dp"
+                custom:pinRadius="20dp"
+                android:layout_weight="1"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceRepresentationSummaryWrapper"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"><!--
+                android:layout_below="@+id/priceRepresentation"-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/priceRepresentationSummary"
+                    android:textStyle="bold"
+                    android:textSize="16dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceRepresentationChangingSummaryWrapper"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"><!--
+                android:layout_below="@+id/priceRepresentationSummaryWrapper"-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/background_dark"
+                    android:id="@+id/priceRepresentationChangingSummary"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_below="@+id/pricesBar"
+            android:layout_gravity="center_vertical"
+            android:layout_width="200dp"
+            android:background="@drawable/oval"
+            android:text="maxPeoplePrice"
+            android:layout_height="100dp"
+            android:id="@+id/maxPeoplePrice"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+    </LinearLayout>
+        <!--<SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price"
+        android:id="@+id/pricesBar"
+        />-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,7 +207,7 @@
         android:shape="rectangle"
         android:radius="10dp"
         android:id="@+id/book"
-        android:layout_below="@+id/price"
+        android:layout_below="@+id/priceRepresentation"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
