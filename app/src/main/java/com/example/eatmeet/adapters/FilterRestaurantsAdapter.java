@@ -41,12 +41,13 @@ public class FilterRestaurantsAdapter extends ArrayAdapter {
                 (Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mListRowLayout, null);
 
-        TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItemFilterRestaurant);
+        //TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItemFilterRestaurant);
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxListItemFilterRestaurant);
         final Restaurant restaurant = mItems.get(position);
 
-        listItem.setText(restaurant.getName());
+        //listItem.setText(restaurant.getName());
         checkBox.setId(restaurant.getId());
+        checkBox.setText(restaurant.getName());
         if(EatMeetApp.getFiltersManager().getSelectedRestaurants().contains(restaurant)){
             checkBox.setChecked(true);
             if(!mSelectedRestaurants.contains(restaurant)) {

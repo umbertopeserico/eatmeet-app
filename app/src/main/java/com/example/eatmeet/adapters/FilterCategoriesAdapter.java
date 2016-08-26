@@ -47,12 +47,13 @@ public class FilterCategoriesAdapter extends ArrayAdapter {
                 (Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mListRowLayout, null);
 
-        TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItemFilterCategory);
+        //TextView listItem = (TextView) convertView.findViewById(R.id.textViewListItemFilterCategory);
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxListItemFilterCategory);
         final Category category = mItems.get(position);
 
-        listItem.setText(category.getName());
+        //listItem.setText(category.getName());
         checkBox.setId(category.getId());
+        checkBox.setText(category.getName());
         if(EatMeetApp.getFiltersManager().getSelectedCategories().contains(category)){
             checkBox.setChecked(true);
             if(!mSelectedCategories.contains(category)) {
