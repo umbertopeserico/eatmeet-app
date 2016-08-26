@@ -20,6 +20,7 @@ public class Event extends AbstractEntity implements Serializable{
     private Integer menuId;
     private Integer participantsCount;
     private List<Photo> photos;
+    private List<User> participants;
 
     private Menu menu;
     private Restaurant restaurant;
@@ -184,6 +185,14 @@ public class Event extends AbstractEntity implements Serializable{
         List<EventParticipation> oldValue = eventParticipations;
         this.eventParticipations = eventParticipations;
         this.getCs().firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
     }
 
     @Override

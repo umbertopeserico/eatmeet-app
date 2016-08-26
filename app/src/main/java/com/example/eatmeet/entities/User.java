@@ -19,6 +19,7 @@ public class User extends AbstractEntity implements Serializable{
     private String provider;
     private String uid;
     private List<EventParticipation> eventParticipations;
+    private List<Event> events;
 
     public String getName() {
         return name;
@@ -118,6 +119,14 @@ public class User extends AbstractEntity implements Serializable{
         List<EventParticipation> oldValue = eventParticipations;
         this.eventParticipations = eventParticipations;
         this.getCs().firePropertyChange("eventParticipations", oldValue, this.eventParticipations);
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
