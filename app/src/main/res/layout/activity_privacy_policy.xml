@@ -9,4 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.PrivacyPolicyActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Here at Free Privacy Policy, we've helped more than five hundred thousand (500,000) website owners create easy-to-read, highly effective, custom privacy policies.
+
+Our intuitive, easy-to-use system allows you to create a custom privacy policy using our free website privacy policy generator.
+
+All you do is answer a few simple questions about your business and your website privacy policy is created and ready to add to your site. In fact for most people it takes less than 15 minutes.
+
+Our Privacy Policy Creator includes several compliance verification tools to help you effectively protect your customers privacy, while limiting your liability, all while adhering to the most notable state and federal privacy laws and 3rd party initiatives."/>
+
 </RelativeLayout>
