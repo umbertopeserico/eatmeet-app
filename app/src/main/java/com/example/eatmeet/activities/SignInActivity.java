@@ -94,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.w("CURRENT USER: ", ""+ response.toString());
 
                                 Intent intent;
-                                if(from.equals("ConfirmActivity")) {
+                                if(from != null && from.equals("ConfirmActivity")) {
                                     intent = new Intent(SignInActivity.this, ConfirmActivity.class);
                                     intent.putExtra("from", "SignInActivity");
                                     intent.putExtra("id", eventId);

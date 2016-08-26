@@ -46,6 +46,7 @@ public class EventActivity extends AppCompatActivity {
 
     private int newEventId;
     private int eventId;
+    private Event event;
 
     private ProgressBar loadingBar;
     private LinearLayout loadingBarContainer;
@@ -59,7 +60,6 @@ public class EventActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         eventId = 1;
         if(extras!=null) {
-            eventId = extras.getInt("id");
             eventId = extras.getInt("id");
         }
         newEventId = eventId;
@@ -91,10 +91,28 @@ public class EventActivity extends AppCompatActivity {
         unbookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EventActivity.this, ConfirmActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("id", newEventId);
-                startActivity(intent);
+                EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+                BackendStatusManager eventParticipationBSM = new BackendStatusManager();
+                eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        CharSequence message = "Annullamento effettuata correttamente";
+                        Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(EventActivity.this, EventActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("id", newEventId);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        CharSequence message = "Errore nell'annullamento della prenotazione. Si prega di riprovare";
+                        Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                });
+                Event event = new Event();
+                event.setId(newEventId);
+                eventDAO.removeParticipation(event, eventParticipationBSM);
             }
         });
     }
@@ -108,7 +126,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object response, Integer code) {
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
-                Event event = (Event) response;
+                event = (Event) response;
 
                 System.out.println("PARTECIPANTI:" + event.getParticipants());
                 if(EatMeetApp.getCurrentUser() == null) {
@@ -193,7 +211,7 @@ public class EventActivity extends AppCompatActivity {
                     //pricesBar.setTickInterval((maxPrice-minPrice)/6);
                     //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPeopleMinPrice()));
                     //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPricesArray().size()));
-                    pricesBar.setTickInterval(0.01f);
+                    pricesBar.setTickInterval(0.10f);
                     pricesBar.setTickStart(minPrice);
                     pricesBar.setTickEnd(maxPrice);
                     pricesBar.setRangePinsByValue(minPrice, actualPrice);
