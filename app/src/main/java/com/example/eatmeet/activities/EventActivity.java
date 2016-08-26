@@ -40,11 +40,13 @@ public class EventActivity extends AppCompatActivity {
     private TextView actual_price;
     private TextView menu;
     private Button bookButton;
+    private Button unbookButton;
     private Toolbar toolbar;
     private ImageView eventImage;//final ImageView image;
 
     private int newEventId;
     private int eventId;
+    private Event event;
 
     private ProgressBar loadingBar;
     private LinearLayout loadingBarContainer;
@@ -59,7 +61,6 @@ public class EventActivity extends AppCompatActivity {
         eventId = 1;
         if(extras!=null) {
             eventId = extras.getInt("id");
-            eventId = extras.getInt("id");
         }
         newEventId = eventId;
 
@@ -69,105 +70,8 @@ public class EventActivity extends AppCompatActivity {
         setActions();
         loadData();
 
-        /*
-        final SeekBar pricesBar = (SeekBar) findViewById(R.id.pricesBar);
-        pricesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        */
-
-        /*
-        myNewEvent.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-
-                switch (event.getPropertyName()) {
-                    case "title":
-                        TextView title = (TextView) findViewById(R.id.titleEvent);//textViewEvent
-                        if (title != null) {
-                            title.setText(event.getNewValue().toString());
-                        }
-                        break;
-                    case "schedule":
-                        System.out.println("SCHEDULE LISTENER WORKING");
-                        TextView scheduleView = (TextView) findViewById(R.id.scheduleEvent);
-                        Date scheduleDate = (Date) event.getNewValue();
-                        String scheduleString="il ";
-                        Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
-                        calendar.setTime(scheduleDate);   // assigns calendar to given date
-                        scheduleString+=calendar.get(Calendar.DAY_OF_MONTH) + "/";
-                        scheduleString+=calendar.get(Calendar.MONTH) + "/";
-                        scheduleString+=calendar.get(Calendar.YEAR) + " alle ";
-                        int hrs = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
-                        int mnts = calendar.get(Calendar.MINUTE); // gets hour in 24h format
-                        String hrsMnts = String.format("%02d:%02d", hrs, mnts);
-                        scheduleString += hrsMnts;
-                        if (scheduleView != null) {
-                            scheduleView.setText(scheduleString);
-                        }
-                        break;
-                    case "restaurant":
-                        System.out.println("restaurant LISTENER WORKING");
-                        TextView address = (TextView) findViewById(R.id.address);
-                        if (address != null) {
-                            String newValue = ((Restaurant) event.getNewValue()).getStreet().toString();
-                            newValue += " - "+((Restaurant) event.getNewValue()).getZipCode().toString();
-                            newValue += " "+((Restaurant) event.getNewValue()).getCity().toString();
-                            newValue += " ("+((Restaurant) event.getNewValue()).getProvince().toString()+")";
-                            address.setText(newValue);
-                        }
-                        TextView restaurant = (TextView) findViewById(R.id.restaurant);
-                        if (restaurant != null) {
-                            String newValue = ((Restaurant) event.getNewValue()).getName().toString();
-                            restaurant.setText(newValue);
-                        }
-                        break;
-                    case "participants_count":
-                        System.out.println("participants LISTENER WORKING");
-                        TextView participants = (TextView) findViewById(R.id.participants_count);
-                        if (participants != null) {
-                            participants.setText("Partecipanti: " + event.getNewValue().toString());
-                        }
-                        break;
-                    case "actual_price":
-                        TextView actual_price = (TextView) findViewById(R.id.price);
-                        if (actual_price != null) {
-                            actual_price.setText("Prezzo: " + event.getNewValue().toString() + "€");
-                        }
-                        break;
-                    case "menu":
-                        TextView menu = (TextView) findViewById(R.id.menu);
-                        if (menu != null) {
-                            menu.setText(((Menu) event.getNewValue()).getTextMenu().toString());
-                        }
-                        break;
-                    case "urlImage":
-                        final ImageView image = (ImageView) findViewById(R.id.eventImage);
-                        new Images(){
-                            @Override public void onPostExecute(Bitmap result){
-                                image.setImageBitmap(result);
-                            }
-                        }.execute((String) event.getNewValue());
-                    default:
-
-                }
-
-            }
-        });
-        */
     }
+
     private void setActions() {
         setSupportActionBar(toolbar);
 
@@ -183,6 +87,34 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        unbookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
+                BackendStatusManager eventParticipationBSM = new BackendStatusManager();
+                eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
+                    @Override
+                    public void onSuccess(Object response, Integer code) {
+                        CharSequence message = "Annullamento effettuata correttamente";
+                        Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(EventActivity.this, EventActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("id", newEventId);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Object response, Integer code) {
+                        CharSequence message = "Errore nell'annullamento della prenotazione. Si prega di riprovare";
+                        Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                });
+                Event event = new Event();
+                event.setId(newEventId);
+                eventDAO.removeParticipation(event, eventParticipationBSM);
+            }
+        });
     }
 
     private void loadData(){
@@ -194,7 +126,24 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object response, Integer code) {
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.INFO, "Connection succeded");
-                Event event = (Event) response;
+                event = (Event) response;
+
+                System.out.println("PARTECIPANTI:" + event.getParticipants());
+                if(EatMeetApp.getCurrentUser() == null) {
+                    Visibility.makeInvisible(unbookButton);
+                    Visibility.makeVisible(bookButton);
+                } else if(event.getParticipants().contains(EatMeetApp.getCurrentUser())) {
+                    Visibility.makeVisible(unbookButton);
+                    Visibility.makeInvisible(bookButton);
+                } else {
+                    Visibility.makeVisible(bookButton);
+                    Visibility.makeInvisible(unbookButton);
+                }
+
+                if(event.getSchedule().before(Calendar.getInstance().getTime())) {
+                    Visibility.makeInvisible(unbookButton);
+                    Visibility.makeInvisible(bookButton);
+                }
 
                 if (title != null) {
                     title.setText(event.getTitle());
@@ -262,7 +211,7 @@ public class EventActivity extends AppCompatActivity {
                     //pricesBar.setTickInterval((maxPrice-minPrice)/6);
                     //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPeopleMinPrice()));
                     //pricesBar.setTickInterval((maxPrice-minPrice)/(event.getPricesArray().size()));
-                    pricesBar.setTickInterval(0.01f);
+                    pricesBar.setTickInterval(0.10f);
                     pricesBar.setTickStart(minPrice);
                     pricesBar.setTickEnd(maxPrice);
                     pricesBar.setRangePinsByValue(minPrice, actualPrice);
@@ -334,6 +283,7 @@ public class EventActivity extends AppCompatActivity {
 
     private void initViewElements() {
         bookButton = (Button) findViewById(R.id.book);
+        unbookButton = (Button) findViewById(R.id.unbook);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         eventImage = (ImageView) findViewById(R.id.eventImage);
         title = (TextView) findViewById(R.id.titleEvent);//textViewEvent
@@ -364,6 +314,7 @@ public class EventActivity extends AppCompatActivity {
         Visibility.makeVisible(loadingBar);
         Visibility.makeVisible(loadingBarContainer);
         Visibility.makeInvisible(messagesLabel);
+
     }
 
     /*add action for back button*/

@@ -113,6 +113,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     final Button bookButton = (Button) findViewById(R.id.bookButton);
         if (EatMeetApp.getCurrentUser() != null){
+            assert bookButton!=null;
             bookButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

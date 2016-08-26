@@ -198,19 +198,37 @@
         android:layout_below="@+id/price"
         android:id="@+id/pricesBar"
         />-->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PREVENTIVO"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        android:shape="rectangle"
-        android:radius="10dp"
-        android:id="@+id/book"
+    <RelativeLayout
+        android:id="@+id/buttons"
         android:layout_below="@+id/priceRepresentation"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PREVENTIVO"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
+            android:shape="rectangle"
+            android:radius="10dp"
+            android:id="@+id/book"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Annulla prenotazione"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
+            android:shape="rectangle"
+            android:radius="10dp"
+            android:id="@+id/unbook"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+    </RelativeLayout>
+
 
     <TextView
         android:layout_marginTop="10dp"
@@ -218,7 +236,7 @@
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/book"
+        android:layout_below="@+id/buttons"
         android:id="@+id/menu_title"
         android:text="Menu:"/>
 

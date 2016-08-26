@@ -95,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Visibility.makeInvisible(loadingBar);
 
                         Intent intent;
-                        if(from.equals("ConfirmActivity")) {
+                        if(from != null && from.equals("ConfirmActivity")) {
                             intent = new Intent(SignUpActivity.this, ConfirmActivity.class);
                             intent.putExtra("from", "SignInActivity");
                             intent.putExtra("id", eventId);
