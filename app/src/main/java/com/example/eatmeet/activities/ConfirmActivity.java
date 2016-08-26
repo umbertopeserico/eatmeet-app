@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 public class ConfirmActivity extends AppCompatActivity {
 
     private int eventId = 1;
+    private int bookedPeople;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class ConfirmActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             eventId = extras.getInt("id");
+            if(extras.getString("bookedPeople")!=null){
+                bookedPeople = extras.getInt("bookedPeople");
+            }
         }
 
         Button homeButton = (Button) findViewById(R.id.homeButton);
@@ -123,7 +127,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     Visibility.makeVisible(findViewById(R.id.homeButton));
                     toast.show();
 
-                    bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
+                    bookButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     bookButton.setEnabled(false);
                     findViewById(R.id.spinnerPeople).setEnabled(false);
                 }

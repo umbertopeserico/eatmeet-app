@@ -1,6 +1,7 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,25 +36,26 @@ public class SignInActivity extends AppCompatActivity {
 
     private int eventId;
     private int bookedPeople;
+    private String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        super.onCreate(savedInstanceState);setContentView(R.layout.activity_sign_in);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             if(extras.getString("from").equals("ConfirmActivity")){
+                from = extras.getString("from");
                 System.out.println("from confirm activity");
                 eventId = extras.getInt("eventId");
                 bookedPeople = extras.getInt("bookedPeople");
                 String loginToBook = "Dopo il login potrai completare la prenotazione all'evento";
-                Toast.makeText(SignInActivity.this, loginToBook, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, loginToBook, Toast.LENGTH_LONG).show();
                 ((TextView) findViewById(R.id.loginToBookMessage)).setText(loginToBook);
+                ((TextView) findViewById(R.id.loginToBookMessage)).setTextColor(Color.parseColor("#ff0000"));
                 Visibility.makeVisible(findViewById(R.id.loginToBookMessage));
             }
         }
@@ -91,7 +93,15 @@ public class SignInActivity extends AppCompatActivity {
                                 EatMeetApp.setCurrentUser(user);
                                 Log.w("CURRENT USER: ", ""+ response.toString());
 
-                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                Intent intent;
+                                if(from.equals("ConfirmActivity")) {
+                                    intent = new Intent(SignInActivity.this, ConfirmActivity.class);
+                                    intent.putExtra("from", "SignInActivity");
+                                    intent.putExtra("id", eventId);
+                                    intent.putExtra("bookedPeople", bookedPeople);
+                                } else {
+                                    intent = new Intent(SignInActivity.this, MainActivity.class);
+                                }
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
@@ -144,6 +154,11 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                if(from.equals("ConfirmActivity")) {
+                    intent.putExtra("from", "ConfirmActivity");
+                    intent.putExtra("id", eventId);
+                    intent.putExtra("bookedPeople", bookedPeople);
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
