@@ -170,8 +170,9 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     private void changePeopleNumber(int peopleNumber){
-        DecimalFormat df = new DecimalFormat("#.##");
-        String estimate = df.format(Math.random()*10) + "€ a persona se prenoti per " + peopleNumber + " persone.";//TODO
+        Integer newPosition = (currentEvent.getParticipantsCount()-1)+peopleNumber;
+        Double newPrice = currentEvent.getPricesArray().get(newPosition);
+        String estimate = newPrice + "€ a persona se prenoti per " + peopleNumber + " persone.";
         TextView dynamicPrice = (TextView) findViewById(R.id.dynamicPrice);
         dynamicPrice.setText(estimate);
         Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_SHORT).show();

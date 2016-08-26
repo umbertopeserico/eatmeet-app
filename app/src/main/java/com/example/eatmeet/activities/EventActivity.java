@@ -271,7 +271,7 @@ public class EventActivity extends AppCompatActivity {
                     pricesBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
                         @Override
                         public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                            long newActualPeople = Math.round(Math.random()*100);//TODO: ask server for new people count instead of random
+                            long newActualPeople = Math.round(Math.random()*100);
                             String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
                             if(newActualPeople > actualPeople) {
                                 estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";
