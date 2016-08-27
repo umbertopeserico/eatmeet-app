@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,17 +95,38 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onSuccess(Object response, Integer code) {
                         Visibility.makeInvisible(loadingBar);
 
-                        Intent intent;
-                        if(from != null && from.equals("ConfirmActivity")) {
-                            intent = new Intent(SignUpActivity.this, ConfirmActivity.class);
-                            intent.putExtra("from", "SignInActivity");
-                            intent.putExtra("id", eventId);
-                            intent.putExtra("bookedPeople", bookedPeople);
-                        } else {
-                            intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        }
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        BackendStatusManager userBSM = new BackendStatusManager();
+                        userBSM.setBackendStatusListener(new BackendStatusListener() {
+                            @Override
+                            public void onSuccess(Object response, Integer code) {
+                                Visibility.makeInvisible(loadingBar);
+                                User user = (User) response;
+                                EatMeetApp.setCurrentUser(user);
+                                Log.w("CURRENT USER: ", ""+ response.toString());
+
+                                Intent intent;
+                                if(from != null && from.equals("ConfirmActivity")) {
+                                    intent = new Intent(SignUpActivity.this, ConfirmActivity.class);
+                                    intent.putExtra("from", "SignInActivity");
+                                    intent.putExtra("id", eventId);
+                                    intent.putExtra("bookedPeople", bookedPeople);
+                                } else {
+                                    intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                }
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Object response, Integer code) {
+                                Visibility.makeInvisible(loadingBar);
+                                EatMeetApp.setCurrentUser(null);
+                                Log.e("CURRENT USER: ", "Retrieve current user failed: "+code);
+                            }
+                        });
+                        User user = new User();
+                        user.setId((Integer) response);
+                        userDAO.getUser(user, userBSM);
                     }
 
                     @Override
