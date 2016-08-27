@@ -154,7 +154,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-                if(from.equals("ConfirmActivity")) {
+                if(from != null && from.equals("ConfirmActivity")) {
                     intent.putExtra("from", "ConfirmActivity");
                     intent.putExtra("id", eventId);
                     intent.putExtra("bookedPeople", bookedPeople);
