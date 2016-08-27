@@ -36,7 +36,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     private Event currentEvent;
     private int eventId = 1;
-    private int bookedPeople;
+    private int bookedPeople = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,16 +111,18 @@ public class ConfirmActivity extends AppCompatActivity {
         });
         eventDAO.getEvent(eventId,backendStatusManager);
 
-    final Button bookButton = (Button) findViewById(R.id.bookButton);
+        final Button bookButton = (Button) findViewById(R.id.bookButton);
         if (EatMeetApp.getCurrentUser() != null){
             assert bookButton!=null;
             bookButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final Spinner spinnerPeople = (Spinner) findViewById(R.id.spinnerPeople);
-                    findViewById(R.id.spinnerPeople).setEnabled(false);
+                    bookedPeople = (Integer) spinnerPeople.getSelectedItem();
+                    spinnerPeople.setEnabled(false);
                     bookButton.setBackgroundColor(Color.parseColor("#cccccc"));
                     bookButton.setEnabled(false);
+
 
                     EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
                     BackendStatusManager eventParticipationBSM = new BackendStatusManager();
@@ -129,7 +131,6 @@ public class ConfirmActivity extends AppCompatActivity {
                         public void onSuccess(Object response, Integer code) {
 
                             Context context = getApplicationContext();
-                            Integer bookedPeople = (Integer) spinnerPeople.getSelectedItem();
                             CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
                             int duration = Toast.LENGTH_SHORT;
 

@@ -41,6 +41,7 @@ public class EventActivity extends AppCompatActivity {
     private TextView menu;
     private Button bookButton;
     private Button unbookButton;
+    private Button eventFullMessage;
     private Toolbar toolbar;
     private ImageView eventImage;//final ImageView image;
 
@@ -143,6 +144,11 @@ public class EventActivity extends AppCompatActivity {
                 if(event.getSchedule().before(Calendar.getInstance().getTime())) {
                     Visibility.makeInvisible(unbookButton);
                     Visibility.makeInvisible(bookButton);
+                }
+                if(event.getParticipantsCount() >= event.getMaxPeople() && !event.getParticipants().contains(EatMeetApp.getCurrentUser())) {
+                    Visibility.makeInvisible(unbookButton);
+                    Visibility.makeInvisible(bookButton);
+                    Visibility.makeVisible(eventFullMessage);
                 }
 
                 if (title != null) {
@@ -284,6 +290,7 @@ public class EventActivity extends AppCompatActivity {
     private void initViewElements() {
         bookButton = (Button) findViewById(R.id.book);
         unbookButton = (Button) findViewById(R.id.unbook);
+        eventFullMessage = (Button) findViewById(R.id.eventFullMessage);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         eventImage = (ImageView) findViewById(R.id.eventImage);
         title = (TextView) findViewById(R.id.titleEvent);//textViewEvent
