@@ -77,6 +77,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Visibility.makeVisible(loadingBar);
                 Visibility.makeInvisible(errorText);
+                Visibility.makeInvisible(findViewById(R.id.basicInfoCard));
                 errorText.setText("");
 
                 final UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
@@ -124,6 +125,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Object response, Integer code) {
+                                Visibility.makeVisible(findViewById(R.id.basicInfoCard));
                                 Visibility.makeInvisible(loadingBar);
                                 EatMeetApp.setCurrentUser(null);
                                 Log.e("CURRENT USER: ", "Retrieve current user failed: "+code);
@@ -138,6 +140,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onFailure(Object response, Integer code) {
                         Visibility.makeInvisible(loadingBar);
                         Visibility.makeVisible(errorText);
+                        Visibility.makeVisible(findViewById(R.id.basicInfoCard));
                         if(code == 401) {
                             try {
                                 String errorString = "";
@@ -154,7 +157,6 @@ public class SignInActivity extends AppCompatActivity {
                                 Log.e("JSON PARSE: ", "Signin response not decoded:\n" + e.getMessage());
                             }
                         } else {
-                            Visibility.makeInvisible(loadingBar);
                             Visibility.makeInvisible(errorText);
                             Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
                         }

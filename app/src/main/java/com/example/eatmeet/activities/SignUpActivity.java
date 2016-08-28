@@ -80,6 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.cleanErrors();
         SignUpActivity.this.cleanErrors();
         Visibility.makeVisible(loadingBar);
+        Visibility.makeInvisible(findViewById(R.id.basicInfoCard));
         user.setName(name.getText().toString());
         user.setSurname(surname.getText().toString());
         user.setEmail(email.getText().toString());
@@ -146,6 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Object response, Integer code) {
                         Visibility.makeInvisible(loadingBar);
+                        Visibility.makeVisible(findViewById(R.id.basicInfoCard));
                         Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -155,6 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Object response, Integer code) {
                 Visibility.makeInvisible(loadingBar);
+                Visibility.makeVisible(findViewById(R.id.basicInfoCard));
                 if(response!=null) {
                     ErrorsMap errorsMap = (ErrorsMap) response;
                     if(errorsMap.get("name")!=null) {
