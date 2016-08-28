@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,6 +73,12 @@ public class FiltersActivity extends AppCompatActivity {
     private CardView dateToCardView;
     private Button dateToCardViewCloseButton;
 
+    private Button restaurantsCardViewSelectAllButton;
+    private Button restaurantsCardViewDeSelectAllButton;
+    private Button categoriesCardViewSelectAllButton;
+    private Button categoriesCardViewDeSelectAllButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +126,10 @@ public class FiltersActivity extends AppCompatActivity {
         dateFromCardViewCloseButton = (Button) findViewById(R.id.dateFromCardViewCloseButton);
         dateToCardView = (CardView) findViewById(R.id.dateToCardView);
         dateToCardViewCloseButton = (Button) findViewById(R.id.dateToCardViewCloseButton);
+        restaurantsCardViewSelectAllButton = (Button) findViewById(R.id.restaurantsCardViewSelectAllButton);
+        restaurantsCardViewDeSelectAllButton = (Button) findViewById(R.id.restaurantsCardViewDeSelectAllButton);
+        categoriesCardViewSelectAllButton = (Button) findViewById(R.id.categoriesCardViewSelectAllButton);
+        categoriesCardViewDeSelectAllButton = (Button) findViewById(R.id.categoriesCardViewDeSelectAllButton);
     }
 
     private void setActions() {
@@ -191,8 +202,56 @@ public class FiltersActivity extends AppCompatActivity {
                 toggleCard("close","date_to");
             }
         });
+        restaurantsCardViewSelectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCheckboxes("restaurants","selectAll");
+            }
+        });
+        restaurantsCardViewDeSelectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCheckboxes("restaurants","deSelectAll");
+            }
+        });
+        categoriesCardViewSelectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCheckboxes("categories","selectAll");
+            }
+        });
+        categoriesCardViewDeSelectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCheckboxes("categories","deSelectAll");
+            }
+        });
     }
 
+    private void toggleCheckboxes(String object, String action){
+        boolean check = true;
+        ListView mainListView = new ListView(this);
+        switch (object) {
+            case "categories":
+                mainListView = (ListView) findViewById(R.id.categoriesListView);
+                break;
+            case "restaurants":
+                mainListView = (ListView) findViewById(R.id.restaurantsListView);
+                break;
+        }
+        switch (action) {
+            case "selectAll":
+                check = true;
+                break;
+            case "deSelectAll":
+                check = false;
+        }
+        for (int x = 0; x < mainListView.getChildCount(); x++){
+            LinearLayout linearLayout = (LinearLayout) mainListView.getChildAt(x);
+            CheckBox checkBoxListItemFilterRestaurant = (CheckBox) linearLayout.getChildAt(0);
+            checkBoxListItemFilterRestaurant.setChecked(check);
+        }
+    }
     private void setCurrentValues() {
         if (filtersManager.isMinPeopleEnabled()) {
             peopleRangeBar.setRangePinsByValue(filtersManager.getMinPeople(), Integer.parseInt(peopleRangeBar.getRightPinValue()));

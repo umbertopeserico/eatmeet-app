@@ -38,6 +38,8 @@ public class ConfirmActivity extends AppCompatActivity {
     private int eventId = 1;
     private int bookedPeople = 1;
 
+    boolean firstChange = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +98,20 @@ public class ConfirmActivity extends AppCompatActivity {
 
                     }
                 });
+                TextView eventName = (TextView) findViewById(R.id.eventName);
+                eventName.setText("Stai prenotando per: " + currentEvent.getTitle());
+                TextView alreadyBookedPeople = (TextView) findViewById(R.id.alreadyBookedPeople);
+                alreadyBookedPeople.setText("Hanno già prenotato " + currentEvent.getParticipantsCount() + " partecipanti");
+                TextView minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
+                String minPriceInfoSummary;
+                if(currentEvent.getPeopleMinPrice()<=currentEvent.getParticipantsCount()){
+                    minPriceInfoSummary = "Il prezzo minimo è stato raggiunto con " + currentEvent.getPeopleMinPrice() + " partecipanti";
+                } else {
+                    minPriceInfoSummary = "Al prezzo minimo mancano " + (currentEvent.getPeopleMinPrice()-currentEvent.getParticipantsCount()) + " partecipanti";
+                }
+                minPriceInfo.setText(minPriceInfoSummary);
+                TextView remainingSeets = (TextView) findViewById(R.id.remainingSeets);
+                remainingSeets.setText("Posti rimanenti: " + (currentEvent.getMaxPeople() - currentEvent.getParticipantsCount()));
             }
             @Override
             public void onFailure(Object response, Integer code) {
@@ -105,7 +121,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 Visibility.makeInvisible(findViewById(R.id.content_confirm));
                 if(response==null) {
                     ((TextView) findViewById(R.id.messagesLabel)).setText(getString(R.string.network_error));
-                    Toast.makeText(ConfirmActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfirmActivity.this, getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -132,7 +148,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
                             Context context = getApplicationContext();
                             CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
-                            int duration = Toast.LENGTH_SHORT;
+                            int duration = Toast.LENGTH_LONG;
 
                             Toast toast = Toast.makeText(context, text, duration);
                             TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
@@ -140,9 +156,6 @@ public class ConfirmActivity extends AppCompatActivity {
                             Visibility.makeVisible(bookedFeedback);
                             Visibility.makeVisible(findViewById(R.id.homeButton));
                             toast.show();
-
-                            CharSequence message = "Prenotazione effettuata correttamente";
-                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -151,7 +164,7 @@ public class ConfirmActivity extends AppCompatActivity {
                             bookButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                             bookButton.setEnabled(true);
                             CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
-                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_LONG).show();
                         }
                     });
                     eventDAO.addParticipation(currentEvent, bookedPeople, eventParticipationBSM);
@@ -180,7 +193,11 @@ public class ConfirmActivity extends AppCompatActivity {
         String estimate = newPrice + "€ a persona se prenoti per " + peopleNumber + " persone.";
         TextView dynamicPrice = (TextView) findViewById(R.id.dynamicPrice);
         dynamicPrice.setText(estimate);
-        Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_SHORT).show();
+        if(firstChange){
+            firstChange = false;
+        } else {
+            Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

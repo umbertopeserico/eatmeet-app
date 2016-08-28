@@ -19,6 +19,8 @@ import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.entities.User;
+import com.example.eatmeet.utils.Visibility;
 
 import java.io.File;
 import java.util.Calendar;
@@ -115,6 +117,11 @@ public class EventsAdapter extends ArrayAdapter {
 
         TextView eventsParticipants = (TextView) convertView.findViewById(R.id.eventsParticipants);
         eventsParticipants.setText(event.getParticipantsCount() + " partecipanti");
+
+        TextView alreadyBooked = (TextView) convertView.findViewById(R.id.alreadyBooked);
+        if(EatMeetApp.getCurrentUser()!=null && event.getParticipants().contains(EatMeetApp.getCurrentUser())){
+            Visibility.makeVisible(alreadyBooked);
+        }
 
         final LinearLayout eventLayout = (LinearLayout) convertView.findViewById(R.id.list_item_events);
         eventLayout.setOnClickListener(new View.OnClickListener() {

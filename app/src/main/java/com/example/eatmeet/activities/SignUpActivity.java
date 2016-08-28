@@ -132,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Object response, Integer code) {
                         Visibility.makeInvisible(loadingBar);
-                        Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Errore nel login interno. Si prega di riprovare", Toast.LENGTH_LONG).show();
                     }
                 });
                 userDAO.signIn(user, signInBM);
@@ -207,9 +207,9 @@ public class SignUpActivity extends AppCompatActivity {
                             Visibility.makeVisible(passwordConfirmationErrors);
                         }
                     }
-                    Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.registration_error, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(SignUpActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
                 }
             }
         });

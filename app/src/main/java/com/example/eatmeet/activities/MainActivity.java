@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 EatMeetApp.setCurrentUser(null);
                 navigationView.getMenu().clear();
                 navigationView.inflateMenu(R.menu.activity_main_drawer);
-                Toast.makeText(MainActivity.this, R.string.sign_out_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.sign_out_success, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onFailure(Object response, Integer code) {
                 Visibility.makeInvisible(overlay);
                 Visibility.makeInvisible(loadingBar);
-                Toast.makeText(MainActivity.this, R.string.sign_out_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.sign_out_error, Toast.LENGTH_LONG).show();
             }
         });
 

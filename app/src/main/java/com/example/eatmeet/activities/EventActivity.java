@@ -55,6 +55,9 @@ public class EventActivity extends AppCompatActivity {
 
     RelativeLayout contentEvent;
 
+    private TextView minPriceInfo;
+    private TextView remainingSeets;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +100,7 @@ public class EventActivity extends AppCompatActivity {
                 eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
-                        CharSequence message = "Annullamento effettuata correttamente";
+                        CharSequence message = "Annullamento effettuato correttamente";
                         Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(EventActivity.this, EventActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -228,7 +231,7 @@ public class EventActivity extends AppCompatActivity {
                             String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
                             if(newActualPeople > actualPeople) {
                                 estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";
-                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_LONG).show();
                             }
                             priceRepresentationChangingSummary.setText(estimate);
                         }
@@ -270,6 +273,16 @@ public class EventActivity extends AppCompatActivity {
                     }
                     Visibility.makeVisible(eventImage);
                 }
+
+                String minPriceInfoSummary;
+                if(event.getPeopleMinPrice()<=event.getParticipantsCount()){
+                    minPriceInfoSummary = "Il prezzo minimo è stato raggiunto con " + event.getPeopleMinPrice() + " partecipanti";
+                } else {
+                    minPriceInfoSummary = "Al prezzo minimo mancano " + (event.getPeopleMinPrice()-event.getParticipantsCount()) + " partecipanti";
+                }
+                minPriceInfo.setText(minPriceInfoSummary);
+                remainingSeets.setText("Posti rimanenti: " + (event.getMaxPeople() - event.getParticipantsCount()));
+
                 Visibility.makeInvisible(loadingBar);
                 Visibility.makeInvisible(loadingBarContainer);
                 Visibility.makeVisible(contentEvent);
@@ -280,7 +293,7 @@ public class EventActivity extends AppCompatActivity {
                 Visibility.makeVisible(loadingBarContainer);
                 Visibility.makeVisible(messagesLabel);
                 messagesLabel.setText(getString(R.string.network_error));
-                Toast.makeText(EventActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventActivity.this, getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
@@ -306,6 +319,9 @@ public class EventActivity extends AppCompatActivity {
         messagesLabel = (TextView) findViewById(R.id.messagesLabel);
 
         contentEvent = (RelativeLayout) findViewById(R.id.content_event);
+
+        minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
+        remainingSeets = (TextView) findViewById(R.id.remainingSeets);
 
         Visibility.makeInvisible(eventImage);
         Visibility.makeInvisible(title);
