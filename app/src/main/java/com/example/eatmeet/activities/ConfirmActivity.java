@@ -105,7 +105,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 Visibility.makeInvisible(findViewById(R.id.content_confirm));
                 if(response==null) {
                     ((TextView) findViewById(R.id.messagesLabel)).setText(getString(R.string.network_error));
-                    Toast.makeText(ConfirmActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfirmActivity.this, getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -132,7 +132,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
                             Context context = getApplicationContext();
                             CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
-                            int duration = Toast.LENGTH_SHORT;
+                            int duration = Toast.LENGTH_LONG;
 
                             Toast toast = Toast.makeText(context, text, duration);
                             TextView bookedFeedback = (TextView) findViewById(R.id.bookedFeedback);
@@ -142,7 +142,7 @@ public class ConfirmActivity extends AppCompatActivity {
                             toast.show();
 
                             CharSequence message = "Prenotazione effettuata correttamente";
-                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -151,7 +151,7 @@ public class ConfirmActivity extends AppCompatActivity {
                             bookButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                             bookButton.setEnabled(true);
                             CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
-                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_LONG).show();
                         }
                     });
                     eventDAO.addParticipation(currentEvent, bookedPeople, eventParticipationBSM);
@@ -180,7 +180,7 @@ public class ConfirmActivity extends AppCompatActivity {
         String estimate = newPrice + "€ a persona se prenoti per " + peopleNumber + " persone.";
         TextView dynamicPrice = (TextView) findViewById(R.id.dynamicPrice);
         dynamicPrice.setText(estimate);
-        Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_SHORT).show();
+        Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_LONG).show();
     }
 
     @Override

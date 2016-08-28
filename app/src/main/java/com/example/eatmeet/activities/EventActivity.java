@@ -228,7 +228,7 @@ public class EventActivity extends AppCompatActivity {
                             String estimate = "Prezzo per " + newActualPeople + " persone: circa" + rightPinValue + "€ a testa";
                             if(newActualPeople > actualPeople) {
                                 estimate = "Se prenoti per " + (newActualPeople-actualPeople) + " costerà circa " + rightPinValue + "€ a testa";
-                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EventActivity.this, estimate, Toast.LENGTH_LONG).show();
                             }
                             priceRepresentationChangingSummary.setText(estimate);
                         }
@@ -280,7 +280,7 @@ public class EventActivity extends AppCompatActivity {
                 Visibility.makeVisible(loadingBarContainer);
                 Visibility.makeVisible(messagesLabel);
                 messagesLabel.setText(getString(R.string.network_error));
-                Toast.makeText(EventActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventActivity.this, getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 Logger.getLogger(EventActivity.this.getClass().getName()).log(Level.SEVERE, "Connection NOT succeded");
             }
         });
