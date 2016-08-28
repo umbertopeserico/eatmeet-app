@@ -39,12 +39,29 @@
             android:id="@+id/filterStatusCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/filtersEnabledText"
-                android:padding="8dp" />
+                android:orientation="vertical"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/banner"
+                    android:text="Più siamo, meno paghiamo"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:gravity="center_horizontal"
+                    android:padding="8dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/filtersEnabledText"
+                    android:padding="8dp" />
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <include layout="@layout/loading_bar" />
