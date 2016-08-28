@@ -396,39 +396,39 @@ public class FiltersActivity extends AppCompatActivity {
 
     private void setNewValuesToFiltersManager() {
         // Participants
-        if(Float.parseFloat(peopleRangeBar.getLeftPinValue())==(peopleRangeBar.getTickStart())) {
+        if(Float.parseFloat(peopleRangeBar.getLeftPinValue())<=(peopleRangeBar.getTickStart())) {
             filtersManager.setMinPeople(null);
         } else {
             filtersManager.setMinPeople(Integer.parseInt(peopleRangeBar.getLeftPinValue()));
         }
 
-        if(Float.parseFloat(peopleRangeBar.getRightPinValue())==(peopleRangeBar.getTickEnd())) {
+        if(Float.parseFloat(peopleRangeBar.getRightPinValue())>=(peopleRangeBar.getTickEnd())) {
             filtersManager.setMaxPeople(null);
         } else {
             filtersManager.setMaxPeople(Integer.parseInt(peopleRangeBar.getRightPinValue()));
         }
 
         // Price range
-        if(Float.parseFloat(priceRangeBar.getLeftPinValue())==(priceRangeBar.getTickStart())) {
+        if(Float.parseFloat(priceRangeBar.getLeftPinValue())<=(priceRangeBar.getTickStart())) {
             filtersManager.setMinPrice(null);
         } else {
             filtersManager.setMinPrice(Double.parseDouble(priceRangeBar.getLeftPinValue()));
         }
 
-        if(Float.parseFloat(priceRangeBar.getRightPinValue())==(priceRangeBar.getTickEnd())) {
+        if(Float.parseFloat(priceRangeBar.getRightPinValue())>=(priceRangeBar.getTickEnd())) {
             filtersManager.setMaxPrice(null);
         } else {
             filtersManager.setMaxPrice(Double.parseDouble(priceRangeBar.getRightPinValue()));
         }
 
         // Sale range
-        if(Float.parseFloat(actualSaleRangeBar.getLeftPinValue())==(actualSaleRangeBar.getTickStart())) {
+        if(Float.parseFloat(actualSaleRangeBar.getLeftPinValue())<=(actualSaleRangeBar.getTickStart())) {
             filtersManager.setMinActualSale(null);
         } else {
             filtersManager.setMinActualSale(Double.parseDouble(actualSaleRangeBar.getLeftPinValue()));
         }
 
-        if(Float.parseFloat(actualSaleRangeBar.getRightPinValue())==(actualSaleRangeBar.getTickEnd())) {
+        if(Float.parseFloat(actualSaleRangeBar.getRightPinValue())>=(actualSaleRangeBar.getTickEnd())) {
             filtersManager.setMaxActualSale(null);
         } else {
             filtersManager.setMaxActualSale(Double.parseDouble(actualSaleRangeBar.getRightPinValue()));
