@@ -46,7 +46,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ConfirmActivity"
-            android:label="@string/title_activity_confirm"
+            android:label="Conferma Prenotazione"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.FiltersActivity"
