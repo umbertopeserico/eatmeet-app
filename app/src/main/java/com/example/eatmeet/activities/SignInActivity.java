@@ -115,7 +115,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                     intent.putExtra("from", "SignInActivity");
                                     intent.putExtra("id", eventId);
-                                    intent.putExtra("bookedPeople", bookedPeople);
+                                    intent.putExtra("bookedPeople", ""+bookedPeople);
                                 } else {
                                     intent = new Intent(SignInActivity.this, MainActivity.class);
                                 }

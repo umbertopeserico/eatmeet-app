@@ -124,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     }
                                     intent.putExtra("from", "SignInActivity");
                                     intent.putExtra("id", eventId);
-                                    intent.putExtra("bookedPeople", bookedPeople);
+                                    intent.putExtra("bookedPeople", ""+bookedPeople);
                                 } else {
                                     intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 }

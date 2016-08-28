@@ -33,7 +33,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     private Event currentEvent;
     private int eventId = 1;
-    private int bookedPeople = 1;
+    private int bookedPeople = 0;
 
     private boolean firstChange = true;
 
@@ -52,7 +52,7 @@ public class ConfirmActivity extends AppCompatActivity {
         if(extras!=null) {
             eventId = extras.getInt("id");
             if(extras.getString("bookedPeople")!=null){
-                bookedPeople = extras.getInt("bookedPeople");
+                bookedPeople = Integer.parseInt(extras.getString("bookedPeople"))-1;
             }
         }
 
@@ -95,6 +95,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, numberPeopleList);
                 spinnerArrayAdapter.setDropDownViewResource(R.layout.custom_spinner_drpodown_item);
                 spinnerPeople.setAdapter(spinnerArrayAdapter);
+                spinnerPeople.setSelection(bookedPeople);
                 spinnerPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
