@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,7 +35,9 @@ public class ConfirmActivity extends AppCompatActivity {
     private int eventId = 1;
     private int bookedPeople = 1;
 
-    boolean firstChange = true;
+    private boolean firstChange = true;
+
+    private boolean haveBooked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +155,8 @@ public class ConfirmActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Object response, Integer code) {
 
+                            haveBooked = true;
+
                             Context context = getApplicationContext();
                             CharSequence text = "Hai prenotato per " + bookedPeople + " persone";
                             int duration = Toast.LENGTH_LONG;
@@ -213,8 +218,29 @@ public class ConfirmActivity extends AppCompatActivity {
         }
     }
 
+    public void refreshPrevious(){
+        if(haveBooked){
+            Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);
+            intent.putExtra("id", eventId);
+            intent.putExtra("haveBooked", haveBooked);
+            startActivity(intent);
+        }
+    }
+
+
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+            onSupportNavigateUp();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
     @Override
     public boolean onSupportNavigateUp(){
+        if(haveBooked){
+            refreshPrevious();
+        }
         finish();
         /*
         Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);

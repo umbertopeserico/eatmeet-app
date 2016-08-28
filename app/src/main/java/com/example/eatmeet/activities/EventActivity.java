@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,6 +59,8 @@ public class EventActivity extends AppCompatActivity {
     private TextView minPriceInfo;
     private TextView remainingSeets;
 
+    private boolean haveBooked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class EventActivity extends AppCompatActivity {
         eventId = 1;
         if(extras!=null) {
             eventId = extras.getInt("id");
+            haveBooked = extras.getBoolean("haveBooked");
         }
         newEventId = eventId;
 
@@ -345,9 +349,30 @@ public class EventActivity extends AppCompatActivity {
 
     }
 
+
+    public void refreshPrevious(){
+        if(haveBooked){
+            Intent intent = new Intent(EventActivity.this, MainActivity.class);
+            intent.putExtra("destination", "1");
+            startActivity(intent);
+        }
+    }
+
+
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+            onSupportNavigateUp();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
     /*add action for back button*/
     @Override
     public boolean onSupportNavigateUp(){
+        if(haveBooked){
+            refreshPrevious();
+        }
         finish();
         /*
         Intent intent = new Intent(EventActivity.this, MainActivity.class);
