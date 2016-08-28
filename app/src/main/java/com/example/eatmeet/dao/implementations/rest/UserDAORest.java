@@ -2,6 +2,7 @@ package com.example.eatmeet.dao.implementations.rest;
 
 import android.util.Log;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
@@ -229,6 +230,9 @@ public class UserDAORest implements UserDAO {
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                         .create();
                 user = gson.fromJson(responseString, User.class);
+
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                //userDAO.signIn();
 
                 backendStatusManager.addSuccess(user, statusCode);
             }
