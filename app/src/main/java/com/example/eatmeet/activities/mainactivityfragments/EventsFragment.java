@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
 import com.example.eatmeet.activities.FiltersActivity;
+import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.activities.OrderActivity;
 import com.example.eatmeet.adapters.EventsAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
@@ -70,6 +72,7 @@ public class EventsFragment extends Fragment implements Refreshable {
     @Override
     public void refresh() {
         if(isAdded()) {
+            ((MainActivity) getActivity()).trackFragments(1);
             loadData();
         }
     }
