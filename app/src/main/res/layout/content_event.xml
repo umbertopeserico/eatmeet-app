@@ -17,20 +17,6 @@
     tools:showIn="@layout/activity_event"
     android:id="@+id/content_event">
 
-    <ImageView
-        android:minWidth="750dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="immagine"
-        android:id="@+id/eventImage"
-        android:layout_marginTop="57dp"
-        android:layout_marginBottom="7dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-    <!--
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,53 +24,26 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="TITLE"
         android:id="@+id/titleEvent"
-        android:layout_below="@+id/eventImage"
+        android:layout_marginTop="50dp"
         android:layout_alignLeft="@+id/eventImage"
         android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:minWidth="750dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RESTAURANT"
-        android:id="@+id/restaurant"
+        android:text="immagine"
+        android:id="@+id/eventImage"
         android:layout_below="@+id/titleEvent"
-        android:layout_alignLeft="@+id/titleEvent"
-        android:layout_alignStart="@+id/titleEvent" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADDRESS"
-        android:id="@+id/address"
-        android:layout_below="@+id/restaurant"
-        android:layout_alignLeft="@+id/titleEvent"
-        android:layout_marginTop="5dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SCHEDULE"
-        android:id="@+id/scheduleEvent"
-        android:layout_below="@+id/address"
-        android:layout_alignLeft="@+id/titleEvent"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="-40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <!--
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp"-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PARTICIPANTS"
-        android:id="@+id/participants_count"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/address"
-        android:layout_alignLeft="@+id/address"
-        android:layout_alignStart="@+id/address" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PRICE"
-        android:id="@+id/price"
-        android:layout_below="@+id/participants_count"
-        android:layout_alignLeft="@+id/restaurant"
-        android:layout_centerHorizontal="true" />
 
 
     <!--
@@ -103,7 +62,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_below="@+id/price">
+        android:layout_below="@+id/eventImage">
         <TextView
             android:layout_gravity="center_vertical"
             android:layout_below="@+id/pricesBar"
@@ -264,12 +223,57 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESTAURANT"
+        android:id="@+id/restaurant"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/minPriceInfo"
+        android:layout_alignLeft="@+id/titleEvent"
+        android:layout_alignStart="@+id/titleEvent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADDRESS"
+        android:id="@+id/address"
+        android:layout_below="@+id/restaurant"
+        android:layout_alignLeft="@+id/titleEvent"
+        android:layout_marginTop="5dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SCHEDULE"
+        android:id="@+id/scheduleEvent"
+        android:layout_below="@+id/address"
+        android:layout_alignLeft="@+id/titleEvent"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PARTICIPANTS"
+        android:id="@+id/participants_count"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/address"
+        android:layout_alignLeft="@+id/address"
+        android:layout_alignStart="@+id/address" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PRICE"
+        android:id="@+id/price"
+        android:layout_below="@+id/participants_count"
+        android:layout_alignLeft="@+id/restaurant"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
         android:layout_marginTop="10dp"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/minPriceInfo"
+        android:layout_below="@+id/price"
         android:id="@+id/menu_title"
         android:text="Menu:"/>
 
