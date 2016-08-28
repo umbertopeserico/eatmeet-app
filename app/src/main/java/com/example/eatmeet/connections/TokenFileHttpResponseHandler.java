@@ -40,8 +40,8 @@ public abstract class TokenFileHttpResponseHandler extends FileAsyncHttpResponse
 
     @Override
     public final void onSuccess(int statusCode, Header[] headers, File file) {
-        this.onSuccessAction(statusCode, headers, file);
         HttpRestClient.saveTokenToCookie(headers);
+        this.onSuccessAction(statusCode, headers, file);
     }
 
     public abstract void onFailureAction(int statusCode, Header[] headers, Throwable throwable, File file);
