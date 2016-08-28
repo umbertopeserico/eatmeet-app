@@ -18,12 +18,16 @@ import com.example.eatmeet.R;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.UserDAO;
+import com.example.eatmeet.entities.Event;
+import com.example.eatmeet.entities.EventParticipation;
 import com.example.eatmeet.entities.User;
 import com.example.eatmeet.utils.Visibility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -95,7 +99,19 @@ public class SignInActivity extends AppCompatActivity {
 
                                 Intent intent;
                                 if(from != null && from.equals("ConfirmActivity")) {
-                                    intent = new Intent(SignInActivity.this, ConfirmActivity.class);
+                                    boolean alreadyBooked = false;
+                                    List userEvents = user.getEventParticipations();
+                                    for(int i = 0; i < userEvents.size(); i++){
+                                        if(((EventParticipation) userEvents.get(i)).getEventId()==eventId){
+                                            alreadyBooked = true;
+                                        }
+                                    }
+                                    if(alreadyBooked) {
+                                        intent = new Intent(SignInActivity.this, EventActivity.class);
+                                        intent.putExtra("haveBooked", true);
+                                    } else {
+                                        intent = new Intent(SignInActivity.this, ConfirmActivity.class);
+                                    }
                                     intent.putExtra("from", "SignInActivity");
                                     intent.putExtra("id", eventId);
                                     intent.putExtra("bookedPeople", bookedPeople);

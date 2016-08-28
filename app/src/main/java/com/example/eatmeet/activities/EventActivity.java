@@ -78,6 +78,10 @@ public class EventActivity extends AppCompatActivity {
         setActions();
         loadData();
 
+        if(haveBooked==true){
+            Toast.makeText(EventActivity.this, "Hai già prenotato questo evento", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void setActions() {
@@ -105,6 +109,7 @@ public class EventActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Object response, Integer code) {
                         CharSequence message = "Annullamento effettuato correttamente";
+                        haveBooked = false;
                         Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(EventActivity.this, EventActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
