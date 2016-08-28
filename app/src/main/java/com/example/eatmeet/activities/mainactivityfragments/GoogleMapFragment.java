@@ -32,7 +32,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,7 +79,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         MainActivity mainActivity = (MainActivity) context;
         EatMeetApp.getFiltersManager().resetFilters();
         EatMeetApp.getFiltersManager().addRestaurant(markers.get(marker));
-        EatMeetApp.getFiltersManager().setEnabled(true);
+        EatMeetApp.getFiltersManager().setEnabledFilters(true);
         mainActivity.setCurrentFragment(1);
 
         //String title = marker.getTitle();

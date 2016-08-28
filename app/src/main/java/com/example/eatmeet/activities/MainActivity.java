@@ -1,11 +1,9 @@
 package com.example.eatmeet.activities;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +41,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -341,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             applyFilters = (String) intent.getExtras().get("applyFilters");
             if (applyFilters!= null) {
                 if (applyFilters.equals("1")) {
-                    EatMeetApp.getFiltersManager().setEnabled(true);
+                    EatMeetApp.getFiltersManager().setEnabledFilters(true);
                 }
             }
 
@@ -349,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             applyOrder = (String) intent.getExtras().get("applyOrder");
             if (applyOrder!= null) {
                 if (applyOrder.equals("1")) {
-                    EatMeetApp.getFiltersManager().setEnabled(true);
+                    EatMeetApp.getFiltersManager().setEnabledOrder(true);
                 }
             }
 
