@@ -98,6 +98,20 @@ public class ConfirmActivity extends AppCompatActivity {
 
                     }
                 });
+                TextView eventName = (TextView) findViewById(R.id.eventName);
+                eventName.setText("Stai prenotando per: " + currentEvent.getTitle());
+                TextView alreadyBookedPeople = (TextView) findViewById(R.id.alreadyBookedPeople);
+                alreadyBookedPeople.setText("Hanno già prenotato " + currentEvent.getParticipantsCount() + " partecipanti");
+                TextView minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
+                String minPriceInfoSummary;
+                if(currentEvent.getPeopleMinPrice()<=currentEvent.getParticipantsCount()){
+                    minPriceInfoSummary = "Il prezzo minimo è stato raggiunto con " + currentEvent.getPeopleMinPrice() + " partecipanti";
+                } else {
+                    minPriceInfoSummary = "Al prezzo minimo mancano " + (currentEvent.getPeopleMinPrice()-currentEvent.getParticipantsCount()) + " partecipanti";
+                }
+                minPriceInfo.setText(minPriceInfoSummary);
+                TextView remainingSeets = (TextView) findViewById(R.id.remainingSeets);
+                remainingSeets.setText("Posti rimanenti: " + (currentEvent.getMaxPeople() - currentEvent.getParticipantsCount()));
             }
             @Override
             public void onFailure(Object response, Integer code) {
