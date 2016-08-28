@@ -140,7 +140,7 @@ public class SignInActivity extends AppCompatActivity {
                         } else {
                             Visibility.makeInvisible(loadingBar);
                             Visibility.makeInvisible(errorText);
-                            Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
                         }
                     }
                 });

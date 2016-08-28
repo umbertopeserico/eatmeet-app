@@ -82,7 +82,7 @@ public class CategoriesFragment extends Fragment implements Refreshable {
                     Visibility.makeInvisible(loadingBar);
                     Visibility.makeVisible(messageLabel);
                     messageLabel.setText(getString(R.string.network_error));
-                    Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoriesFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_LONG).show();
                 }
             }
         });

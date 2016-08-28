@@ -47,24 +47,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:weightSum="4">
+            android:weightSum="12">
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="New Text"
                 android:id="@+id/eventsPrice"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:singleLine="false"/>
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="New Text"
                 android:id="@+id/eventsParticipants"
-                android:layout_weight="2"
+                android:layout_weight="5"
                 android:singleLine="false"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Parteciperò"
+                android:textColor="#29B6F6"
+                android:id="@+id/alreadyBooked"
+                android:layout_weight="4"
+                android:singleLine="false"
+                android:visibility="invisible"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

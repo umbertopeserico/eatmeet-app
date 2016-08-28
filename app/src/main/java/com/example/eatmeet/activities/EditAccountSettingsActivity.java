@@ -104,7 +104,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
             public void onSuccess(Object response, Integer code) {
                 Visibility.makeInvisible(loadingBar);
                 EatMeetApp.setCurrentUser((User) response);
-                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_success, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(EditAccountSettingsActivity.this, AccountSettingsActivity.class);
                 startActivity(intent);
             }
@@ -192,7 +192,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_failure, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_settings_save_failure, Toast.LENGTH_LONG).show();
             }
         });
         userDAO.updateProfile(user, userBSM);
@@ -220,7 +220,7 @@ public class EditAccountSettingsActivity extends AppCompatActivity {
                 break;
             case R.id.backButton:
                 setOldValues();
-                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_setting_reset, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditAccountSettingsActivity.this, R.string.account_setting_reset, Toast.LENGTH_LONG).show();
                 break;
             default:
         }

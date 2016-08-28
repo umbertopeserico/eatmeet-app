@@ -116,7 +116,7 @@ public class EventsFragment extends Fragment implements Refreshable {
                     Visibility.makeInvisible(filterStatusCardView);
                     if(response==null) {
                         messagesLabel.setText(getString(R.string.network_error));
-                        Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_LONG).show();
                     }
                 }
                 EatMeetApp.getFiltersManager().setEnabled(false);

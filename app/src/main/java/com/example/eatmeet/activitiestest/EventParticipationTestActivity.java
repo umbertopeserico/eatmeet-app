@@ -132,13 +132,13 @@ public class EventParticipationTestActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Object response, Integer code) {
                                 CharSequence message = "Prenotazione effettuata correttamente";
-                                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onFailure(Object response, Integer code) {
                                 CharSequence message = "Errore nella prenotazione. Si prega di riprovare";
-                                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -162,7 +162,7 @@ public class EventParticipationTestActivity extends AppCompatActivity {
             @Override
             public void onFailure(Object response, Integer code) {
                 CharSequence message = "Impossibile recuperare l'evento";
-                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventParticipationTestActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
 

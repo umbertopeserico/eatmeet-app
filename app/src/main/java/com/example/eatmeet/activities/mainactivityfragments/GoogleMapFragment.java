@@ -84,7 +84,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         mainActivity.setCurrentFragment(1);
 
         //String title = marker.getTitle();
-        //Toast.makeText(this.getContext(), title + " clicked " + Integer.toString(restaurantId),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this.getContext(), title + " clicked " + Integer.toString(restaurantId),Toast.LENGTH_LONG).show();
     }
 
     @Override

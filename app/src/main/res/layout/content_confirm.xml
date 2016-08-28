@@ -18,7 +18,44 @@
         tools:context="com.example.eatmeet.activities.EventActivity"
         tools:showIn="@layout/activity_confirm">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="30dp"
+            android:text="Stai prenotando per: "
+            android:id="@+id/eventName"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_below="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="10dp"
+            android:text="Hanno già prenotato "
+            android:id="@+id/alreadyBookedPeople"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_below="@+id/alreadyBookedPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="10dp"
+            android:text="Il prezzo minimo si raggiunge con "
+            android:id="@+id/minPriceInfo"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_below="@+id/minPriceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="30dp"
+            android:text="Posti rimanenti: "
+            android:id="@+id/remainingSeets"
+            android:layout_centerHorizontal="true" />
+
         <LinearLayout
+            android:layout_below="@+id/remainingSeets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
