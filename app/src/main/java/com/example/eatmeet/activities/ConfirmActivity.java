@@ -85,7 +85,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     numberPeopleList.add(i);
                 }
                 ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_item, numberPeopleList);
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerArrayAdapter.setDropDownViewResource(R.layout.custom_spinner_drpodown_item);
                 spinnerPeople.setAdapter(spinnerArrayAdapter);
                 spinnerPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
