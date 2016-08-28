@@ -250,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, R.string.sign_out_success, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("destination", "1");
                 startActivity(intent);
             }
 
