@@ -27,4 +27,5 @@ public interface UserDAO {
 
     void updateProfile(User user, BackendStatusManager backendStatusManager);
 
+    void deleteAccount(BackendStatusManager bsm);
 }

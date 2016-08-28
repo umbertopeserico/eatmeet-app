@@ -2,6 +2,7 @@ package com.example.eatmeet.dao.implementations.rest;
 
 import android.util.Log;
 
+import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.connections.HttpRestClient;
 import com.example.eatmeet.connections.TokenTextHttpResponseHandler;
@@ -230,9 +231,26 @@ public class UserDAORest implements UserDAO {
                         .create();
                 user = gson.fromJson(responseString, User.class);
 
+                UserDAO userDAO = EatMeetApp.getDaoFactory().getUserDAO();
+                //userDAO.signIn();
+
                 backendStatusManager.addSuccess(user, statusCode);
             }
         });
     }
 
+    @Override
+    public void deleteAccount(final BackendStatusManager bsm) {
+        HttpRestClient.delete(Configs.getBackendUrl() + "/api/users/auth", null, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                bsm.addError(responseString, statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                bsm.addSuccess(responseString, statusCode);
+            }
+        });
+    }
 }

@@ -19,7 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.v7.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -79,6 +80,19 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ELIMINA ACCOUNT"
+                android:background="@color/colorPrimary"
+                android:textSize="25dp"
+                android:enabled="true"
+                android:textColor="#fff"
+                android:shape="rectangle"
+                android:radius="10dp"
+                android:id="@+id/deleteAccount"
+                android:layout_weight="6.15" />
 
 
         </LinearLayout>

@@ -40,10 +40,10 @@ import java.util.logging.Logger;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,Refreshable {
+public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener, OnMapReadyCallback, Refreshable {
     final int MY_PERMISSIONS_REQUEST_ACCESS_POSITION = 12;
     MapView mapView;
-    HashMap<Marker,Restaurant> markers = new HashMap<>();
+    HashMap<Marker, Restaurant> markers = new HashMap<>();
     GoogleMap map;
     View view;
     private List<Restaurant> restaurantList;
@@ -111,7 +111,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
         ifAllowedGetData();
     }
 
-    private void ifAllowedGetData(){
+    private void ifAllowedGetData() {
         System.out.println("MAP READY TO LOAD DATA");
         RestaurantDAO restaurantDAO = EatMeetApp.getDaoFactory().getRestaurantDAO();
         final ObservableArrayList<Event> restaurantList = new ObservableArrayList<>();
@@ -141,6 +141,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
             public View getInfoWindow(Marker arg0) {
                 return null;
             }
+
             @Override
             public View getInfoContents(Marker arg0) {
                 View infoWindowView = infoWindowLayoutInflater.inflate(R.layout.fragment_map_info_window, infoWindowContainer, false);
@@ -164,7 +165,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
                 Restaurant r = (Restaurant) item;
                 Float markerColor = BitmapDescriptorFactory.HUE_RED;
                 Float markerAlpha = 1.0f;
-                if(r.getEvents().size()==0){
+                if (r.getEvents().size() == 0) {
                     markerAlpha = 0.5f;
                 }
                 LatLng pos = new LatLng(r.getLat(), r.getLgt());
@@ -176,7 +177,7 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
                         .position(pos);
                 Marker marker = map.addMarker(markerOptions);
                 markers.put(marker, r);
-                if(restaurantList.size()==1) {
+                if (restaurantList.size() == 1) {
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(((Restaurant) restaurantList.get(0)).getLat(), ((Restaurant) restaurantList.get(0)).getLgt()), 12.0f));
                 }
             }
@@ -188,8 +189,24 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
     @Override
     public void onResume() {
         super.onResume();
-        if (mapView != null)
+
+        if (mapView != null) {
             mapView.onResume();
+            ;
+        }
+        if (map != null) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            map.setMyLocationEnabled(false);
+        }
     }
 
     @Override
