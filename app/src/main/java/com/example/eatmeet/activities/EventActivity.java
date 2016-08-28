@@ -157,6 +157,7 @@ public class EventActivity extends AppCompatActivity {
                 if (title != null) {
                     title.setText(event.getTitle());
                     Visibility.makeVisible(title);
+                    title.setGravity(View.TEXT_ALIGNMENT_CENTER);
                 }
 
                 System.out.println("SCHEDULE LISTENER WORKING");
@@ -288,6 +289,7 @@ public class EventActivity extends AppCompatActivity {
                     minPriceInfoSummary = "Al prezzo minimo mancano " + (event.getPeopleMinPrice()-event.getParticipantsCount()) + " partecipanti";
                 }
                 minPriceInfo.setText(minPriceInfoSummary);
+                minPriceInfo.setGravity(View.TEXT_ALIGNMENT_CENTER);
                 remainingSeets.setText("Posti rimanenti: " + (event.getMaxPeople() - event.getParticipantsCount()));
             }
             @Override

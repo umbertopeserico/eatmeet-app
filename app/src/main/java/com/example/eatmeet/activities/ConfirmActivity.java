@@ -6,7 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -60,6 +63,15 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
 
+        final TextView eventName = (TextView) findViewById(R.id.eventName);
+        eventName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);
+                intent.putExtra("id", eventId);
+                startActivity(intent);
+            }
+        });
         final EventDAO eventDAO = EatMeetApp.getDaoFactory().getEventDAO();
         Visibility.makeVisible(findViewById(R.id.loadingBar));
         Visibility.makeVisible(findViewById(R.id.loadingBarContainer));
@@ -91,8 +103,9 @@ public class ConfirmActivity extends AppCompatActivity {
 
                     }
                 });
-                TextView eventName = (TextView) findViewById(R.id.eventName);
-                eventName.setText("Stai prenotando per: " + currentEvent.getTitle());
+                SpannableString content = new SpannableString(currentEvent.getTitle());
+                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                eventName.setText(content);
                 TextView alreadyBookedPeople = (TextView) findViewById(R.id.alreadyBookedPeople);
                 alreadyBookedPeople.setText("Hanno già prenotato " + currentEvent.getParticipantsCount() + " partecipanti");
                 TextView minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
@@ -202,12 +215,12 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
-        /*
         finish();
-        */
+        /*
         Intent intent = new Intent(ConfirmActivity.this, EventActivity.class);
         intent.putExtra("id", eventId);
         startActivity(intent);
+        */
         return true;
     }
 }
