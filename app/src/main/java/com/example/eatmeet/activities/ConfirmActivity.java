@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,19 +16,14 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
-import com.example.eatmeet.activitiestest.EventParticipationTestActivity;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
 import com.example.eatmeet.dao.interfaces.EventDAO;
 import com.example.eatmeet.entities.Event;
 import com.example.eatmeet.utils.Visibility;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class ConfirmActivity extends AppCompatActivity {
 
     private Event currentEvent;

@@ -39,6 +39,7 @@ public class HttpRestClient {
         }
         setTokenToHeaders(requestParams);
         client.get(url, requestParams, responseHandler);
+        //saveTokenToCookie(responseHandler.getRequestHeaders());
     }
 
     public static void post(String url, RequestParams requestParams, AsyncHttpResponseHandler responseHandler) {
@@ -74,6 +75,7 @@ public class HttpRestClient {
         }
         setTokenToHeaders(requestParams);
         client.delete(url, requestParams, responseHandler);
+        //saveTokenToCookie(responseHandler.getRequestHeaders());
     }
 
     public static void setConfigurations(Context context) {
@@ -103,12 +105,16 @@ public class HttpRestClient {
 
     public static void saveTokenToCookie(Header[] headers) {
         ArrayList<String> acceptedCookies = new ArrayList<>();
+        //HttpRestClient.getCookieStore().clear();
         acceptedCookies.add("Set-Cookie");
         acceptedCookies.add("access-token");
         acceptedCookies.add("token-type");
         acceptedCookies.add("client");
         acceptedCookies.add("expiry");
         acceptedCookies.add("uid");
+        //acceptedCookies.add("_eatameet_prod_session");
+
+        System.out.println("COOKIES BEFORE: " + HttpRestClient.getCookieStore().getCookies());
 
         for( Header h : headers ) {
             BasicClientCookie cookie;
@@ -117,5 +123,8 @@ public class HttpRestClient {
                 HttpRestClient.getCookieStore().addCookie(cookie);
             }
         }
+
+        System.out.println("COOKIES AFTER:" + HttpRestClient.getCookieStore().getCookies());
+        System.out.println("COOKIES AFTER:" + HttpRestClient.getCookieStore().getCookies().size());
     }
 }
