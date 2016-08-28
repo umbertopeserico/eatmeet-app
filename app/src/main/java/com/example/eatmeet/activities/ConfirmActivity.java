@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,6 +149,13 @@ public class ConfirmActivity extends AppCompatActivity {
                             Visibility.makeVisible(bookedFeedback);
                             Visibility.makeVisible(findViewById(R.id.homeButton));
                             toast.show();
+
+                            final ScrollView content_confirm = (ScrollView) findViewById(R.id.content_confirm);
+                            content_confirm.post(new Runnable() {
+                                public void run() {
+                                    content_confirm.fullScroll(View.FOCUS_DOWN);
+                                }
+                            });
                         }
 
                         @Override

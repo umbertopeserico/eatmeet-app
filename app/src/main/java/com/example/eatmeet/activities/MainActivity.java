@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProgressBar loadingBar;
     NavigationView navigationView;
 
+    private int fragmentPrevious = 0;
+    private int fragmentActual;
+
     /*private void chooseMenuType() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //Use navigationView
@@ -72,6 +76,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
+
+    public void trackFragments(int newFragment){
+        fragmentPrevious = fragmentActual;
+        fragmentActual = newFragment;
+    }
+
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking() && !event.isCanceled()) {
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            intent.putExtra("destination", "" + fragmentPrevious);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 
     public void setCurrentFragment(int position){
         mViewPager.setCurrentItem(position, true);

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.eatmeet.EatMeetApp;
 import com.example.eatmeet.R;
+import com.example.eatmeet.activities.MainActivity;
 import com.example.eatmeet.adapters.CategoriesAdapter;
 import com.example.eatmeet.backendstatuses.BackendStatusListener;
 import com.example.eatmeet.backendstatuses.BackendStatusManager;
@@ -106,6 +107,7 @@ public class CategoriesFragment extends Fragment implements Refreshable {
     @Override
     public void refresh() {
         if(isAdded()) {
+            ((MainActivity) getActivity()).trackFragments(0);
             loadData();
         }
     }

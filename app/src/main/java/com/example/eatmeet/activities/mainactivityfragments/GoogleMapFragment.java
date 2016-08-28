@@ -234,6 +234,8 @@ public class GoogleMapFragment extends Fragment implements GoogleMap.OnInfoWindo
 
     @Override
     public void refresh() {
-
+        if(isAdded()) {
+            ((MainActivity) getActivity()).trackFragments(2);
+        }
     }
 }

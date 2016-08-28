@@ -253,13 +253,17 @@ public class EventActivity extends AppCompatActivity {
                         imageStatusManager.setBackendStatusListener(new BackendStatusListener() {
                             @Override
                             public void onSuccess(Object response, Integer code) {
-                                System.out.println("Immagine scaricata");
                                 eventImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                                Visibility.makeInvisible(loadingBar);
+                                Visibility.makeInvisible(loadingBarContainer);
+                                Visibility.makeVisible(contentEvent);
                             }
 
                             @Override
                             public void onFailure(Object response, Integer code) {
-                                System.out.println("Immagine NON scaricata");
+                                Visibility.makeInvisible(loadingBar);
+                                Visibility.makeInvisible(loadingBarContainer);
+                                Visibility.makeVisible(contentEvent);
                             }
                         });
                         eventDAO.getImage(event.getPhotos().get(0).getImage(), tmpFileName, imageStatusManager, getCacheDir());
@@ -269,6 +273,9 @@ public class EventActivity extends AppCompatActivity {
                         System.out.println("Cache esiste");
                         if(!file.isDirectory()) {
                             eventImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                            Visibility.makeInvisible(loadingBar);
+                            Visibility.makeInvisible(loadingBarContainer);
+                            Visibility.makeVisible(contentEvent);
                         }
                     }
                     Visibility.makeVisible(eventImage);
@@ -282,10 +289,6 @@ public class EventActivity extends AppCompatActivity {
                 }
                 minPriceInfo.setText(minPriceInfoSummary);
                 remainingSeets.setText("Posti rimanenti: " + (event.getMaxPeople() - event.getParticipantsCount()));
-
-                Visibility.makeInvisible(loadingBar);
-                Visibility.makeInvisible(loadingBarContainer);
-                Visibility.makeVisible(contentEvent);
             }
             @Override
             public void onFailure(Object response, Integer code) {
@@ -343,13 +346,12 @@ public class EventActivity extends AppCompatActivity {
     /*add action for back button*/
     @Override
     public boolean onSupportNavigateUp(){
-        /*
         finish();
-        */
+        /*
         Intent intent = new Intent(EventActivity.this, MainActivity.class);
         intent.putExtra("destination", "1");
         startActivity(intent);
-
+        */
         return true;
     }
 }
