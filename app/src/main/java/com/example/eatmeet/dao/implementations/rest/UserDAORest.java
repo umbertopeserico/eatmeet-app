@@ -239,4 +239,18 @@ public class UserDAORest implements UserDAO {
         });
     }
 
+    @Override
+    public void deleteAccount(final BackendStatusManager bsm) {
+        HttpRestClient.delete(Configs.getBackendUrl() + "/api/users/auth", null, new TokenTextHttpResponseHandler() {
+            @Override
+            public void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                bsm.addError(responseString, statusCode);
+            }
+
+            @Override
+            public void onSuccessAction(int statusCode, Header[] headers, String responseString) {
+                bsm.addSuccess(responseString, statusCode);
+            }
+        });
+    }
 }
