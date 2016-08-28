@@ -4,7 +4,7 @@
     <string name="categories">Categorie</string>
     <string name="restaurants">Ristoranti</string>
     <string name="date">Data</string>
-    <string name="number_of_people">Numero di persone già prenotate all'evento</string>
+    <string name="number_of_people">Numero di persone già prenotate all\'evento</string>
     <string name="price">Prezzo (€)</string>
     <string name="day_from">Dal giorno</string>
     <string name="day_to">Al giorno</string>
