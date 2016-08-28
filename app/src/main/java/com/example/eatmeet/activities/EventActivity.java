@@ -55,6 +55,10 @@ public class EventActivity extends AppCompatActivity {
 
     RelativeLayout contentEvent;
 
+    private TextView alreadyBookedPeople;
+    private TextView minPriceInfo;
+    private TextView remainingSeets;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,6 +274,17 @@ public class EventActivity extends AppCompatActivity {
                     }
                     Visibility.makeVisible(eventImage);
                 }
+
+                alreadyBookedPeople.setText("Hanno già prenotato " + event.getParticipantsCount() + " partecipanti");
+                String minPriceInfoSummary;
+                if(event.getPeopleMinPrice()<=event.getParticipantsCount()){
+                    minPriceInfoSummary = "Il prezzo minimo è stato raggiunto con " + event.getPeopleMinPrice() + " partecipanti";
+                } else {
+                    minPriceInfoSummary = "Al prezzo minimo mancano " + (event.getPeopleMinPrice()-event.getParticipantsCount()) + " partecipanti";
+                }
+                minPriceInfo.setText(minPriceInfoSummary);
+                remainingSeets.setText("Posti rimanenti: " + (event.getMaxPeople() - event.getParticipantsCount()));
+
                 Visibility.makeInvisible(loadingBar);
                 Visibility.makeInvisible(loadingBarContainer);
                 Visibility.makeVisible(contentEvent);
@@ -306,6 +321,10 @@ public class EventActivity extends AppCompatActivity {
         messagesLabel = (TextView) findViewById(R.id.messagesLabel);
 
         contentEvent = (RelativeLayout) findViewById(R.id.content_event);
+
+        alreadyBookedPeople = (TextView) findViewById(R.id.alreadyBookedPeople);
+        minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
+        remainingSeets = (TextView) findViewById(R.id.remainingSeets);
 
         Visibility.makeInvisible(eventImage);
         Visibility.makeInvisible(title);

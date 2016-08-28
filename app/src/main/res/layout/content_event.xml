@@ -86,6 +86,7 @@
         android:layout_alignLeft="@+id/restaurant"
         android:layout_centerHorizontal="true" />
 
+
     <!--
     <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
         android:layout_width="match_parent"
@@ -244,12 +245,31 @@
 
 
     <TextView
+        android:layout_below="@+id/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="20dp"
+        android:text="Posti rimanenti: "
+        android:id="@+id/remainingSeets"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_below="@+id/remainingSeets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="10dp"
+        android:text="Il prezzo minimo si raggiunge con "
+        android:id="@+id/minPriceInfo"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
         android:layout_marginTop="10dp"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttons"
+        android:layout_below="@+id/minPriceInfo"
         android:id="@+id/menu_title"
         android:text="Menu:"/>
 
