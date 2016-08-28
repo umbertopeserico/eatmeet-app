@@ -55,7 +55,6 @@ public class EventActivity extends AppCompatActivity {
 
     RelativeLayout contentEvent;
 
-    private TextView alreadyBookedPeople;
     private TextView minPriceInfo;
     private TextView remainingSeets;
 
@@ -275,7 +274,6 @@ public class EventActivity extends AppCompatActivity {
                     Visibility.makeVisible(eventImage);
                 }
 
-                alreadyBookedPeople.setText("Hanno già prenotato " + event.getParticipantsCount() + " partecipanti");
                 String minPriceInfoSummary;
                 if(event.getPeopleMinPrice()<=event.getParticipantsCount()){
                     minPriceInfoSummary = "Il prezzo minimo è stato raggiunto con " + event.getPeopleMinPrice() + " partecipanti";
@@ -322,7 +320,6 @@ public class EventActivity extends AppCompatActivity {
 
         contentEvent = (RelativeLayout) findViewById(R.id.content_event);
 
-        alreadyBookedPeople = (TextView) findViewById(R.id.alreadyBookedPeople);
         minPriceInfo = (TextView) findViewById(R.id.minPriceInfo);
         remainingSeets = (TextView) findViewById(R.id.remainingSeets);
 
