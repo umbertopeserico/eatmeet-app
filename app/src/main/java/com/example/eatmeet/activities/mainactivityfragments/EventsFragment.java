@@ -79,7 +79,7 @@ public class EventsFragment extends Fragment implements Refreshable {
 
     // Funzioni di logica interna
     private void loadData() {
-        if(EatMeetApp.getFiltersManager().isEnabled()) {
+        if(EatMeetApp.getFiltersManager().isEnabledFilters()) {
             parameters = EatMeetApp.getFiltersManager().buildJson();
         } else {
             parameters = new JSONObject();
@@ -91,23 +91,21 @@ public class EventsFragment extends Fragment implements Refreshable {
             public void onSuccess(Object response, Integer code) {
                 Visibility.makeInvisible(loadingBar);
                 Visibility.makeInvisible(loadingBarContainer);
-                Visibility.makeInvisible(filterStatusLayout);
-                
+
                 if(eventsList.size()==0) {
                     Log.i("EVENTS LOAD", "NO EVENTS FOUND");
-                    Visibility.makeVisible(filterStatusLayout);
                     Visibility.makeVisible(loadingBarContainer);
                     Visibility.makeVisible(messagesLabel);
                     messagesLabel.setText(R.string.events_no_event);
                 }
 
-                if(EatMeetApp.getFiltersManager().isEnabled() && EatMeetApp.getFiltersManager().isAnyFilterSet()) {
+                if((EatMeetApp.getFiltersManager().isEnabledFilters() || (EatMeetApp.getFiltersManager().isEnabledOrder()))) {
                     Visibility.makeVisible(filterStatusLayout);
-                    Visibility.makeVisible(filterStatusCardView);
                     filtersEnabledText.setText(EatMeetApp.getFiltersManager().toString());
                 }
 
-                EatMeetApp.getFiltersManager().setEnabled(false);
+                EatMeetApp.getFiltersManager().setEnabledFilters(false);
+                EatMeetApp.getFiltersManager().setEnabledOrder(true);
             }
 
             @Override
@@ -116,13 +114,13 @@ public class EventsFragment extends Fragment implements Refreshable {
                     Visibility.makeInvisible(loadingBar);
                     Visibility.makeVisible(loadingBarContainer);
                     Visibility.makeVisible(messagesLabel);
-                    Visibility.makeInvisible(filterStatusCardView);
                     if(response==null) {
                         messagesLabel.setText(getString(R.string.network_error));
                         Toast.makeText(EventsFragment.this.getActivity(), getString(R.string.network_error), Toast.LENGTH_LONG).show();
                     }
                 }
-                EatMeetApp.getFiltersManager().setEnabled(false);
+                EatMeetApp.getFiltersManager().setEnabledFilters(false);
+                EatMeetApp.getFiltersManager().setEnabledOrder(true);
             }
         });
         eventsList.setOnAddListener(new OnAddListener() {
@@ -135,7 +133,6 @@ public class EventsFragment extends Fragment implements Refreshable {
         Visibility.makeVisible(loadingBar);
         Visibility.makeVisible(loadingBarContainer);
         Visibility.makeInvisible(messagesLabel);
-        Visibility.makeInvisible(filterStatusCardView);
         Visibility.makeVisible(filterStatusLayout);
         eventDAO.getEvents(eventsList, eventsBSM, parameters);
     }

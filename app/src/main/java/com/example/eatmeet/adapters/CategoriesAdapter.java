@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +51,7 @@ public class CategoriesAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 EatMeetApp.getFiltersManager().resetFilters();
                 EatMeetApp.getFiltersManager().addCategory(category);
-                EatMeetApp.getFiltersManager().setEnabled(true);
+                EatMeetApp.getFiltersManager().setEnabledFilters(true);
                 mainActivity.setCurrentFragment(1);
             }
         });
