@@ -17,8 +17,8 @@ public abstract class TokenTextHttpResponseHandler extends TextHttpResponseHandl
 
     @Override
     public final void onSuccess(int statusCode, Header[] headers, String responseString) {
-        HttpRestClient.saveTokenToCookie(headers);
         this.onSuccessAction(statusCode, headers, responseString);
+        HttpRestClient.saveTokenToCookie(headers);
     }
 
     public abstract void onFailureAction(int statusCode, Header[] headers, String responseString, Throwable throwable);
