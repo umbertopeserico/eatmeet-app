@@ -221,16 +221,24 @@
         android:text="Il prezzo minimo si raggiunge con "
         android:id="@+id/minPriceInfo"
         android:layout_centerHorizontal="true" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"
+        android:layout_below="@+id/minPriceInfo"
+        android:id="@+id/below_minPriceInfo"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RESTAURANT"
         android:id="@+id/restaurant"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/minPriceInfo"
+        android:layout_below="@+id/below_minPriceInfo"
         android:layout_alignLeft="@+id/titleEvent"
-        android:layout_alignStart="@+id/titleEvent"/>
+        android:layout_alignStart="@+id/titleEvent"
+        android:layout_marginTop="5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -239,22 +247,37 @@
         android:layout_below="@+id/restaurant"
         android:layout_alignLeft="@+id/titleEvent"
         android:layout_marginTop="5dp" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"
+        android:layout_below="@+id/address"
+        android:id="@+id/below_address"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SCHEDULE"
         android:id="@+id/scheduleEvent"
-        android:layout_below="@+id/address"
+        android:layout_below="@+id/below_address"
         android:layout_alignLeft="@+id/titleEvent"
         android:layout_marginTop="5dp" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"
+        android:id="@+id/below_titleEvent"
+        android:layout_below="@+id/scheduleEvent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARTICIPANTS"
         android:id="@+id/participants_count"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/address"
+        android:layout_below="@+id/below_titleEvent"
         android:layout_alignLeft="@+id/address"
         android:layout_alignStart="@+id/address" />
 
@@ -266,6 +289,12 @@
         android:layout_below="@+id/participants_count"
         android:layout_alignLeft="@+id/restaurant"
         android:layout_centerHorizontal="true" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"
+        android:layout_below="@+id/price"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_marginTop="10dp"
