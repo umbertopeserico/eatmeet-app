@@ -38,6 +38,8 @@ public class ConfirmActivity extends AppCompatActivity {
     private int eventId = 1;
     private int bookedPeople = 1;
 
+    boolean firstChange = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,9 +142,6 @@ public class ConfirmActivity extends AppCompatActivity {
                             Visibility.makeVisible(bookedFeedback);
                             Visibility.makeVisible(findViewById(R.id.homeButton));
                             toast.show();
-
-                            CharSequence message = "Prenotazione effettuata correttamente";
-                            Toast.makeText(ConfirmActivity.this, message, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -180,7 +179,11 @@ public class ConfirmActivity extends AppCompatActivity {
         String estimate = newPrice + "€ a persona se prenoti per " + peopleNumber + " persone.";
         TextView dynamicPrice = (TextView) findViewById(R.id.dynamicPrice);
         dynamicPrice.setText(estimate);
-        Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_LONG).show();
+        if(firstChange){
+            firstChange = false;
+        } else {
+            Toast.makeText(ConfirmActivity.this, estimate, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
