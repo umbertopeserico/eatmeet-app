@@ -20,11 +20,12 @@ import java.util.Locale;
 public class FiltersManager {
 
     // VARIABILE DI CONTROLLO PER SAPERE SE IMPOSTARE I FILTRI
-    private boolean enabled;
+    private boolean enabledFilters;
+    private boolean enabledOrder = true;
 
     // VARIABILI PER ORDINAMENTO
-    private String orderByField;
-    private String orderByDirection;
+    private String orderByField = "schedule";
+    private String orderByDirection = "asc";
 
     // VARIABILI PER FILTRI
     private List<Category> selectedCategories;
@@ -43,12 +44,20 @@ public class FiltersManager {
         selectedRestaurants = new ArrayList<>();
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isEnabledFilters() {
+        return enabledFilters;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setEnabledFilters(boolean enabledFilters) {
+        this.enabledFilters = enabledFilters;
+    }
+
+    public boolean isEnabledOrder() {
+        return enabledOrder;
+    }
+
+    public void setEnabledOrder(boolean enabledOrder) {
+        this.enabledOrder = enabledOrder;
     }
 
     // SEZIONE ORDINAMENTO
@@ -275,7 +284,6 @@ public class FiltersManager {
     // FINE SETTING FILTRI PER MIN PEOPLE
 
     public void resetFilters() {
-        removeOrder();
         removeMinDate();
         removeMaxDate();
         removeMinPrice();
@@ -286,6 +294,10 @@ public class FiltersManager {
         removeMaxPeople();
         removeRestaurants();
         removeCategories();
+    }
+
+    public void resetOrder() {
+        removeOrder();
     }
 
     public JSONObject buildJson() {
@@ -396,45 +408,46 @@ public class FiltersManager {
             check = true;
         }
 
-        if (isOrderSet()) {
-            check = true;
-        }
-
         return check;
     }
 
     @Override
     public String toString() {
         String text = "";
-        if(isEnabled()) {
-            text+= "Filtri abilitati: ";
+        if(isEnabledFilters() && isAnyFilterSet()) {
+            text += "Filtri abilitati: ";
 
             if (isCategoryEnabled()) {
-                text+= "Categorie ";
+                text += "Categorie ";
             }
 
             if (isRestaurantEnabled()) {
-                text+= "Ristoranti ";
+                text += "Ristoranti ";
             }
 
             if (isMinDateEnabled() || isMaxDateEnabled()) {
-                text+= "Data ";
+                text += "Data ";
             }
 
             if (isMinPriceEnabled() || isMaxPriceEnabled()) {
-                text+= "Prezzo ";
+                text += "Prezzo ";
             }
 
             if (isMinActualSaleEnabled() || isMaxActualSaleEnabled()) {
-                text+= "Sconto ";
+                text += "Sconto ";
             }
 
             if (isMinPeopleEnabled() || isMaxPeopleEnabled()) {
-                text+= "Partecipanti ";
+                text += "Partecipanti ";
             }
+        }
 
+        if(isEnabledOrder()) {
             if (isOrderSet()) {
-                text += "\nOrdinati per: ";
+                if(!text.equals("")) {
+                    text+="\n";
+                }
+                text += "Ordinati per: ";
                 if(orderByField.equals("schedule")) {
                     text+="Data";
                 } else if(orderByField.equals("actual_price")) {

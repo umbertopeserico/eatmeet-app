@@ -20,6 +20,9 @@ public class OrderActivity extends AppCompatActivity {
     private Button resetOrder;
     private String selectedOrder;
     private String selectedOrderDirection;
+    private RadioButton scheduleOrder;
+    private RadioButton actualPriceOrder;
+    private RadioButton actualSaleOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,21 @@ public class OrderActivity extends AppCompatActivity {
     private void initViewElements() {
         applyOrder = (Button) findViewById(R.id.applyOrder);
         resetOrder = (Button) findViewById(R.id.resetOrder);
+        scheduleOrder = (RadioButton) findViewById(R.id.scheduleOrder);
+        actualPriceOrder = (RadioButton) findViewById(R.id.actualPriceOrder);
+        actualSaleOrder = (RadioButton) findViewById(R.id.actualSaleOrder);
+
+        if(EatMeetApp.getFiltersManager().getOrderByField().equals("schedule")) {
+            scheduleOrder.setChecked(true);
+        }
+
+        if(EatMeetApp.getFiltersManager().getOrderByField().equals("actual_price")) {
+            actualPriceOrder.setChecked(true);
+        }
+
+        if(EatMeetApp.getFiltersManager().getOrderByField().equals("actual_sale")) {
+            actualSaleOrder.setChecked(true);
+        }
     }
 
     private void setActions() {
@@ -60,6 +78,7 @@ public class OrderActivity extends AppCompatActivity {
     private void goToMainActivity() {
         Intent intent = new Intent(OrderActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("applyFilters", "1");
         intent.putExtra("applyOrder", "1");
         intent.putExtra("destination", "1");
         startActivity(intent);
@@ -70,7 +89,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void resetOrder() {
-        EatMeetApp.getFiltersManager().resetFilters();
+        EatMeetApp.getFiltersManager().resetOrder();
     }
 
     // add action for back button
