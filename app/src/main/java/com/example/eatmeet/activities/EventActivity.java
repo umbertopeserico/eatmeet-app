@@ -100,7 +100,7 @@ public class EventActivity extends AppCompatActivity {
                 eventParticipationBSM.setBackendStatusListener(new BackendStatusListener() {
                     @Override
                     public void onSuccess(Object response, Integer code) {
-                        CharSequence message = "Annullamento effettuata correttamente";
+                        CharSequence message = "Annullamento effettuato correttamente";
                         Toast.makeText(EventActivity.this, message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(EventActivity.this, EventActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
